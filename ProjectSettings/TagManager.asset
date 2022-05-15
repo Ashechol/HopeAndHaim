@@ -13,32 +13,23 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Props
+  - Player
   - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 3166645369
+    locked: 0
+  - name: Wall
+    uniqueID: 3689229217
+    locked: 0
+  - name: Props
+    uniqueID: 3828035631
+    locked: 0
+  - name: Player
+    uniqueID: 1556806095
     locked: 0
