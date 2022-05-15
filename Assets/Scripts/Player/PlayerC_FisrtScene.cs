@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 玩家控制器_第一幕
@@ -11,13 +12,23 @@ using UnityEngine;
 public class PlayerC_FisrtScene : MonoBehaviour
 {
     public float speed = 20f;
+    //播放静止语音的时间阈值
+    public float audioPlayTime = 5f;
 
+    //移动检测
     private float _xVelocity, _yVelocity;
     private bool _isMoving = false;
     private float _obstacleCheck = 1f;
     private Vector3 _targetPos;
 
     private int _wallMask;
+
+    //按 E 行动
+    private bool _pressedAction = false;
+    public event UnityAction triggeAction;
+
+    //静止开始事件
+    private float _staticTime = 0;
 
     private void Start()
     {
@@ -26,53 +37,70 @@ public class PlayerC_FisrtScene : MonoBehaviour
 
     private void Update()
     {
-        _xVelocity = Input.GetAxisRaw("Horizontal");
-        _yVelocity = Input.GetAxisRaw("Vertical");
+        UserInput();
 
         Movement();
+        PlayerAction();
+        StaticAction();
     }
 
-    private void FixedUpdate()
+    private void UserInput()
     {
-        
+        if (!_isMoving)
+        {
+            _xVelocity = Input.GetAxisRaw("Horizontal");
+            _yVelocity = Input.GetAxisRaw("Vertical");
+        }
+
+        _pressedAction = Input.GetKeyDown(KeyCode.E);
+    }
+
+    /// <summary>
+    /// 根据 x, y 轴的输入，获得一个方向。
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>上下左右其中一个方向</returns>
+    private Vector3 GetDirection(float x, float y)
+    {
+        if (x != 0)
+        {
+            return new Vector3(x, 0, 0);
+        }
+        else
+        {
+            return new Vector3(0, y, 0);
+        }
     }
 
     private void Movement()
     {
-        //静止，且有输入时
-        if (!_isMoving && (_xVelocity != 0 || _yVelocity != 0))
+        //静止
+        if (!_isMoving)
         {
-            //设置射线
-            Vector3 direction;
-            RaycastHit2D wallHit;
-            if (_xVelocity != 0)
+            //有输入
+            if (_xVelocity != 0 || _yVelocity != 0)
             {
-                direction = Vector3.right * _xVelocity;
-                wallHit = Physics2D.Raycast(transform.position, direction, _obstacleCheck, _wallMask);
-                Debug.DrawRay(transform.position, Vector3.right * _xVelocity, Color.green);
-            }
-            else
-            {
-                direction = Vector3.up * _yVelocity;
-                wallHit = Physics2D.Raycast(transform.position, direction, _obstacleCheck, _wallMask);
-                Debug.DrawRay(transform.position, Vector3.up * _yVelocity, Color.green);
-            }
+                //碰撞检测
+                Vector3 direction = GetDirection(_xVelocity, _yVelocity);
+                RaycastHit2D wallHit = Physics2D.Raycast(transform.position, direction, _obstacleCheck, _wallMask);
+                Debug.DrawRay(transform.position, new Vector3(direction.x * Mathf.Abs(_xVelocity), direction.y * Mathf.Abs(_yVelocity), 0), Color.green);
 
-            //碰撞检测
-            if (wallHit)
-            {
-                Debug.Log("碰撞 Wall 层");
-            }
-            //没有碰撞，可以移动
-            else
-            {
-                Debug.Log("没有碰撞");
-                _isMoving = true;
-                _targetPos = transform.position + direction;
+                //检测处理
+                if (wallHit)
+                {
+                    Debug.Log("碰撞 Wall 层");
+                }
+                else
+                {
+                    Debug.Log("没有碰撞，开始移动");
+                    _isMoving = true;
+                    _targetPos = transform.position + direction;
+                }
             }
         }
-        //移动中
-        else if (_isMoving)
+        //移动
+        else
         {
             //抵达目的地
             if (transform.position == _targetPos)
@@ -80,12 +108,38 @@ public class PlayerC_FisrtScene : MonoBehaviour
                 Debug.Log("抵达目的地");
                 _isMoving = false;
             }
-            //正在移动
+            //继续移动
             else
             {
-                Debug.Log("正在移动");
+                Debug.Log("移动中");
                 transform.position = Vector3.MoveTowards(transform.position, _targetPos, Time.deltaTime * speed);
             }
+        }
+    }
+
+    private void PlayerAction()
+    {
+        if (_pressedAction)
+        {
+            triggeAction();
+        }
+    }
+
+    //静止行为
+    private void StaticAction()
+    {
+        if (_isMoving)
+        {
+            _staticTime = 0;
+        }
+        else
+        {
+            _staticTime += Time.deltaTime;
+        }
+
+        if (_staticTime >= audioPlayTime)
+        {
+            Debug.Log("达到静止语音播放阈值");
         }
     }
 }
