@@ -6,6 +6,8 @@ public class MouseManager : Singleton<MouseManager>
 {
     Camera _mainCam;
 
+    Vector3Int _gridPos;
+
     public Tilemap tilemap;
 
     public event Action<Vector3> OnMouseClicked;
@@ -25,16 +27,19 @@ public class MouseManager : Singleton<MouseManager>
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int gridPos = tilemap.WorldToCell(mousePos);
-
-            if (tilemap.HasTile(gridPos))
+            if (tilemap.HasTile(_gridPos))
             {
-                Vector3 dest = tilemap.GetCellCenterWorld(gridPos);
+                Vector3 dest = tilemap.GetCellCenterWorld(_gridPos);
                 // tilemap.SetTileFlags(gridPos, TileFlags.None);
                 // tilemap.SetColor(gridPos, Color.red);
                 OnMouseClicked?.Invoke(dest);
             }
         }
+    }
+
+    void TilePointAt()
+    {
+        Vector2 mousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+        _gridPos = tilemap.WorldToCell(mousePos);
     }
 }
