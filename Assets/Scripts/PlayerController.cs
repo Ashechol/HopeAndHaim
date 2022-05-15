@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     NavMeshAgent _agent;
 
+    public float speed;
+    Vector3 destination;
+
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -14,19 +17,32 @@ public class PlayerController : MonoBehaviour
         _agent.updateUpAxis = false;
     }
 
-    void Start()
+    void OnEnable()
     {
         MouseManager.Instance.OnMouseClicked += MoveToPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
-
+        MouseManager.Instance.OnMouseClicked -= MoveToPosition;
     }
 
-    void MoveToPosition(Vector2 pos)
+    void Update()
     {
+        // transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+    }
+
+    void MoveToPosition(Vector3 pos)
+    {
+        _agent.isStopped = false;
+        if (pos.x - transform.position.x == 0)
+            pos.x += 0.01f;
         _agent.destination = pos;
+        Debug.Log(_agent.destination);
+        Debug.Log(_agent.velocity);
+
+
+        // destination = pos;
+
     }
 }
