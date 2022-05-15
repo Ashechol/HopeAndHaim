@@ -20,6 +20,7 @@ public class MouseManager : Singleton<MouseManager>
 
     void Update()
     {
+        TilePointAt();
         MouseControll();
     }
 
