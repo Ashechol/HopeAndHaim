@@ -5,10 +5,10 @@ using UnityEngine.Tilemaps;
 public class MouseManager : Singleton<MouseManager>
 {
     Camera _mainCam;
-
     Vector3Int _gridPos;
+    public Tilemap pathMap;
 
-    public Tilemap tilemap;
+    public Vector3Int MousePos { get { return _gridPos; } }
 
     public event Action<Vector3> OnMouseClicked;
 
@@ -20,27 +20,22 @@ public class MouseManager : Singleton<MouseManager>
 
     void Update()
     {
-        TilePointAt();
         MouseControll();
     }
 
     void MouseControll()
     {
+        Vector2 mousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+        _gridPos = pathMap.WorldToCell(mousePos);
         if (Input.GetMouseButtonDown(0))
         {
-            if (tilemap.HasTile(_gridPos))
+            if (pathMap.HasTile(_gridPos))
             {
-                Vector3 dest = tilemap.GetCellCenterWorld(_gridPos);
+                Vector3 dest = pathMap.GetCellCenterWorld(_gridPos);
                 // tilemap.SetTileFlags(gridPos, TileFlags.None);
                 // tilemap.SetColor(gridPos, Color.red);
                 OnMouseClicked?.Invoke(dest);
             }
         }
-    }
-
-    void TilePointAt()
-    {
-        Vector2 mousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-        _gridPos = tilemap.WorldToCell(mousePos);
     }
 }
