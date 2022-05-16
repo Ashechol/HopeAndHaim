@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÉäÏß¼ì²â·½Ê½µÄµÀ¾ß
+/// å°„çº¿æ£€æµ‹æ–¹å¼çš„é“å…·
 /// </summary>
 public class RayDetectProp : DetectProp
 {
@@ -15,7 +15,7 @@ public class RayDetectProp : DetectProp
         RIGHT
     }
 
-    [Header("ÉäÏß¼ì²â")]
+    [Header("å°„çº¿æ£€æµ‹")]
     public Direction direction = Direction.UP;
     public float raycastLength = 1f;
 
@@ -42,10 +42,5 @@ public class RayDetectProp : DetectProp
 
         Debug.DrawRay(transform.position, _dir * raycastLength, Color.green);
         return Physics2D.Raycast(transform.position, _dir, raycastLength, detectMask);
-    }
-
-    public override void DetectAction()
-    {
-        Debug.Log("Ö´ĞĞ¼ì²âº¯Êı");
     }
 }

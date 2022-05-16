@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 /// <summary>
 /// 触发器检测方式的道具
+/// 本脚本暂时搁置……考虑能直接使用 OnTrigger 函数解决。
 /// </summary>
 public class TriggerDetectProp : DetectProp
 {
@@ -33,10 +34,5 @@ public class TriggerDetectProp : DetectProp
         }
 
         return false;
-    }
-
-    public override void DetectAction()
-    {
-        Debug.Log("执行检测函数");
     }
 }

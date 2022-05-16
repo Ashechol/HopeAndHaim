@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ using UnityEngine.Events;
 /// 需要玩家一开始的位置属于方格内
 /// 目前仅检测 Wall
 /// </summary>
+[Obsolete("过时，请使用重构新版本", false)]
 public class PlayerC_FisrtScene : MonoBehaviour
 {
     public float speed = 20f;

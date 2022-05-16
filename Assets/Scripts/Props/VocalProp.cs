@@ -1,16 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ·¢ÉùµÀ¾ß
+/// å‘å£°é“å…·ï¼Œä½¿ç”¨ç‰©ä½“è‡ªèº«çš„ç¢°æ’ä½“è¿›è¡Œæ£€æµ‹
 /// </summary>
 public class VocalProp : MonoBehaviour
 {
 
-    //²¥·ÅÄ£Ê½
+    //æ’­æ”¾æ¨¡å¼
     public bool isLoop = false;
-    //¼ì²â²ã¼¶
+    //ç¦»å¼€æ—¶æ˜¯å¦ç»“æŸ
+    public bool isStopOnExit = true;
+    //æ£€æµ‹å±‚çº§
     public LayerMask detectMask;
 
     private AudioSource _audioSource;
@@ -21,15 +23,16 @@ public class VocalProp : MonoBehaviour
         if (_audioSource == null)
         {
             _audioSource = gameObject.AddComponent<AudioSource>();
+            AudioManager.Instance.SetAudioSourceField(_audioSource);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("½øÈë´¥·¢Æ÷");
+        Debug.Log("è¿›å…¥è§¦å‘å™¨");
         if (((1 << collision.gameObject.layer) & detectMask) != 0)
         {
-            Debug.Log("´¥·¢²ã¼¶");
+            Debug.Log("è§¦å‘å±‚çº§");
             if (!_audioSource.isPlaying)
             {
                 _audioSource.loop = isLoop;
@@ -40,7 +43,14 @@ public class VocalProp : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Àë¿ª´¥·¢Æ÷");
-        _audioSource.Stop();
+        Debug.Log("ç¦»å¼€è§¦å‘å™¨");
+        if (isStopOnExit)
+        {
+            _audioSource.Stop();
+        }
+        else
+        {
+            _audioSource.loop = false;
+        }
     }
 }

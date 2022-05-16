@@ -1,22 +1,22 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ������Ƶ�ļ�
+/// 管理音频文件
 /// </summary>
 public class AudioManager
 {
     private static AudioManager instance = new AudioManager();
     public static AudioManager Instance => instance;
 
-    //��Ƶ�б�
+    //音频列表
     private List<AudioClip> staticClips = new List<AudioClip>();
     private List<AudioClip> collideClips = new List<AudioClip>();
 
     private AudioManager()
     {
-        //��ȡ��Ƶ
+        //获取音频
     }
 
     public AudioClip GetStaticClip()
@@ -27,5 +27,14 @@ public class AudioManager
     public AudioClip GetCollideClip()
     {
         return null;
+    }
+
+    //设置 AudioSource 声音效果
+    public void SetAudioSourceField(AudioSource audioSource)
+    {
+        //设置 3D 立体效果
+        audioSource.spatialBlend = 1;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.maxDistance = 8;
     }
 }
