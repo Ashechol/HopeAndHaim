@@ -5,9 +5,10 @@ using UnityEngine.Tilemaps;
 public class MouseManager : Singleton<MouseManager>
 {
     Camera _mainCam;
-
     Vector3Int _gridPos;
 
+    [Header("Mouse Interaction")]
+    public Grid grid;
     public Tilemap tilemap;
 
     public event Action<Vector3> OnMouseClicked;
