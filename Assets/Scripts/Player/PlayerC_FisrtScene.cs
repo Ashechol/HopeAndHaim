@@ -1,33 +1,36 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// Íæ¼Ò¿ØÖÆÆ÷_µÚÒ»Ä»
-/// Ò»¸ñÒ»¸ñÒÆ¶¯£¬ÇÒÒÆ¶¯¹ı³ÌÖĞ²»½ÓÊÜÊäÈë
-/// ĞèÒªÍæ¼ÒÒ»¿ªÊ¼µÄÎ»ÖÃÊôÓÚ·½¸ñÄÚ
-/// Ä¿Ç°½ö¼ì²â Wall
+/// ç©å®¶æ§åˆ¶å™¨_ç¬¬ä¸€å¹•
+/// ä¸€æ ¼ä¸€æ ¼ç§»åŠ¨ï¼Œä¸”ç§»åŠ¨è¿‡ç¨‹ä¸­ä¸æ¥å—è¾“å…¥
+/// éœ€è¦ç©å®¶ä¸€å¼€å§‹çš„ä½ç½®å±äºæ–¹æ ¼å†…
+/// ç›®å‰ä»…æ£€æµ‹ Wall
 /// </summary>
 public class PlayerC_FisrtScene : MonoBehaviour
 {
     public float speed = 20f;
-    //²¥·Å¾²Ö¹ÓïÒôµÄÊ±¼äãĞÖµ
+    //æ’­æ”¾é™æ­¢è¯­éŸ³çš„æ—¶é—´é˜ˆå€¼
     public float audioPlayTime = 5f;
 
-    //ÒÆ¶¯¼ì²â
+    //ç§»åŠ¨æ£€æµ‹
     private float _xVelocity, _yVelocity;
     private bool _isMoving = false;
     private float _obstacleCheck = 1f;
     private Vector3 _targetPos;
+    //å‰è¿›æ–¹å‘
+    private Vector3 _direction;
 
+    //å±‚çº§
     private int _wallMask;
 
-    //°´ E ĞĞ¶¯
+    //æŒ‰ E è¡ŒåŠ¨
     private bool _pressedAction = false;
     public event UnityAction triggeAction;
 
-    //¾²Ö¹¿ªÊ¼ÊÂ¼ş
+    //é™æ­¢å¼€å§‹äº‹ä»¶
     private float _staticTime = 0;
 
     private void Start()
@@ -56,11 +59,11 @@ public class PlayerC_FisrtScene : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸ù¾İ x, y ÖáµÄÊäÈë£¬»ñµÃÒ»¸ö·½Ïò¡£
+    /// æ ¹æ® x, y è½´çš„è¾“å…¥ï¼Œè·å¾—ä¸€ä¸ªæ–¹å‘ã€‚
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
-    /// <returns>ÉÏÏÂ×óÓÒÆäÖĞÒ»¸ö·½Ïò</returns>
+    /// <returns>ä¸Šä¸‹å·¦å³å…¶ä¸­ä¸€ä¸ªæ–¹å‘</returns>
     private Vector3 GetDirection(float x, float y)
     {
         if (x != 0)
@@ -73,45 +76,50 @@ public class PlayerC_FisrtScene : MonoBehaviour
         }
     }
 
+    private RaycastHit2D GetHit(int layerMask)
+    {
+        _direction = GetDirection(_xVelocity, _yVelocity);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, _direction, _obstacleCheck, layerMask);
+        Debug.DrawRay(transform.position, new Vector3(_direction.x * Mathf.Abs(_xVelocity), _direction.y * Mathf.Abs(_yVelocity), 0), Color.green);
+        return hit;
+    }
+
     private void Movement()
     {
-        //¾²Ö¹
+        //é™æ­¢
         if (!_isMoving)
         {
-            //ÓĞÊäÈë
+            //æœ‰è¾“å…¥
             if (_xVelocity != 0 || _yVelocity != 0)
             {
-                //Åö×²¼ì²â
-                Vector3 direction = GetDirection(_xVelocity, _yVelocity);
-                RaycastHit2D wallHit = Physics2D.Raycast(transform.position, direction, _obstacleCheck, _wallMask);
-                Debug.DrawRay(transform.position, new Vector3(direction.x * Mathf.Abs(_xVelocity), direction.y * Mathf.Abs(_yVelocity), 0), Color.green);
+                //ç¢°æ’æ£€æµ‹
+                RaycastHit2D wallHit = GetHit(_wallMask);
 
-                //¼ì²â´¦Àí
                 if (wallHit)
                 {
-                    Debug.Log("Åö×² Wall ²ã");
+                    Debug.Log("ç¢°æ’ Wall å±‚");
                 }
                 else
                 {
-                    Debug.Log("Ã»ÓĞÅö×²£¬¿ªÊ¼ÒÆ¶¯");
+                    Debug.Log("æ²¡æœ‰ç¢°æ’ï¼Œå¼€å§‹ç§»åŠ¨");
                     _isMoving = true;
-                    _targetPos = transform.position + direction;
+                    _targetPos = transform.position + _direction;
                 }
             }
         }
-        //ÒÆ¶¯
+        //ç§»åŠ¨
         else
         {
-            //µÖ´ïÄ¿µÄµØ
+            //æŠµè¾¾ç›®çš„åœ°
             if (transform.position == _targetPos)
             {
-                Debug.Log("µÖ´ïÄ¿µÄµØ");
+                Debug.Log("æŠµè¾¾ç›®çš„åœ°");
                 _isMoving = false;
             }
-            //¼ÌĞøÒÆ¶¯
+            //ç»§ç»­ç§»åŠ¨
             else
             {
-                Debug.Log("ÒÆ¶¯ÖĞ");
+                Debug.Log("ç§»åŠ¨ä¸­");
                 transform.position = Vector3.MoveTowards(transform.position, _targetPos, Time.deltaTime * speed);
             }
         }
@@ -125,7 +133,7 @@ public class PlayerC_FisrtScene : MonoBehaviour
         }
     }
 
-    //¾²Ö¹ĞĞÎª
+    //é™æ­¢è¡Œä¸º
     private void StaticAction()
     {
         if (_isMoving)
@@ -139,7 +147,7 @@ public class PlayerC_FisrtScene : MonoBehaviour
 
         if (_staticTime >= audioPlayTime)
         {
-            Debug.Log("´ïµ½¾²Ö¹ÓïÒô²¥·ÅãĞÖµ");
+            Debug.Log("è¾¾åˆ°é™æ­¢è¯­éŸ³æ’­æ”¾é˜ˆå€¼");
         }
     }
 }
