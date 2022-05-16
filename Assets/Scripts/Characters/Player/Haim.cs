@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Haim : MonoBehaviour
 {
     NavMeshAgent _agent;
+    AudioSource _audioSource;
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
@@ -15,6 +16,7 @@ public class Haim : MonoBehaviour
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _audioSource = GetComponent<AudioSource>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
     }
@@ -36,13 +38,14 @@ public class Haim : MonoBehaviour
     void Update()
     {
         HackCam();
+
+
     }
 
     void MoveToPosition(Vector3 pos)
     {
         if (!_isHacking)
         {
-            _agent.isStopped = false;
             if (pos.x - transform.position.x == 0)
                 pos.x += 0.01f;
             _agent.destination = pos;
