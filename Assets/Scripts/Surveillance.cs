@@ -11,6 +11,8 @@ public class Surveillance : MonoBehaviour
     public float angulerSpeed = 5.0f;
     public bool canBeHack;
     public bool hacking;
+    public float minAngle;
+    public float maxAngle;
 
     void Awake()
     {

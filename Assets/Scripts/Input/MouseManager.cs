@@ -20,7 +20,8 @@ public class MouseManager : Singleton<MouseManager>
 
     void Update()
     {
-        MouseControll();
+        if (GameManager.Instance.haim.ArriveAtDest())
+            MouseControll();
     }
 
     void MouseControll()

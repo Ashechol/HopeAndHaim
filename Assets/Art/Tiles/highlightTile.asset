@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: highlightTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 1b4c0ac7a20da4853b5724a7d73ad2a7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8490566, g: 0.27634388, b: 0.27634388, a: 1}
   m_Transform:
     e00: 1
     e01: 0
