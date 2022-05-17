@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    // Haim one of the main actors
+    List<IGameObserver> _observers;
+
     public Haim haim;
 
     public void RegisterHaim(Haim haim)
     {
         this.haim = haim;
+    }
+
+    public void AddObserver(IGameObserver observer)
+    {
+        _observers.Add(observer);
+    }
+
+    public void RemoveObserver(IGameObserver observer)
+    {
+        _observers.Remove(observer);
     }
 }
