@@ -10,7 +10,11 @@ using UnityEngine;
 public class Hope : MonoBehaviour
 {
     #region 组件
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D _rigidbody;
+    private AudioSource _hearSource;
+    private AudioSource _speakSource;
+    private AudioSource _bgmSource;
+    private BoxCollider2D _collider;
     #endregion
 
     #region 移动参数
@@ -18,6 +22,15 @@ public class Hope : MonoBehaviour
     public float speed = 8f;
     //朝向
     public Direction direction = Direction.Up;
+    #endregion
+
+    #region 射线检测
+    //检测碰撞体
+    public LayerMask rayMask;
+    //射线长度
+    private float _rayLength = 0.1f;
+    //射线
+    private RaycastHit2D _hitL, _hitR;
     #endregion
 
     #region 输入参数
@@ -36,12 +49,19 @@ public class Hope : MonoBehaviour
     #region 循环函数
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _hearSource = transform.Find("Hear").GetComponent<AudioSource>();
+        _speakSource = transform.Find("Speak").GetComponent<AudioSource>();
+        _bgmSource = transform.Find("Bgm").GetComponent<AudioSource>();
+        _collider = transform.Find("Collider").GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
-        UserInput();
+        //判断 GameManager 的 GameMode
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Normal) {
+            UserInput();
+        }
 
         //显示朝向
         Debug.DrawRay(transform.position, GetDirectionVector(), Color.green);
@@ -52,22 +72,25 @@ public class Hope : MonoBehaviour
         PlayerMove();
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && _isMoving) {
+            WallCollideVoice();
+        }
+    }
+
     private void PlayerMove()
     {
         //旋转
         if (_isRotating) {
             Debug.Log("Hope 正在转向");
-            //结束移动
             Invoke("ResetIsRotating", 0.2f);
         }
         //移动
         else if (_isMoving) {
             Debug.Log("Hope 正在移动");
-            //检查输入，一旦无输入立即停下
-            if (!_isForward && !_isBackward) {
-                _isMoving = false;
-                rigidbody.velocity = Vector2.zero;
-            }
+            //检查输入，保持速度或停下
+            ChangeVelocity();
         }
         //静止
         else {
@@ -82,13 +105,7 @@ public class Hope : MonoBehaviour
             else if (_isForward || _isBackward) {
                 _isMoving = true;
                 //设置移动速度
-                Vector3 dir = GetDirectionVector();
-                if (_isForward) {
-                    rigidbody.velocity = new Vector2(dir.x, dir.y) * speed * Time.fixedDeltaTime;
-                }
-                else if (_isBackward) {
-                    rigidbody.velocity = new Vector2(dir.x, dir.y) * -speed * Time.fixedDeltaTime;
-                }
+                ChangeVelocity();
             }
         }
     }
@@ -122,27 +139,76 @@ public class Hope : MonoBehaviour
     {
         switch (direction) {
             case Direction.Left:
-                if (left) direction = Direction.Down;
-                else direction = Direction.Up;
+                if (left) {
+                    direction = Direction.Down;
+                }
+                else {
+                    direction = Direction.Up;
+                }
                 break;
             case Direction.Right:
-                if (left) direction = Direction.Up;
-                else direction = Direction.Down;
+                if (left) {
+                    direction = Direction.Up;
+                }
+                else {
+                    direction = Direction.Down;
+                }
                 break;
             case Direction.Up:
-                if (left) direction = Direction.Left;
-                else direction = Direction.Right;
+                if (left) {
+                    direction = Direction.Left;
+                }
+                else {
+                    direction = Direction.Right;
+                }
                 break;
             case Direction.Down:
-                if (left) direction = Direction.Right;
-                else direction = Direction.Left;
+                if (left) {
+                    direction = Direction.Right;
+                }
+                else {
+                    direction = Direction.Left;
+                }
                 break;
+        }
+        if (left) {
+            _collider.transform.Rotate(Vector3.forward, 90);
+        }
+        else {
+            _collider.transform.Rotate(Vector3.forward, -90);
+        }
+    }
+
+    //设置移动速度
+    private void ChangeVelocity()
+    {
+        Vector3 dir = GetDirectionVector();
+        if (_isForward) {
+            _rigidbody.velocity = new Vector2(dir.x, dir.y) * speed * Time.fixedDeltaTime;
+        }
+        else if (_isBackward) {
+            _rigidbody.velocity = new Vector2(dir.x, dir.y) * -speed * Time.fixedDeltaTime;
+        }
+        else {
+            _rigidbody.velocity = Vector2.zero;
+            _isMoving = false;
         }
     }
 
     private void ResetIsRotating()
     {
         _isRotating = false;
+    }
+
+    private void WallCollideVoice()
+    {
+        Debug.Log("Hope 撞到墙壁");
+        if (!_speakSource.isPlaying) {
+            _speakSource.clip = AudioManager.Instance.GetCollideClip();
+            _speakSource.loop = false;
+            _speakSource.time = 0.6f;
+            _speakSource.Play();
+        }
     }
     #endregion
 }

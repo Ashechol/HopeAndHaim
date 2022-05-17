@@ -139,7 +139,6 @@ public class Hope_Ray : MonoBehaviour
             Debug.Log($"Hope 碰撞层级:{LayerMask.LayerToName(layerIndex)}");
             //碰撞墙壁
             if (layerIndex == LayerMask.NameToLayer("Wall")) {
-                //TODO: 碰撞音频触发
                 Debug.Log("Hope 触发碰撞音频");
             }
         }

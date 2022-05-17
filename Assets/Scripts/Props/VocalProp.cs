@@ -20,8 +20,7 @@ public class VocalProp : MonoBehaviour
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
-        if (_audioSource == null)
-        {
+        if (_audioSource == null) {
             _audioSource = gameObject.AddComponent<AudioSource>();
             AudioManager.Instance.SetAudioSourceField(_audioSource);
         }
@@ -30,11 +29,9 @@ public class VocalProp : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("进入触发器");
-        if (((1 << collision.gameObject.layer) & detectMask) != 0)
-        {
+        if (((1 << collision.gameObject.layer) & detectMask) != 0) {
             Debug.Log("触发层级");
-            if (!_audioSource.isPlaying)
-            {
+            if (!_audioSource.isPlaying) {
                 _audioSource.loop = isLoop;
                 _audioSource.Play();
             }
@@ -44,12 +41,10 @@ public class VocalProp : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("离开触发器");
-        if (isStopOnExit)
-        {
+        if (isStopOnExit) {
             _audioSource.Stop();
         }
-        else
-        {
+        else {
             _audioSource.loop = false;
         }
     }
