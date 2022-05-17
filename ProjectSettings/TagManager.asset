@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Director
   layers:
   - Default
   - TransparentFX
@@ -16,6 +17,27 @@ TagManager:
   - Wall
   - Props
   - Player
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   m_SortingLayers:
   - name: Default

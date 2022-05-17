@@ -75,6 +75,8 @@ public class GameManager : Singleton<GameManager>
         gameMode = GameMode.GamePlay;
         //恢复播放
         currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
+        //关闭对话框
+        UIManager.Instance.CleanDialogue();
     }
 
     public void ResumeGame()
@@ -94,11 +96,6 @@ public class GameManager : Singleton<GameManager>
         else {
             currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
         }
-    }
-
-    public void SignalTest()
-    {
-        Debug.Log("Signal 测试");
     }
     #endregion
 }

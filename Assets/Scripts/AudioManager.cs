@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class AudioManager : Singleton<AudioManager>
 {
-    public AudioSource bgmSource;
-    public AudioSource speakSource;
+    public Hope hope;
 
     //音频列表
     public List<AudioClip> staticClips = new List<AudioClip>();
@@ -24,22 +23,25 @@ public class AudioManager : Singleton<AudioManager>
         return collideClips[Random.Range(0, collideClips.Count)];
     }
 
-    //设置 AudioSource 声音效果
-    public void SetAudioSourceField(AudioSource audioSource)
+    #region 设置角色声音
+    public void SetFootstep(AudioClip clip)
     {
-        //设置 3D 立体效果
-        audioSource.spatialBlend = 1;
-        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        audioSource.maxDistance = 8;
+        if (hope != null) {
+            hope.footSource.clip = clip;
+            if (hope.IsMoving) {
+                hope.footSource.Play();
+            }
+        }
     }
+    #endregion
 
-    #region 设置背景音乐
+    #region 设置背景音乐，暂不使用
     public void SetBgm(string clipName, bool isLoop = false)
     {
         string path = "Audio/SE/" + clipName;
-        bgmSource.clip = Resources.Load(path) as AudioClip;
-        bgmSource.loop = isLoop;
-        bgmSource.Play();
+        hope.bgmSource.clip = Resources.Load(path) as AudioClip;
+        hope.bgmSource.loop = isLoop;
+        hope.bgmSource.Play();
     }
 
     public void SetDropBgm()

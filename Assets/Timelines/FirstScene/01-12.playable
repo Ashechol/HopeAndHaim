@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: FirstScene_01-12
+  m_Name: 01-12
   m_EditorClassIdentifier: 
   m_Version: 0
   m_Tracks:
@@ -87,22 +87,6 @@ MonoBehaviour:
   m_bufferingTime: 0.1
   m_ClipProperties:
     volume: 1
---- !u!114 &3054782153127381941
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
-  m_EditorClassIdentifier: 
-  m_Time: 94.5
-  m_Retroactive: 0
-  m_EmitOnce: 0
-  m_Asset: {fileID: 11400000, guid: 8a919faf2ba3a9b469499c86fac90267, type: 2}
 --- !u!114 &3920519444423963608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -518,7 +502,6 @@ MonoBehaviour:
   m_Markers:
     m_Objects:
     - {fileID: 4617320004307251128}
-    - {fileID: 3054782153127381941}
     - {fileID: -8814818535941058161}
     - {fileID: -8723822165165417074}
     - {fileID: -3302710264868124941}

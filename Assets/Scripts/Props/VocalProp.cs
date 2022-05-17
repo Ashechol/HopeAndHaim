@@ -22,7 +22,7 @@ public class VocalProp : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null) {
             _audioSource = gameObject.AddComponent<AudioSource>();
-            AudioManager.Instance.SetAudioSourceField(_audioSource);
+            //AudioManager.Instance.SetAudioSourceField(_audioSource);
         }
     }
 

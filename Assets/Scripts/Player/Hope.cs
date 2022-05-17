@@ -11,9 +11,14 @@ public class Hope : MonoBehaviour
 {
     #region 组件
     private Rigidbody2D _rigidbody;
-    private AudioSource _hearSource;
-    private AudioSource _speakSource;
-    private AudioSource _bgmSource;
+    [HideInInspector]
+    public AudioSource hearSource;
+    [HideInInspector]
+    public AudioSource speakSource;
+    [HideInInspector]
+    public AudioSource bgmSource;
+    [HideInInspector]
+    public AudioSource footSource;
     private BoxCollider2D _collider;
     #endregion
 
@@ -22,15 +27,6 @@ public class Hope : MonoBehaviour
     public float speed = 8f;
     //朝向
     public Direction direction = Direction.Up;
-    #endregion
-
-    #region 射线检测
-    //检测碰撞体
-    public LayerMask rayMask;
-    //射线长度
-    private float _rayLength = 0.1f;
-    //射线
-    private RaycastHit2D _hitL, _hitR;
     #endregion
 
     #region 输入参数
@@ -44,15 +40,17 @@ public class Hope : MonoBehaviour
     private bool _isRotating;
     //正在移动
     private bool _isMoving;
+    public bool IsMoving => _isMoving;
     #endregion
 
     #region 循环函数
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _hearSource = transform.Find("Hear").GetComponent<AudioSource>();
-        _speakSource = transform.Find("Speak").GetComponent<AudioSource>();
-        _bgmSource = transform.Find("Bgm").GetComponent<AudioSource>();
+        hearSource = transform.Find("Hear").GetComponent<AudioSource>();
+        speakSource = transform.Find("Speak").GetComponent<AudioSource>();
+        bgmSource = transform.Find("Bgm").GetComponent<AudioSource>();
+        footSource = transform.Find("Footstep").GetComponent<AudioSource>();
         _collider = transform.Find("Collider").GetComponent<BoxCollider2D>();
     }
 
@@ -84,7 +82,7 @@ public class Hope : MonoBehaviour
         //旋转
         if (_isRotating) {
             Debug.Log("Hope 正在转向");
-            Invoke("ResetIsRotating", 0.2f);
+            Invoke("ResetIsRotating", 0.1f);
         }
         //移动
         else if (_isMoving) {
@@ -104,6 +102,8 @@ public class Hope : MonoBehaviour
             //再检查移动
             else if (_isForward || _isBackward) {
                 _isMoving = true;
+                //开启脚步
+                footSource.Play();
                 //设置移动速度
                 ChangeVelocity();
             }
@@ -190,8 +190,7 @@ public class Hope : MonoBehaviour
             _rigidbody.velocity = new Vector2(dir.x, dir.y) * -speed * Time.fixedDeltaTime;
         }
         else {
-            _rigidbody.velocity = Vector2.zero;
-            _isMoving = false;
+            StopHope();
         }
     }
 
@@ -200,14 +199,23 @@ public class Hope : MonoBehaviour
         _isRotating = false;
     }
 
+    public void StopHope()
+    {
+        _isMoving = false;
+        _isForward = false;
+        _isBackward = false;
+        _rigidbody.velocity = Vector2.zero;
+        footSource.Pause();
+    }
+
     private void WallCollideVoice()
     {
         Debug.Log("Hope 撞到墙壁");
-        if (!_speakSource.isPlaying) {
-            _speakSource.clip = AudioManager.Instance.GetCollideClip();
-            _speakSource.loop = false;
-            _speakSource.time = 0.6f;
-            _speakSource.Play();
+        if (!speakSource.isPlaying) {
+            speakSource.clip = AudioManager.Instance.GetCollideClip();
+            speakSource.loop = false;
+            speakSource.time = 0.6f;
+            speakSource.Play();
         }
     }
     #endregion

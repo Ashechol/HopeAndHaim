@@ -56,7 +56,7 @@ public class DialogueBehaviour : PlayableBehaviour
             GameManager.Instance.PauseTimeline();
         }
         else {
-            //设置 UI, 关闭对话框
+            //关闭对话框
             UIManager.Instance.CleanDialogue();
         }
     }
