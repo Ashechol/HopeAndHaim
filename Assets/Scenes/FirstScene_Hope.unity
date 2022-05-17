@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 36157845}
   m_Layer: 0
-  m_Name: PlotPos
+  m_Name: Plot16Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -259,7 +259,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 110
+  Priority: 80
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -633,6 +633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 1
   currentPlayableDirector: {fileID: 1167488413}
+  hope: {fileID: 1011864770}
   haim: {fileID: 0}
 --- !u!4 &436486871
 Transform:
@@ -1495,6 +1496,8 @@ PlayableDirector:
     value: {fileID: 1167488412}
   - key: {fileID: 4365965748174026876, guid: 07eda9e1ec5556e40b39365950af0561, type: 2}
     value: {fileID: 124979145}
+  - key: {fileID: 3054595897807061395, guid: 07eda9e1ec5556e40b39365950af0561, type: 2}
+    value: {fileID: 1167488412}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1167488414
@@ -1530,6 +1533,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f39555b194800204e891ab83a0d73ff4, type: 2}
     - {fileID: 11400000, guid: 7f7848d9abcb7534aa59779633f15626, type: 2}
     - {fileID: 11400000, guid: b1bf2d0719628fc44abea9404965bc6d, type: 2}
+    - {fileID: 11400000, guid: e78a4f27296efdf46be72f3d07bd82a7, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1592,6 +1596,20 @@ MonoBehaviour:
         - m_Target: {fileID: 1011864770}
           m_TargetAssemblyTypeName: Hope, Assembly-CSharp
           m_MethodName: StopHope
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 436486870}
+          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+          m_MethodName: Plot16
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

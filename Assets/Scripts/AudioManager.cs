@@ -13,11 +13,13 @@ public class AudioManager : Singleton<AudioManager>
     public List<AudioClip> staticClips = new List<AudioClip>();
     public List<AudioClip> collideClips = new List<AudioClip>();
 
+    //获得随机静态语音
     public AudioClip GetStaticClip()
     {
         return null;
     }
 
+    //获得随机碰撞语音
     public AudioClip GetCollideClip()
     {
         return collideClips[Random.Range(0, collideClips.Count)];

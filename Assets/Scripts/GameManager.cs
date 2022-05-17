@@ -20,6 +20,8 @@ public class GameManager : Singleton<GameManager>
     private bool isSpeedUp = false;
     #endregion
 
+    public Hope hope;
+
     // Haim one of the main actors
     public Haim haim;
 
@@ -55,11 +57,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region Timeline 函数
-    public void RegisterDirector(PlayableDirector director)
-    {
-        currentPlayableDirector = director;
-    }
-
     public void PauseTimeline()
     {
         //获得 director 以控制播放，如果不暂停则不需要获得组件
@@ -86,6 +83,7 @@ public class GameManager : Singleton<GameManager>
         currentPlayableDirector.playOnAwake = false;
     }
 
+    //调试用，加速播放 Timeline
     public void SpeedUp()
     {
         isSpeedUp = !isSpeedUp;
@@ -96,6 +94,20 @@ public class GameManager : Singleton<GameManager>
         else {
             currentPlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
         }
+    }
+
+    //16 语音后剧情
+    public void Plot16()
+    {
+        if (hope == null) return;
+        //获得起始位置
+        Vector3 startPos = GameObject.Find("Plot16Pos").transform.position;
+        //设置剧情移动
+        hope.transform.position = startPos;
+        hope.direction = Direction.Up;
+        hope.transform.rotation = Quaternion.Euler(Vector3.zero);
+        hope.IsMoving = true;
+        hope.IsForward = true;
     }
     #endregion
 }

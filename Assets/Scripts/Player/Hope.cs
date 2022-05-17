@@ -33,6 +33,7 @@ public class Hope : MonoBehaviour
     //键盘输入
     private bool _isForward, _isBackward;
     private bool _isLeft, _isRight;
+    public bool IsForward { get; set; }
     #endregion
 
     #region 状态参数
@@ -40,7 +41,7 @@ public class Hope : MonoBehaviour
     private bool _isRotating;
     //正在移动
     private bool _isMoving;
-    public bool IsMoving => _isMoving;
+    public bool IsMoving { get; set; }
     #endregion
 
     #region 循环函数
