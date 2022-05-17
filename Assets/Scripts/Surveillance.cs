@@ -6,6 +6,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 public class Surveillance : MonoBehaviour
 {
     Light2D _camLight;
+    AudioSource _camSound;
+    bool _isPlaying;
 
     [Header("Settings")]
     public float angulerSpeed = 5.0f;
@@ -14,8 +16,13 @@ public class Surveillance : MonoBehaviour
     public float minAngle;
     public float maxAngle;
 
+    [Header("Audio")]
+    public List<AudioClip> rotateSound;
+    public AudioClip switchSound;
+
     void Awake()
     {
+        _camSound = GetComponent<AudioSource>();
         _camLight = GetComponentInChildren<Light2D>();
         _camLight.enabled = false;
     }
@@ -31,6 +38,10 @@ public class Surveillance : MonoBehaviour
     public void RotateCam()
     {
         float input = Input.GetAxisRaw("Horizontal");
+
+        if (input != 0 && !_isPlaying)
+            StartCoroutine(PlayRotateSound());
+
         Vector3 euler = new Vector3(0.0f, 0.0f, -input * angulerSpeed * Time.deltaTime);
         transform.Rotate(euler);
     }
@@ -38,11 +49,38 @@ public class Surveillance : MonoBehaviour
     public void TurnOn()
     {
         _camLight.enabled = true;
+        _camSound.clip = switchSound;
+        _camSound.Play();
     }
 
     public void TurnOff()
     {
         _camLight.enabled = false;
+        _camSound.clip = switchSound;
+        _camSound.Play();
+    }
+
+    IEnumerator PlayRotateSound()
+    {
+        _isPlaying = true;
+        _camSound.clip = rotateSound[0];
+        _camSound.Play();
+
+        while (_camSound.isPlaying)
+            yield return null;
+
+        _camSound.clip = rotateSound[1];
+        _camSound.loop = true;
+        _camSound.Play();
+
+        while (Input.GetAxisRaw("Horizontal") != 0)
+            yield return null;
+
+        _camSound.clip = rotateSound[2];
+        _camSound.loop = false;
+        _camSound.Play();
+        _isPlaying = false;
+
     }
 
     void OnTriggerEnter2D(Collider2D coll)
