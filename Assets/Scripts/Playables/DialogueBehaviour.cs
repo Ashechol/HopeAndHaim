@@ -53,7 +53,7 @@ public class DialogueBehaviour : PlayableBehaviour
         if (pauseScheduled) {
             pauseScheduled = false;
             //暂停 Timeline
-            GameManager.Instance.PauseTimeline();
+            TimelineManager.Instance.PauseTimeline();
         }
         else {
             //关闭对话框

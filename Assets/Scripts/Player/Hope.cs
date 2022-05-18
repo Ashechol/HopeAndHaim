@@ -52,7 +52,20 @@ public class Hope : MonoBehaviour
 
 
     #region 提供外部
-
+    public void ChangeFootstep(AudioClip clip)
+    {
+        _footSource.clip = clip;
+        _footSource.loop = true;
+        if (_isMoving) {
+            _footSource.Play();
+        }
+    }
+    public void ChangeBgm(AudioClip clip, bool isLoop = true)
+    {
+        _bgmSource.clip = clip;
+        _bgmSource.loop = isLoop;
+        _bgmSource.Play();
+    }
     #endregion
 
     #region 功能函数
@@ -88,6 +101,12 @@ public class Hope : MonoBehaviour
             _speakSource.loop = false;
             _speakSource.time = 0.6f;
             _speakSource.Play();
+        }
+        //HACK: 碰撞语音有点过长，效果不太好，临时修改
+        else {
+            if (_speakSource.time >= 2.5f) {
+                _speakSource.Stop();
+            }
         }
     }
 

@@ -612,6 +612,7 @@ GameObject:
   - component: {fileID: 436486870}
   - component: {fileID: 436486872}
   - component: {fileID: 436486873}
+  - component: {fileID: 436486874}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -632,7 +633,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 1
-  currentPlayableDirector: {fileID: 1167488413}
   hope: {fileID: 1011864770}
   haim: {fileID: 0}
 --- !u!4 &436486871
@@ -661,7 +661,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1bdf406ced02a47baa4f851f555ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hope: {fileID: 1011864770}
   staticClips: []
   collideClips:
   - {fileID: 8300000, guid: 4eb1201cc099215468df17d2bbbef07d, type: 3}
@@ -680,6 +679,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 134139049}
+--- !u!114 &436486874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436486869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8acff851533384ba63045d01d66a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDirector: {fileID: 1167488413}
 --- !u!1 &481804208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,41 +1536,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Events:
     m_Signals:
-    - {fileID: 11400000, guid: c016fd8157fc61c49ba13384c1503a49, type: 2}
-    - {fileID: 11400000, guid: 8a919faf2ba3a9b469499c86fac90267, type: 2}
     - {fileID: 11400000, guid: f39555b194800204e891ab83a0d73ff4, type: 2}
     - {fileID: 11400000, guid: 7f7848d9abcb7534aa59779633f15626, type: 2}
     - {fileID: 11400000, guid: b1bf2d0719628fc44abea9404965bc6d, type: 2}
-    - {fileID: 11400000, guid: e78a4f27296efdf46be72f3d07bd82a7, type: 2}
+    - {fileID: 11400000, guid: 324a732c9b7a2874fb71672e547d8620, type: 2}
     m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 436486870}
-          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: ResumeGame
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: SignalTest
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 436486872}
-          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-          m_MethodName: SetDropBgm
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 436486872}
@@ -1575,8 +1557,8 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 436486870}
-          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        - m_Target: {fileID: 436486874}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
           m_MethodName: ResumeGame
           m_Mode: 1
           m_Arguments:
@@ -1603,9 +1585,9 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 436486870}
-          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: Plot16
+        - m_Target: {fileID: 436486874}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+          m_MethodName: FirstScenePlot16
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
