@@ -60,7 +60,8 @@ public class Hope_Ray : MonoBehaviour
     private void UserInput()
     {
         //移动
-        if (!_isMoving) {
+        if (!_isMoving)
+        {
             _isUp = Input.GetKeyDown(KeyCode.W);
             _isDown = Input.GetKeyDown(KeyCode.S);
             _isLeft = Input.GetKeyDown(KeyCode.A);
@@ -68,7 +69,8 @@ public class Hope_Ray : MonoBehaviour
         }
 
         //行动
-        if (!_hasAction) {
+        if (!_hasAction)
+        {
             _hasAction = Input.GetKeyDown(KeyCode.E);
         }
     }
@@ -76,9 +78,11 @@ public class Hope_Ray : MonoBehaviour
     private void Movement()
     {
         //静止
-        if (!_isMoving) {
+        if (!_isMoving)
+        {
             //有移动输入
-            if (GetMoveDirection() != Vector3.zero) {
+            if (GetMoveDirection() != Vector3.zero)
+            {
                 //碰撞检测
                 GetRayHit(LayerMask.GetMask("Wall") | LayerMask.GetMask("Props"));
                 //不同的碰撞物，不同的行为
@@ -86,14 +90,17 @@ public class Hope_Ray : MonoBehaviour
             }
         }
         //移动
-        else {
+        else
+        {
             //抵达目的地
-            if (transform.position == _targetPos) {
+            if (transform.position == _targetPos)
+            {
                 Debug.Log("Hope 抵达目的地");
                 _isMoving = false;
             }
             //继续移动
-            else {
+            else
+            {
                 Debug.Log("Hope 移动中");
                 transform.position = Vector3.MoveTowards(transform.position, _targetPos, Time.deltaTime * speed);
             }
@@ -103,7 +110,8 @@ public class Hope_Ray : MonoBehaviour
     //按下行动键的玩家行动
     private void PlayerAction()
     {
-        if (_hasAction) {
+        if (_hasAction)
+        {
             actionCallBack();
             _hasAction = false;
         }
@@ -134,16 +142,19 @@ public class Hope_Ray : MonoBehaviour
     private void MoveHitAction()
     {
         //碰撞
-        if (_rayHit) {
+        if (_rayHit)
+        {
             int layerIndex = _rayHit.collider.gameObject.layer;
             Debug.Log($"Hope 碰撞层级:{LayerMask.LayerToName(layerIndex)}");
             //碰撞墙壁
-            if (layerIndex == LayerMask.NameToLayer("Wall")) {
+            if (layerIndex == LayerMask.NameToLayer("Wall"))
+            {
                 Debug.Log("Hope 触发碰撞音频");
             }
         }
         //没有碰撞
-        else {
+        else
+        {
             Debug.Log("Hope 没有碰撞，下一帧开始移动");
             _isMoving = true;
             _targetPos = transform.position + GetMoveDirection();
