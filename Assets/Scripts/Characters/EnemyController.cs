@@ -21,6 +21,11 @@ public class EnemyController : MonoBehaviour
         _agent.updateUpAxis = false;
     }
 
+    void Start()
+    {
+
+    }
+
     void Update()
     {
         MoveToPlayer();
@@ -49,12 +54,22 @@ public class EnemyController : MonoBehaviour
             var vectorToTarget = (_target.position - transform.position).normalized;
             float dot = Vector3.Dot(-transform.up, vectorToTarget);
             float threshold = Mathf.Cos(Mathf.Deg2Rad * sightAngle);
+
             if (dot >= threshold)
                 _agent.destination = _target.position;
         }
 
     }
 
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.CompareTag("Player"))
+        {
+            GameManager.Instance.gameMode = GameManager.GameMode.GameOver;
+            GameManager.Instance.haim.Die();
+        }
+
+    }
 
     void OnDrawGizmosSelected()
     {

@@ -43,4 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f01c40731835c4ea76164c4d64843d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMode: 0
+  hope: {fileID: 0}
   haim: {fileID: 0}

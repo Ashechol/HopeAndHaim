@@ -679,6 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 134139049}
+  GameOverPanel: {fileID: 0}
 --- !u!114 &436486874
 MonoBehaviour:
   m_ObjectHideFlags: 0
