@@ -115,6 +115,7 @@ public class Hope : MonoBehaviour
             _collider.transform.rotation = Quaternion.Slerp(_collider.transform.rotation,
                 DirectionUtility.GetRotationQuaternion(_direction), rSpeed * Time.fixedDeltaTime);
             //解决 Slerp 问题：其运行到最后一点角度会变得极慢，因此当到一定角度内直接改变角度
+            //UNDONE: 原因不明的，当 Right 转向 Up 时会结束的更晚
             float rz = _collider.transform.rotation.eulerAngles.z - DirectionUtility.GetRotationQuaternion(_direction).eulerAngles.z;
             //结束检查
             if (Mathf.Abs(rz) <= 10) {
@@ -127,7 +128,9 @@ public class Hope : MonoBehaviour
         else if (_isMoving) {
             Debug.Log("Hope 正在移动");
             //启动声音
-            _footSource.Play();
+            if (!_footSource.isPlaying) {
+                _footSource.Play();
+            }
 
             //由于移动输入是持续的，因此要不停判断状态
             Vector2 dir = DirectionUtility.GetDirectionVector(_direction);
