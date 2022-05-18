@@ -59,6 +59,8 @@ public class Hope : MonoBehaviour
     private float _plotDuration;
     //剧情移动速度
     private float _plotSpeed;
+    //记录原本的速度
+    private float _originalSpeed;
     #endregion
 
     #region 提供外部
@@ -95,6 +97,16 @@ public class Hope : MonoBehaviour
         float length = (target - transform.position).magnitude;
         _plotSpeed = length / _plotDuration;
     }
+    //剧情降速
+    public void LowSpeed()
+    {
+        _originalSpeed = speed;
+        speed = 10f;
+    }
+    public void OriginalSpeed()
+    {
+        speed = _originalSpeed;
+    }
     #endregion
 
     #region 功能函数
@@ -104,7 +116,7 @@ public class Hope : MonoBehaviour
     {
         _isForward = Input.GetKey(KeyCode.W);
         _isBackward = Input.GetKey(KeyCode.S);
-        //UNDONE: 考虑使用 GetKey 还是 GetKeyDown
+        //使用 GetKeyDown 可能出现按键被吞的感觉
         _isLeft = Input.GetKey(KeyCode.A);
         _isRight = Input.GetKey(KeyCode.D);
     }
@@ -130,7 +142,6 @@ public class Hope : MonoBehaviour
         }
 
         if (!_speakSource.isPlaying) {
-            //HACK: 调用了外部函数，可能修改
             _speakSource.clip = AudioManager.Instance.GetCollideClip();
             _speakSource.loop = false;
             _speakSource.time = 0.6f;
@@ -162,8 +173,7 @@ public class Hope : MonoBehaviour
             _collider.transform.rotation = Quaternion.Slerp(_collider.transform.rotation,
                 DirectionUtility.GetRotationQuaternion(_direction), rSpeed * Time.fixedDeltaTime);
             //解决 Slerp 问题：其运行到最后一点角度会变得极慢，因此当到一定角度内直接改变角度
-            //UNDONE: 原因不明的，当 Right 转向 Up 时会结束的更晚
-            float rz = _collider.transform.rotation.eulerAngles.z - DirectionUtility.GetRotationQuaternion(_direction).eulerAngles.z;
+            float rz = Quaternion.Angle(_collider.transform.rotation, DirectionUtility.GetRotationQuaternion(_direction));
             //结束检查
             if (Mathf.Abs(rz) <= 10) {
                 _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);

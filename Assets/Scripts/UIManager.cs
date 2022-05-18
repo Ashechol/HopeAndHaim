@@ -14,6 +14,7 @@ public class UIManager : Singleton<UIManager>
     //显示对话框
     public void DisplayDialogue(string txt, int size)
     {
+        Debug.Log("显示对话框");
         dialogue.gameObject.SetActive(true);
 
         dialogue.text = txt;
@@ -25,6 +26,7 @@ public class UIManager : Singleton<UIManager>
     {
         dialogue.text = "";
 
-        dialogue.gameObject.SetActive(false);
+        //不知道为什么会出现空引用
+        dialogue?.gameObject.SetActive(false);
     }
 }

@@ -42,7 +42,7 @@ public class AudioManager : Singleton<AudioManager>
     public void SetIntercomBgm()
     {
         if (_hope != null) {
-            _hope.ChangeBgm(intercomClip);
+            _hope.ChangeBgm(intercomClip, false);
         }
     }
 }
