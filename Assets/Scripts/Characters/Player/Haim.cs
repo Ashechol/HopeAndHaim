@@ -75,6 +75,8 @@ public class Haim : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canHack)
         {
+            Stop();
+            _dest = transform.position;
             cam.TurnOn();
             cam.hacking = true;
             _isHacking = true;
@@ -92,9 +94,14 @@ public class Haim : MonoBehaviour
         }
     }
 
-    public void Die()
+    public void Stop()
     {
         _dest = transform.position;
+    }
+
+    public void Die()
+    {
+        Stop();
     }
 
     void OnCollisionStay2D(Collision2D coll)
