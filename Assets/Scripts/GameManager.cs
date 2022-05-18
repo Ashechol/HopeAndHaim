@@ -56,6 +56,16 @@ public class GameManager : Singleton<GameManager>
         this.haim = haim;
     }
 
+    #region GameMode 函数
+    /// <summary>
+    /// 判断当前的游戏模式是否接收用户输入
+    /// </summary>
+    public bool CanInput()
+    {
+        return gameMode == GameMode.Normal;
+    }
+    #endregion
+
     #region Timeline 函数
     public void PauseTimeline()
     {
@@ -103,11 +113,11 @@ public class GameManager : Singleton<GameManager>
         //获得起始位置
         Vector3 startPos = GameObject.Find("Plot16Pos").transform.position;
         //设置剧情移动
-        hope.transform.position = startPos;
-        hope.direction = Direction.Up;
-        hope.transform.rotation = Quaternion.Euler(Vector3.zero);
-        hope.IsMoving = true;
-        hope.IsForward = true;
+        //hope.transform.position = startPos;
+        //hope.direction = Direction.Up;
+        //hope.transform.rotation = Quaternion.Euler(Vector3.zero);
+        //hope.IsMoving = true;
+        //hope.IsForward = true;
     }
     #endregion
 }

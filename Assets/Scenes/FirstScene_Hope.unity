@@ -1262,12 +1262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc01cf3372b0df444af04aba1f6e77c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hearSource: {fileID: 0}
-  speakSource: {fileID: 0}
-  bgmSource: {fileID: 0}
-  footSource: {fileID: 0}
   speed: 400
-  direction: 0
+  rSpeed: 6
 --- !u!81 &1011864771
 AudioListener:
   m_ObjectHideFlags: 0

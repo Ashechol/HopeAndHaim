@@ -29,9 +29,9 @@ public class AudioManager : Singleton<AudioManager>
     public void SetFootstep(AudioClip clip)
     {
         if (hope != null) {
-            hope.footSource.clip = clip;
+            hope.FootSource.clip = clip;
             if (hope.IsMoving) {
-                hope.footSource.Play();
+                hope.FootSource.Play();
             }
         }
     }
@@ -41,9 +41,9 @@ public class AudioManager : Singleton<AudioManager>
     public void SetBgm(string clipName, bool isLoop = false)
     {
         string path = "Audio/SE/" + clipName;
-        hope.bgmSource.clip = Resources.Load(path) as AudioClip;
-        hope.bgmSource.loop = isLoop;
-        hope.bgmSource.Play();
+        hope.BgmSource.clip = Resources.Load(path) as AudioClip;
+        hope.BgmSource.loop = isLoop;
+        hope.BgmSource.Play();
     }
 
     public void SetDropBgm()

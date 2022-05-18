@@ -11,213 +11,181 @@ public class Hope : MonoBehaviour
 {
     #region 组件
     private Rigidbody2D _rigidbody;
-    [HideInInspector]
-    public AudioSource hearSource;
-    [HideInInspector]
-    public AudioSource speakSource;
-    [HideInInspector]
-    public AudioSource bgmSource;
-    [HideInInspector]
-    public AudioSource footSource;
     private BoxCollider2D _collider;
-    #endregion
 
-    #region 移动参数
-    //移动速度
-    public float speed = 8f;
-    //朝向
-    public Direction direction = Direction.Up;
+    private AudioSource _hearSource;
+    public AudioSource HearSource => _hearSource;
+    private AudioSource _speakSource;
+    public AudioSource SpeakSource => _speakSource;
+    private AudioSource _bgmSource;
+    public AudioSource BgmSource => _bgmSource;
+    private AudioSource _footSource;
+    public AudioSource FootSource => _footSource;
     #endregion
 
     #region 输入参数
     //键盘输入
     private bool _isForward, _isBackward;
     private bool _isLeft, _isRight;
-    public bool IsForward { get; set; }
+    public bool IsForward => _isForward;
+    public bool IsBackward => _isBackward;
+    #endregion
+
+    #region 移动参数
+    //移动速度
+    public float speed = 100f;
+    //旋转速度
+    public float rSpeed = 1f;
+    //朝向
+    private Direction _direction = Direction.Up;
+    public Direction HopeDirection => _direction;
     #endregion
 
     #region 状态参数
-    //正在转向
+    //转向中
     private bool _isRotating;
-    //正在移动
+    public bool IsRotating => _isRotating;
+    //移动中
     private bool _isMoving;
-    public bool IsMoving { get; set; }
+    public bool IsMoving => _isMoving;
     #endregion
 
-    #region 循环函数
-    private void Awake()
+
+    #region 提供外部
+
+    #endregion
+
+    #region 功能函数
+
+    //接收玩家输入
+    private void PlayerInput()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        hearSource = transform.Find("Hear").GetComponent<AudioSource>();
-        speakSource = transform.Find("Speak").GetComponent<AudioSource>();
-        bgmSource = transform.Find("Bgm").GetComponent<AudioSource>();
-        footSource = transform.Find("Footstep").GetComponent<AudioSource>();
-        _collider = transform.Find("Collider").GetComponent<BoxCollider2D>();
+        _isForward = Input.GetKey(KeyCode.W);
+        _isBackward = Input.GetKey(KeyCode.S);
+        //UNDONE: 考虑使用 GetKey 还是 GetKeyDown
+        _isLeft = Input.GetKey(KeyCode.A);
+        _isRight = Input.GetKey(KeyCode.D);
     }
 
-    private void Update()
+    //停止 Hope
+    public void StopHope()
     {
-        //判断 GameManager 的 GameMode
-        if (GameManager.Instance.gameMode == GameManager.GameMode.Normal) {
-            UserInput();
-        }
-
-        //显示朝向
-        Debug.DrawRay(transform.position, GetDirectionVector(), Color.green);
+        _isMoving = false;
+        //由于触发 Timeline 后会禁止输入，所以需要修改输入标记
+        _isForward = false;
+        _isBackward = false;
+        _rigidbody.velocity = Vector2.zero;
+        //UNDONE: 考虑 Pause 还是 Stop
+        _footSource.Stop();
     }
 
-    private void FixedUpdate()
+    //播放 Hope 语音
+    private void VoiceWallCollide()
     {
-        PlayerMove();
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && _isMoving) {
-            WallCollideVoice();
+        if (!_speakSource.isPlaying) {
+            //HACK: 调用了外部函数，可能修改
+            _speakSource.clip = AudioManager.Instance.GetCollideClip();
+            _speakSource.loop = false;
+            _speakSource.time = 0.6f;
+            _speakSource.Play();
         }
     }
 
-    private void PlayerMove()
+    //Hope 移动逻辑
+    private void HopeMovement()
     {
-        //旋转
-        if (_isRotating) {
-            Debug.Log("Hope 正在转向");
-            Invoke("ResetIsRotating", 0.1f);
-        }
-        //移动
-        else if (_isMoving) {
-            Debug.Log("Hope 正在移动");
-            //检查输入，保持速度或停下
-            ChangeVelocity();
-        }
         //静止
-        else {
+        if (!_isRotating && !_isMoving) {
             //先检查转向
             if (_isLeft || _isRight) {
                 _isRotating = true;
-                //开始转向
-                ChangeDirection(_isLeft);
-                Debug.Log($"Hope 改变方向:{direction}");
+                //改变方向
+                _direction = DirectionUtility.ChangeDirection(_direction, _isLeft);
             }
             //再检查移动
             else if (_isForward || _isBackward) {
                 _isMoving = true;
-                //开启脚步
-                footSource.Play();
-                //设置移动速度
-                ChangeVelocity();
+            }
+        }
+
+        //先检查旋转
+        if (_isRotating) {
+            Debug.Log("Hope 正在转向");
+            //旋转插值
+            _collider.transform.rotation = Quaternion.Slerp(_collider.transform.rotation,
+                DirectionUtility.GetRotationQuaternion(_direction), rSpeed * Time.fixedDeltaTime);
+            //解决 Slerp 问题：其运行到最后一点角度会变得极慢，因此当到一定角度内直接改变角度
+            float rz = _collider.transform.rotation.eulerAngles.z - DirectionUtility.GetRotationQuaternion(_direction).eulerAngles.z;
+            //结束检查
+            if (Mathf.Abs(rz) <= 10) {
+                _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);
+                Debug.Log("Hope 结束转向");
+                _isRotating = false;
+            }
+        }
+        //再检查移动
+        else if (_isMoving) {
+            Debug.Log("Hope 正在移动");
+            //启动声音
+            _footSource.Play();
+
+            //由于移动输入是持续的，因此要不停判断状态
+            Vector2 dir = DirectionUtility.GetDirectionVector(_direction);
+            //先判断前进
+            if (_isForward) {
+                _rigidbody.velocity = dir * speed * Time.fixedDeltaTime;
+            }
+            //再判断后退
+            else if (_isBackward) {
+                _rigidbody.velocity = dir * -speed * Time.fixedDeltaTime;
+            }
+            //最后判断静止
+            else {
+                Debug.Log("Hope 结束移动");
+                StopHope();
             }
         }
     }
+
     #endregion
 
-    #region 功能函数
-    private void UserInput()
+    #region 循环函数
+
+    private void Awake()
     {
-        _isForward = Input.GetKey(KeyCode.W);
-        _isBackward = Input.GetKey(KeyCode.S);
-        _isLeft = Input.GetKeyDown(KeyCode.A);
-        _isRight = Input.GetKeyDown(KeyCode.D);
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _collider = transform.Find("Collider").GetComponent<BoxCollider2D>();
+
+        _hearSource = transform.Find("Hear").GetComponent<AudioSource>();
+        _speakSource = transform.Find("Speak").GetComponent<AudioSource>();
+        _bgmSource = transform.Find("Bgm").GetComponent<AudioSource>();
+        _footSource = transform.Find("Footstep").GetComponent<AudioSource>();
     }
 
-    public Vector3 GetDirectionVector()
+    private void Update()
     {
-        switch (direction) {
-            case Direction.Left:
-                return Vector3.left;
-            case Direction.Right:
-                return Vector3.right;
-            case Direction.Up:
-                return Vector3.up;
-            case Direction.Down:
-                return Vector3.down;
+        //在输入模式下才接收输入
+        if (GameManager.Instance.CanInput()) {
+            PlayerInput();
         }
-        return Vector3.zero;
+
+        //显示朝向
+        Debug.DrawRay(transform.position, DirectionUtility.GetDirectionVector(_direction), Color.green);
     }
 
-    private void ChangeDirection(bool left)
+    private void FixedUpdate()
     {
-        switch (direction) {
-            case Direction.Left:
-                if (left) {
-                    direction = Direction.Down;
-                }
-                else {
-                    direction = Direction.Up;
-                }
-                break;
-            case Direction.Right:
-                if (left) {
-                    direction = Direction.Up;
-                }
-                else {
-                    direction = Direction.Down;
-                }
-                break;
-            case Direction.Up:
-                if (left) {
-                    direction = Direction.Left;
-                }
-                else {
-                    direction = Direction.Right;
-                }
-                break;
-            case Direction.Down:
-                if (left) {
-                    direction = Direction.Right;
-                }
-                else {
-                    direction = Direction.Left;
-                }
-                break;
-        }
-        if (left) {
-            _collider.transform.Rotate(Vector3.forward, 90);
-        }
-        else {
-            _collider.transform.Rotate(Vector3.forward, -90);
+        HopeMovement();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //检测前方碰撞
+        //播放碰撞语音：碰撞层级为 Wall && 角色正在移动
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && _isMoving) {
+            VoiceWallCollide();
         }
     }
 
-    //设置移动速度
-    private void ChangeVelocity()
-    {
-        Vector3 dir = GetDirectionVector();
-        if (_isForward) {
-            _rigidbody.velocity = new Vector2(dir.x, dir.y) * speed * Time.fixedDeltaTime;
-        }
-        else if (_isBackward) {
-            _rigidbody.velocity = new Vector2(dir.x, dir.y) * -speed * Time.fixedDeltaTime;
-        }
-        else {
-            StopHope();
-        }
-    }
-
-    private void ResetIsRotating()
-    {
-        _isRotating = false;
-    }
-
-    public void StopHope()
-    {
-        _isMoving = false;
-        _isForward = false;
-        _isBackward = false;
-        _rigidbody.velocity = Vector2.zero;
-        footSource.Pause();
-    }
-
-    private void WallCollideVoice()
-    {
-        Debug.Log("Hope 撞到墙壁");
-        if (!speakSource.isPlaying) {
-            speakSource.clip = AudioManager.Instance.GetCollideClip();
-            speakSource.loop = false;
-            speakSource.time = 0.6f;
-            speakSource.Play();
-        }
-    }
     #endregion
 }
