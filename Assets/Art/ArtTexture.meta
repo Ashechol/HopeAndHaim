@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Art/ArtTexture.meta
 guid: f4642be635ee3ce4eb8fd1fc5fe54d78
+=======
+guid: f09cd8696f74cf1478244180d50d976e
+>>>>>>> 190969af5d2a13b40b826c7061754fe878a77289:Assets/Art/Font.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

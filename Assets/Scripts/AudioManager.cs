@@ -3,38 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 管理音频文件
+/// 管理音频播放
 /// </summary>
-public class AudioManager
+public class AudioManager : Singleton<AudioManager>
 {
-    private static AudioManager instance = new AudioManager();
-    public static AudioManager Instance => instance;
+    #region 音频组件
+    //Hope 挂载的 AudioSources
+    private Hope hope;
+    #endregion
 
     //音频列表
-    private List<AudioClip> staticClips = new List<AudioClip>();
-    private List<AudioClip> collideClips = new List<AudioClip>();
+    public List<AudioClip> staticClips = new List<AudioClip>();
+    public List<AudioClip> collideClips = new List<AudioClip>();
 
-    private AudioManager()
+    protected override void Awake()
     {
-        //获取音频
+        base.Awake();
+        hope = GameObject.Find("Hope").GetComponent<Hope>();
+        if (hope == null) {
+            Debug.LogWarning("AudioManager: 在当前场景没有获取到 Hope 组件");
+        }
     }
 
+    #region 提供音频函数
+    //获得随机静态语音
     public AudioClip GetStaticClip()
     {
         return null;
     }
 
+    //获得随机碰撞语音
     public AudioClip GetCollideClip()
     {
-        return null;
+        return collideClips[Random.Range(0, collideClips.Count)];
+    }
+    #endregion
+
+    #region 设置角色声音
+    public void SetFootstep(AudioClip clip)
+    {
+        if (hope != null) {
+            hope.ChangeFootstep(clip);
+        }
+    }
+    #endregion
+
+    #region 设置背景音乐
+    public AudioClip GetSE(string clipName)
+    {
+        string path = "Audio/SE/" + clipName;
+        return Resources.Load(path) as AudioClip;
     }
 
-    //设置 AudioSource 声音效果
-    public void SetAudioSourceField(AudioSource audioSource)
+    public void SetIntercomBgm()
     {
-        //设置 3D 立体效果
-        audioSource.spatialBlend = 1;
-        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        audioSource.maxDistance = 8;
+        if (hope != null) {
+            hope.ChangeBgm(GetSE("对讲机呲啦呲啦音效"));
+        }
     }
+    #endregion
 }
