@@ -8,32 +8,16 @@ using UnityEngine.Playables;
 /// </summary>
 public class TimelineManager : Singleton<TimelineManager>
 {
-    #region 组件
     public PlayableDirector currentDirector;
-    private Hope hope;
-    #endregion
+    private Hope _hope;
 
-    #region 状态参数
     //调试加速
     private bool isSpeedUp = false;
-    #endregion
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        hope = GameObject.Find("Hope").GetComponent<Hope>();
-        if (hope == null) {
-            Debug.LogWarning("AudioManager: 在当前场景没有获取到 Hope 组件");
-        }
+        _hope = GameManager.Instance.hope;
     }
-
-    #region Timeline 剧情函数
-    //FirstScene_16 语音后剧情
-    public void FirstScenePlot16()
-    {
-
-    }
-    #endregion
 
     #region Timeline 通用函数
     //暂停 TL

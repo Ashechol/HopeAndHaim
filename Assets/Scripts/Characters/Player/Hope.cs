@@ -50,6 +50,16 @@ public class Hope : MonoBehaviour
     public bool IsMoving => _isMoving;
     #endregion
 
+    #region 剧情参数
+    //剧情移动状态
+    private bool _isPlotMoving = false;
+    //剧情移动目标
+    private Vector3 _plotTarget;
+    //剧情移动时长
+    private float _plotDuration;
+    //剧情移动速度
+    private float _plotSpeed;
+    #endregion
 
     #region 提供外部
     public void ChangeFootstep(AudioClip clip)
@@ -65,6 +75,25 @@ public class Hope : MonoBehaviour
         _bgmSource.clip = clip;
         _bgmSource.loop = isLoop;
         _bgmSource.Play();
+    }
+    public void SetDirection(Direction direction)
+    {
+        _direction = direction;
+        _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);
+    }
+    public void StartHopeMovement()
+    {
+        _isMoving = true;
+        _isForward = true;
+    }
+    public void MoveToTarget(Vector3 target, float duration)
+    {
+        _isPlotMoving = true;
+        _plotTarget = target;
+        _plotDuration = duration;
+        //根据时长计算速度
+        float length = (target - transform.position).magnitude;
+        _plotSpeed = length / _plotDuration;
     }
     #endregion
 
@@ -95,18 +124,17 @@ public class Hope : MonoBehaviour
     //播放 Hope 语音
     private void VoiceWallCollide()
     {
+        //碰撞语音有点过长，效果不太好，临时修改
+        if (_speakSource.isPlaying && _speakSource.time >= 2.5f) {
+            _speakSource.Stop();
+        }
+
         if (!_speakSource.isPlaying) {
             //HACK: 调用了外部函数，可能修改
             _speakSource.clip = AudioManager.Instance.GetCollideClip();
             _speakSource.loop = false;
             _speakSource.time = 0.6f;
             _speakSource.Play();
-        }
-        //HACK: 碰撞语音有点过长，效果不太好，临时修改
-        else {
-            if (_speakSource.time >= 2.5f) {
-                _speakSource.Stop();
-            }
         }
     }
 
@@ -184,6 +212,10 @@ public class Hope : MonoBehaviour
         _footSource = transform.Find("Footstep").GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        GameManager.Instance.RegisterHope(this);
+    }
     private void Update()
     {
         //在输入模式下才接收输入
@@ -197,7 +229,15 @@ public class Hope : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HopeMovement();
+        if (_isPlotMoving) {
+            transform.position = Vector3.MoveTowards(transform.position, _plotTarget, _plotSpeed * Time.deltaTime);
+            if (transform.position == _plotTarget) {
+                _isPlotMoving = false;
+            }
+        }
+        else {
+            HopeMovement();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
