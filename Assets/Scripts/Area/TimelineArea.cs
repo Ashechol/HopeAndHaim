@@ -14,6 +14,9 @@ public class TimelineArea : MonoBehaviour
 
     public PlayableAsset asset;
 
+    //是否进入剧情模式，即玩家无法操作
+    public bool isInPlotMode = true;
+
     protected virtual void Awake()
     {
         _director = GameObject.FindGameObjectWithTag("Director").GetComponent<PlayableDirector>();
@@ -24,7 +27,9 @@ public class TimelineArea : MonoBehaviour
         //尽管不太可能，但还是检测一下
         if (!_isFirst && collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
             _isFirst = true;
-            GameManager.Instance.gameMode = GameManager.GameMode.GamePlay;
+            if (isInPlotMode) {
+                GameManager.Instance.gameMode = GameManager.GameMode.GamePlay;
+            }
             //播放 Timeline
             _director.playableAsset = asset;
             _director.Play();
