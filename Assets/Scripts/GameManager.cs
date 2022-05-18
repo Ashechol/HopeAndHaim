@@ -8,6 +8,8 @@ public class GameManager : Singleton<GameManager>
 
     public Haim haim;
 
+    public Vector3 PlayerPosition { get { return haim.transform.position; } }
+
     public void RegisterHaim(Haim haim)
     {
         this.haim = haim;
