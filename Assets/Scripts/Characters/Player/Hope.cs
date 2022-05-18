@@ -1,154 +1,213 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
-/// 第一幕的玩家控制器
-/// 键盘输入，一格一格移动
+/// 角色 Hope 的控制器
+/// 
+/// ArnoClare
 /// </summary>
 public class Hope : MonoBehaviour
 {
-    #region 移动相关字段
+    #region 组件
+    private Rigidbody2D _rigidbody;
+    private BoxCollider2D _collider;
+
+    private AudioSource _hearSource;
+    public AudioSource HearSource => _hearSource;
+    private AudioSource _speakSource;
+    public AudioSource SpeakSource => _speakSource;
+    private AudioSource _bgmSource;
+    public AudioSource BgmSource => _bgmSource;
+    private AudioSource _footSource;
+    public AudioSource FootSource => _footSource;
+    #endregion
+
+    #region 输入参数
+    //键盘输入
+    private bool _isForward, _isBackward;
+    private bool _isLeft, _isRight;
+    public bool IsForward => _isForward;
+    public bool IsBackward => _isBackward;
+    #endregion
+
+    #region 移动参数
     //移动速度
-    public float speed = 8f;
+    public float speed = 100f;
+    //旋转速度
+    public float rSpeed = 1f;
+    //朝向
+    private Direction _direction = Direction.Up;
+    public Direction HopeDirection => _direction;
     #endregion
 
-    #region 输入相关字段
-    //按键方向
-    private bool _isUp = false, _isDown = false;
-    private bool _isLeft = false, _isRight = false;
-    //行动键
-    private bool _hasAction = false;
+    #region 状态参数
+    //转向中
+    private bool _isRotating;
+    public bool IsRotating => _isRotating;
+    //移动中
+    private bool _isMoving;
+    public bool IsMoving => _isMoving;
     #endregion
 
-    #region 检测相关字段
-    //射线检测长度
-    private float _rayLength = 1f;
-    //射线碰撞
-    private RaycastHit2D _rayHit;
-    #endregion
 
-    #region 状态相关字段
-    //是否在移动
-    private bool _isMoving = false;
-    //移动目标位置
-    private Vector3 _targetPos;
-    #endregion
-
-    #region 音频相关字段
-    //静止音频播放时间
-    public float audioPlayTime = 4f;
-    #endregion
-
-    //行动键触发函数
-    public event UnityAction actionCallBack;
-
-    #region 循环函数
-    private void Start()
+    #region 提供外部
+    public void ChangeFootstep(AudioClip clip)
     {
-        actionCallBack += () => Debug.Log("Hope 执行行动函数");
-    }
-
-    private void Update()
-    {
-        UserInput();
-        Movement();
-        PlayerAction();
-    }
-
-    private void UserInput()
-    {
-        //移动
-        if (!_isMoving) {
-            _isUp = Input.GetKeyDown(KeyCode.W);
-            _isDown = Input.GetKeyDown(KeyCode.S);
-            _isLeft = Input.GetKeyDown(KeyCode.A);
-            _isRight = Input.GetKeyDown(KeyCode.D);
-        }
-
-        //行动
-        if (!_hasAction) {
-            _hasAction = Input.GetKeyDown(KeyCode.E);
+        _footSource.clip = clip;
+        _footSource.loop = true;
+        if (_isMoving) {
+            _footSource.Play();
         }
     }
-
-    private void Movement()
+    public void ChangeBgm(AudioClip clip, bool isLoop = true)
     {
-        //静止
-        if (!_isMoving) {
-            //有移动输入
-            if (GetMoveDirection() != Vector3.zero) {
-                //碰撞检测
-                GetRayHit(LayerMask.GetMask("Wall") | LayerMask.GetMask("Props"));
-                //不同的碰撞物，不同的行为
-                MoveHitAction();
-            }
-        }
-        //移动
-        else {
-            //抵达目的地
-            if (transform.position == _targetPos) {
-                Debug.Log("Hope 抵达目的地");
-                _isMoving = false;
-            }
-            //继续移动
-            else {
-                Debug.Log("Hope 移动中");
-                transform.position = Vector3.MoveTowards(transform.position, _targetPos, Time.deltaTime * speed);
-            }
-        }
-    }
-
-    //按下行动键的玩家行动
-    private void PlayerAction()
-    {
-        if (_hasAction) {
-            actionCallBack();
-            _hasAction = false;
-        }
+        _bgmSource.clip = clip;
+        _bgmSource.loop = isLoop;
+        _bgmSource.Play();
     }
     #endregion
 
     #region 功能函数
-    private Vector3 GetMoveDirection()
-    {
-        if (_isUp) return Vector3.up;
-        else if (_isDown) return Vector3.down;
-        else if (_isLeft) return Vector3.left;
-        else if (_isRight) return Vector3.right;
 
-        return Vector3.zero;
+    //接收玩家输入
+    private void PlayerInput()
+    {
+        _isForward = Input.GetKey(KeyCode.W);
+        _isBackward = Input.GetKey(KeyCode.S);
+        //UNDONE: 考虑使用 GetKey 还是 GetKeyDown
+        _isLeft = Input.GetKey(KeyCode.A);
+        _isRight = Input.GetKey(KeyCode.D);
     }
 
-    //获得射线碰撞信息
-    private RaycastHit2D GetRayHit(int layerMask = -1)
+    //停止 Hope
+    public void StopHope()
     {
-        //碰撞
-        _rayHit = Physics2D.Raycast(transform.position, GetMoveDirection(), _rayLength, layerMask);
-        Debug.DrawRay(transform.position, GetMoveDirection() * _rayLength, Color.green);
-        return _rayHit;
+        _isMoving = false;
+        //由于触发 Timeline 后会禁止输入，所以需要修改输入标记
+        _isForward = false;
+        _isBackward = false;
+        _rigidbody.velocity = Vector2.zero;
+        //UNDONE: 考虑 Pause 还是 Stop
+        _footSource.Stop();
     }
 
-    //不同碰撞行为
-    private void MoveHitAction()
+    //播放 Hope 语音
+    private void VoiceWallCollide()
     {
-        //碰撞
-        if (_rayHit) {
-            int layerIndex = _rayHit.collider.gameObject.layer;
-            Debug.Log($"Hope 碰撞层级:{LayerMask.LayerToName(layerIndex)}");
-            //碰撞墙壁
-            if (layerIndex == LayerMask.NameToLayer("Wall")) {
-                //TODO: 碰撞音频触发
-                Debug.Log("Hope 触发碰撞音频");
+        if (!_speakSource.isPlaying) {
+            //HACK: 调用了外部函数，可能修改
+            _speakSource.clip = AudioManager.Instance.GetCollideClip();
+            _speakSource.loop = false;
+            _speakSource.time = 0.6f;
+            _speakSource.Play();
+        }
+        //HACK: 碰撞语音有点过长，效果不太好，临时修改
+        else {
+            if (_speakSource.time >= 2.5f) {
+                _speakSource.Stop();
             }
         }
-        //没有碰撞
-        else {
-            Debug.Log("Hope 没有碰撞，下一帧开始移动");
-            _isMoving = true;
-            _targetPos = transform.position + GetMoveDirection();
+    }
+
+    //Hope 移动逻辑
+    private void HopeMovement()
+    {
+        //静止
+        if (!_isRotating && !_isMoving) {
+            //先检查转向
+            if (_isLeft || _isRight) {
+                _isRotating = true;
+                //改变方向
+                _direction = DirectionUtility.ChangeDirection(_direction, _isLeft);
+            }
+            //再检查移动
+            else if (_isForward || _isBackward) {
+                _isMoving = true;
+            }
+        }
+
+        //先检查旋转
+        if (_isRotating) {
+            Debug.Log("Hope 正在转向");
+            //旋转插值
+            _collider.transform.rotation = Quaternion.Slerp(_collider.transform.rotation,
+                DirectionUtility.GetRotationQuaternion(_direction), rSpeed * Time.fixedDeltaTime);
+            //解决 Slerp 问题：其运行到最后一点角度会变得极慢，因此当到一定角度内直接改变角度
+            //UNDONE: 原因不明的，当 Right 转向 Up 时会结束的更晚
+            float rz = _collider.transform.rotation.eulerAngles.z - DirectionUtility.GetRotationQuaternion(_direction).eulerAngles.z;
+            //结束检查
+            if (Mathf.Abs(rz) <= 10) {
+                _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);
+                Debug.Log("Hope 结束转向");
+                _isRotating = false;
+            }
+        }
+        //再检查移动
+        else if (_isMoving) {
+            Debug.Log("Hope 正在移动");
+            //启动声音
+            if (!_footSource.isPlaying) {
+                _footSource.Play();
+            }
+
+            //由于移动输入是持续的，因此要不停判断状态
+            Vector2 dir = DirectionUtility.GetDirectionVector(_direction);
+            //先判断前进
+            if (_isForward) {
+                _rigidbody.velocity = dir * speed * Time.fixedDeltaTime;
+            }
+            //再判断后退
+            else if (_isBackward) {
+                _rigidbody.velocity = dir * -speed * Time.fixedDeltaTime;
+            }
+            //最后判断静止
+            else {
+                Debug.Log("Hope 结束移动");
+                StopHope();
+            }
         }
     }
+
+    #endregion
+
+    #region 循环函数
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _collider = transform.Find("Collider").GetComponent<BoxCollider2D>();
+
+        _hearSource = transform.Find("Hear").GetComponent<AudioSource>();
+        _speakSource = transform.Find("Speak").GetComponent<AudioSource>();
+        _bgmSource = transform.Find("Bgm").GetComponent<AudioSource>();
+        _footSource = transform.Find("Footstep").GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        //在输入模式下才接收输入
+        if (GameManager.Instance.CanInput()) {
+            PlayerInput();
+        }
+
+        //显示朝向
+        Debug.DrawRay(transform.position, DirectionUtility.GetDirectionVector(_direction), Color.green);
+    }
+
+    private void FixedUpdate()
+    {
+        HopeMovement();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //检测前方碰撞
+        //播放碰撞语音：碰撞层级为 Wall && 角色正在移动
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && _isMoving) {
+            VoiceWallCollide();
+        }
+    }
+
     #endregion
 }

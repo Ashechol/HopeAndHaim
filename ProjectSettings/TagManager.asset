@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Wall
+=======
+  - Ground
+  - Director
+>>>>>>> 190969af5d2a13b40b826c7061754fe878a77289
   layers:
   - Default
   - TransparentFX
