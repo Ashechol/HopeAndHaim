@@ -206,7 +206,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &9008184210457070281
 Animator:
   serializedVersion: 3
@@ -250,8 +250,8 @@ AudioSource:
   m_GameObject: {fileID: 9008184210457070133}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d6869a58bae9d7948a8560e70fc66cac, type: 3}
+  OutputAudioMixerGroup: {fileID: -8806391138791787573, guid: 89ea74339615fc842884134330812311, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 0ffd85798f57e0141b785737596bb2f4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

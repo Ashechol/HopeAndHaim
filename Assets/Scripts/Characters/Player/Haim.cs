@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class Haim : MonoBehaviour
 {
-    AudioSource _audioSource;
+    AudioSource _footStep;
     Vector3 _dest;
     Light2D _selfLight;
 
@@ -19,7 +19,7 @@ public class Haim : MonoBehaviour
 
     void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _footStep = GetComponent<AudioSource>();
         _selfLight = GetComponentInChildren<Light2D>();
     }
 
@@ -40,7 +40,6 @@ public class Haim : MonoBehaviour
         if (!_isHacking)
         {
             _dest = pos;
-            _audioSource.Play();
         }
     }
 
@@ -58,17 +57,15 @@ public class Haim : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, _dest, speed * Time.deltaTime);
 
-        if (!ArriveAtDest())
+        if (!ArriveAtDest() && !_footStep.isPlaying)
         {
-            _audioSource.loop = true;
+            _footStep.Play();
         }
-        else
-            _audioSource.loop = false;
     }
 
     public bool ArriveAtDest()
     {
-        return transform.position == _dest;
+        return (_dest - transform.position).sqrMagnitude < 0.3f;
     }
 
     /// <summary>
@@ -82,6 +79,7 @@ public class Haim : MonoBehaviour
             cam.hacking = true;
             _isHacking = true;
             _selfLight.enabled = false;
+            canHack = false;
         }
 
         else if (Input.GetKeyDown(KeyCode.Escape) && _isHacking)
@@ -90,6 +88,7 @@ public class Haim : MonoBehaviour
             cam.hacking = false;
             _isHacking = false;
             _selfLight.enabled = true;
+            canHack = true;
         }
     }
 

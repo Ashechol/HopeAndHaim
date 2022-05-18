@@ -15,7 +15,7 @@ public class GridController : MonoBehaviour, IGameObserver
     void Awake()
     {
         _grid = GetComponent<Grid>();
-        _interactiveMap = transform.GetChild(2).GetComponent<Tilemap>();
+        _interactiveMap = transform.GetChild(3).GetComponent<Tilemap>();
     }
 
     void Update()
