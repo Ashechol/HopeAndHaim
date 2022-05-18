@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Tracks:
   - {fileID: 6863779141485460612}
   - {fileID: 3920519444423963608}
-  m_FixedDuration: 0
+  m_FixedDuration: 202.678
   m_EditorSettings:
     m_Framerate: 60
     m_ScenePreview: 1

@@ -129,7 +129,6 @@ public class Hope : MonoBehaviour
         _isForward = false;
         _isBackward = false;
         _rigidbody.velocity = Vector2.zero;
-        //UNDONE: 考虑 Pause 还是 Stop
         _footSource.Stop();
     }
 
