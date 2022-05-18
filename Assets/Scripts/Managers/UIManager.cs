@@ -10,6 +10,7 @@ public class UIManager : Singleton<UIManager>
 {
     //对话框
     public Text dialogue;
+    public GameObject GameOverPanel;
 
     //显示对话框
     public void DisplayDialogue(string txt, int size)
