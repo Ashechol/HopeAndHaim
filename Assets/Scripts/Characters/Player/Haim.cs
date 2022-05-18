@@ -92,6 +92,11 @@ public class Haim : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        _dest = transform.position;
+    }
+
     void OnCollisionStay2D(Collision2D coll)
     {
         if (coll.gameObject.CompareTag("Wall"))

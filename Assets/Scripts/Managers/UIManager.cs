@@ -6,11 +6,22 @@ using UnityEngine.UI;
 /// <summary>
 /// UI 管理器
 /// </summary>
-public class UIManager : Singleton<UIManager>
+public class UIManager : Singleton<UIManager>, IGameObserver
 {
     //对话框
     public Text dialogue;
-    public GameObject GameOverPanel;
+    public GameObject gameOverPanel;
+    public GameObject infomationPanel;
+
+    void Start()
+    {
+        GameManager.Instance.AddObserver(this);
+    }
+
+    void OnDisale()
+    {
+        GameManager.Instance.RemoveObserver(this);
+    }
 
     //显示对话框
     public void DisplayDialogue(string txt, int size)
@@ -27,5 +38,10 @@ public class UIManager : Singleton<UIManager>
         dialogue.text = "";
 
         dialogue.gameObject.SetActive(false);
+    }
+
+    public void GameOverNotify()
+    {
+        gameOverPanel.SetActive(true);
     }
 }

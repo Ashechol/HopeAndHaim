@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 管理游戏进程
@@ -11,30 +10,31 @@ public class GameManager : Singleton<GameManager>
 {
     public enum GameMode
     {
-        Normal,         //操控角色
-        GamePlay,       //播放动画
-        DialogueMoment  //对话暂停
+        Normal,         // 操控角色
+        GamePlay,       // 播放动画
+        DialogueMoment, // 对话暂停
+        GameOver        // 游戏结束
     }
-    List<IGameObserver> _observers;
-    Scene _currentScene;
-    public GameMode gameMode;
+    List<IGameObserver> _observers = new List<IGameObserver>();
 
+    public GameMode gameMode;
     public Hope hope;
     // Haim one of the main actors
     public Haim haim;
 
     void Start()
     {
-        _currentScene = SceneManager.GetActiveScene();
-
-        if (_currentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
             EpisodeOneStart();
     }
 
     void Update()
     {
-        if (_currentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
             EpisodeOneUpdate();
+
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode Two")
+            EpisodeTwoUpdate();
     }
 
     public Vector3 PlayerPosition { get { return haim.transform.position; } }
@@ -83,6 +83,17 @@ public class GameManager : Singleton<GameManager>
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 TimelineManager.Instance.SpeedUp();
+            }
+        }
+    }
+
+    void EpisodeTwoUpdate()
+    {
+        if (gameMode == GameMode.GameOver)
+        {
+            foreach (var observer in _observers)
+            {
+                observer.GameOverNotify();
             }
         }
     }

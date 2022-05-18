@@ -18,6 +18,16 @@ public class GridController : MonoBehaviour, IGameObserver
         _interactiveMap = transform.GetChild(3).GetComponent<Tilemap>();
     }
 
+    void OnEnable()
+    {
+        GameManager.Instance.AddObserver(this);
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.RemoveObserver(this);
+    }
+
     void Update()
     {
         if (!_gameOver && GameManager.Instance.haim.ArriveAtDest())
