@@ -20,7 +20,8 @@ public class AudioManager : Singleton<AudioManager>
     {
         base.Awake();
         hope = GameObject.Find("Hope").GetComponent<Hope>();
-        if (hope == null) {
+        if (hope == null)
+        {
             Debug.LogWarning("AudioManager: 在当前场景没有获取到 Hope 组件");
         }
     }
@@ -42,7 +43,8 @@ public class AudioManager : Singleton<AudioManager>
     #region 设置角色声音
     public void SetFootstep(AudioClip clip)
     {
-        if (hope != null) {
+        if (hope != null)
+        {
             hope.ChangeFootstep(clip);
         }
     }
@@ -57,7 +59,8 @@ public class AudioManager : Singleton<AudioManager>
 
     public void SetIntercomBgm()
     {
-        if (hope != null) {
+        if (hope != null)
+        {
             hope.ChangeBgm(GetSE("对讲机呲啦呲啦音效"));
         }
     }

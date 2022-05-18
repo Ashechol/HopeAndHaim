@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
     // public SceneFader sceneFaderPrefab;
-    bool sceneLoadComplete;
     // bool fadeInGameOver;  // 保证收到EndNotify只执行一次SceneFade
+    bool sceneLoadComplete;
+
+    public bool skipBegining = false;
 
     public Scene CurrentScene { get { return SceneManager.GetActiveScene(); } }
 
@@ -44,5 +46,17 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     public void LoadFirstLevel()
     {
         StartCoroutine(LoadScene("Episode One"));
+    }
+
+    public void ReLoadScene()
+    {
+        if (skipBegining == false) skipBegining = true;
+
+        StartCoroutine(LoadScene(CurrentScene.name));
+    }
+
+    public void LoadEndingOne()
+    {
+        StartCoroutine(LoadScene("Ending-1"));
     }
 }
