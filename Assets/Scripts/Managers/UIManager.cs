@@ -41,7 +41,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void EpisodeOneUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.C)) {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
             _underCurtain = !_underCurtain;
             curtain.gameObject.SetActive(_underCurtain);
         }
@@ -50,7 +51,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示对话框
     public void DisplayDialogue(string txt, int size)
     {
-        if (!dialogue.gameObject.activeSelf) {
+        if (!dialogue.gameObject.activeSelf)
+        {
             //Debug.Log("显示对话框");
             dialogue.gameObject.SetActive(true);
         }
@@ -63,11 +65,13 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public void CleanDialogue()
     {
         //不知道为什么会出现空引用，显示 Text 已被摧毁
-        if (dialogue == null) {
+        if (dialogue == null)
+        {
             return;
         }
 
-        if (dialogue.gameObject.activeSelf) {
+        if (dialogue.gameObject.activeSelf)
+        {
             dialogue.text = "";
 
             dialogue.gameObject.SetActive(false);

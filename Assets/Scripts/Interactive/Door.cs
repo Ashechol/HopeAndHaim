@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, ICanInteract
 {
     Animator _anim;
     Collider2D _coll;
@@ -12,7 +12,6 @@ public class Door : MonoBehaviour
 
     [Header("Lock And Key")]
     public bool isLock;
-    public int keyCode;
 
     void Awake()
     {
@@ -24,42 +23,41 @@ public class Door : MonoBehaviour
 
     void Update()
     {
-        OpenDoor();
+        PlayerNearBy();
         _anim.SetBool("open", _isOpen);
     }
 
-    void OpenDoor()
+    void PlayerNearBy()
     {
-        if (PlayerNearBy() && Input.GetKeyDown(KeyCode.E) && !_isOpen)
+        var collider = Physics2D.OverlapCircle(transform.position, 1.0f);
+
+        if (collider.CompareTag("Player"))
+        {
+            GameManager.Instance.haim.AddInteraction(this);
+
+            if ((GameManager.Instance.PlayerPosition
+            - transform.position).sqrMagnitude < 0.5f && _isOpen)
+                _renderer.sortingOrder = 3;
+            else
+                _renderer.sortingOrder = 1;
+        }
+
+        else if (_isOpen)
+        {
+            _sound.Play();
+            _isOpen = false;
+            _coll.enabled = true;
+            GameManager.Instance.haim.RemoveInteraction(this);
+        }
+    }
+
+    public void Interact()
+    {
+        if (!_isOpen && !isLock)
         {
             _isOpen = true;
             _coll.enabled = false;
             _sound.Play();
         }
-
-        if ((GameManager.Instance.PlayerPosition
-            - transform.position).sqrMagnitude < 0.5f && _isOpen)
-            _renderer.sortingOrder = 3;
-        else
-            _renderer.sortingOrder = 1;
     }
-
-    bool PlayerNearBy()
-    {
-        var collider = Physics2D.OverlapCircle(transform.position, 1.0f);
-
-        if (collider.CompareTag("Player"))
-            return true;
-
-        if (_isOpen)
-        {
-            _sound.Play();
-            _isOpen = false;
-            _coll.enabled = true;
-        }
-
-        return false;
-    }
-
-
 }

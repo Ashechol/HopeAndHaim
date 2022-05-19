@@ -13,7 +13,7 @@ public class InfomationUI : MonoBehaviour
     }
     void Start()
     {
-        UIManager.Instance.gameOverPanel = this.gameObject;
+        UIManager.Instance.infomationPanel = this.gameObject;
     }
 
     public void SetInformation(Sprite information)

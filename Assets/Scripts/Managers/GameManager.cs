@@ -21,6 +21,13 @@ public class GameManager : Singleton<GameManager>
     public Hope hope;
     // Haim one of the main actors
     public Haim haim;
+    public DialogController dialog;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
@@ -42,11 +49,6 @@ public class GameManager : Singleton<GameManager>
     public void RegisterHope(Hope hope)
     {
         this.hope = hope;
-    }
-
-    public void RegisterHaim(Haim haim)
-    {
-        this.haim = haim;
     }
 
     public void AddObserver(IGameObserver observer)

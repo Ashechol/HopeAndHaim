@@ -12,14 +12,14 @@ public class Haim : MonoBehaviour
     Animator _anim;
     bool _walk;
     MoveDirection _direction;
-    bool _holdKey;
 
     // Player Interact
     List<ICanInteract> _interactions = new List<ICanInteract>();
     int _interactionId;
 
-    [Header("Movement")]
+    [Header("Basic")]
     public float speed;
+    public bool hasKey = false;
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
@@ -36,7 +36,7 @@ public class Haim : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.RegisterHaim(this);
+        GameManager.Instance.haim = this;
         _dest = transform.position;
     }
 
@@ -56,6 +56,7 @@ public class Haim : MonoBehaviour
     void OnDisable()
     {
         MouseManager.Instance.OnMouseClicked -= SetDestination;
+        GameManager.Instance.haim = null;
     }
 
     void SetDestination(Vector3 pos)

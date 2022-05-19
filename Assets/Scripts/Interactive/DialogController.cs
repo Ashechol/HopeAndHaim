@@ -15,8 +15,14 @@ public class DialogController : MonoBehaviour
 
     void Start()
     {
+        GameManager.Instance.dialog = this;
         if (!SceneLoadManager.Instance.skipBegining)
             StartCoroutine(Begining());
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.dialog = null;
     }
 
     IEnumerator Begining()
@@ -28,6 +34,12 @@ public class DialogController : MonoBehaviour
             yield return null;
 
         _voice.clip = voiceClips[1];
+        _voice.Play();
+    }
+
+    public void PlayDiaglog(AudioClip dialog)
+    {
+        _voice.clip = dialog;
         _voice.Play();
     }
 }

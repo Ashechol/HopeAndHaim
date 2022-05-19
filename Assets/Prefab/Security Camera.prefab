@@ -331,7 +331,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0308c38387a5714489b6b07e36466e96, type: 3}
   - {fileID: 8300000, guid: 80f2f1cfd1e7b2d49843f84016f11514, type: 3}
   - {fileID: 8300000, guid: f0ccf5b1406061a4a86d989100211331, type: 3}
-  switchSound: {fileID: 8300000, guid: 1619c22863b7b9647a35e0f9c465768c, type: 3}
+  switchSound: {fileID: 8300000, guid: 38bce113e9b8c504d8e8360c741a0b01, type: 3}
 --- !u!82 &5749834751120017640
 AudioSource:
   m_ObjectHideFlags: 0

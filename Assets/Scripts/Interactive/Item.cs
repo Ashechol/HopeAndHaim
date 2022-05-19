@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, ICanInteract
 {
+    public enum ItemType { Normal, Buffer, Key }
+    AudioSource _interactSound;
     bool _canInteract;
     bool _showing;
+    bool _hasAudioSource;
 
+    [Header("Settings")]
     public Sprite information;
+    public AudioClip dialog;
+    public ItemType itemType;
+    public float buffMutiplier;
 
-    void Update()
+    void Awake()
     {
-
+        _interactSound = GetComponent<AudioSource>();
     }
 
 
@@ -19,7 +26,6 @@ public class Item : MonoBehaviour, ICanInteract
     {
         if (coll.CompareTag("Player"))
         {
-            _canInteract = true;
             GameManager.Instance.haim.AddInteraction(this);
         }
     }
@@ -28,25 +34,30 @@ public class Item : MonoBehaviour, ICanInteract
     {
         if (coll.CompareTag("Player"))
         {
-            _canInteract = false;
             GameManager.Instance.haim.RemoveInteraction(this);
         }
     }
 
     public void Interact()
     {
-        if (_canInteract)
+
+        _interactSound.Play();
+        if (!_showing)
         {
-            if (!_showing)
-            {
-                UIManager.Instance.ShowInformation(information);
-                _showing = true;
-            }
-            else
-            {
-                UIManager.Instance.CloseInformation();
-                _showing = false;
-            }
+            UIManager.Instance.ShowInformation(information);
+            GameManager.Instance.gameMode = GameManager.GameMode.DialogueMoment;
+            _showing = true;
         }
+        else
+        {
+            UIManager.Instance.CloseInformation();
+            GameManager.Instance.gameMode = GameManager.GameMode.Normal;
+            _showing = false;
+
+            if (dialog != null)
+                GameManager.Instance.dialog.PlayDiaglog(dialog);
+
+        }
+
     }
 }
