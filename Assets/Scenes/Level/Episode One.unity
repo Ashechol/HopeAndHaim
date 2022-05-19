@@ -949,7 +949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481804208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.98, y: -4.41, z: -10}
+  m_LocalPosition: {x: -3.45, y: -4.74, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 839596690}
@@ -1427,7 +1427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011864766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.98, y: -4.41, z: 0}
+  m_LocalPosition: {x: -3.45, y: -4.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 612634133}
@@ -1812,6 +1812,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 20865c07a1cce4c45b86fd2c20047de5, type: 2}
     - {fileID: 11400000, guid: 8f12747ebaf83a145a82efba7809c5c8, type: 2}
     - {fileID: 11400000, guid: a675a539a672cf64ba24b26569924103, type: 2}
+    - {fileID: 11400000, guid: bb3e6536b3061ff488ee5456432b70c4, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1939,6 +1940,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 436486874}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+          m_MethodName: StopAudioSource
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1195626126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,7 +2001,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4564e7fb802956942ac641ae42b7fb13, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -17526,7 +17541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797650587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.98, y: -4.41, z: -10}
+  m_LocalPosition: {x: -3.45, y: -4.74, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

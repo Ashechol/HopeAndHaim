@@ -42,7 +42,7 @@ public class TimelineManager : Singleton<TimelineManager>
     //恢复游戏
     public void ResumeGame()
     {
-        Debug.Log("恢复游戏");
+        //Debug.Log("恢复游戏");
         GameManager.Instance.gameMode = GameManager.GameMode.Normal;
         //currentDirector.playOnAwake = false;
     }
@@ -56,6 +56,14 @@ public class TimelineManager : Singleton<TimelineManager>
         }
         else {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
+        }
+    }
+
+    //解决 Timeline bug, 手动置剧情语音 Source 停止播放
+    public void StopAudioSource()
+    {
+        if (_hope != null) {
+            _hope.HearSource.Stop();
         }
     }
     #endregion

@@ -41,7 +41,7 @@ public class UIManager : Singleton<UIManager>
     public void DisplayDialogue(string txt, int size)
     {
         if (!dialogue.gameObject.activeSelf) {
-            Debug.Log("显示对话框");
+            //Debug.Log("显示对话框");
             dialogue.gameObject.SetActive(true);
         }
 

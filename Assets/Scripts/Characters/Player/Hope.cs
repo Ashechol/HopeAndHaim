@@ -146,6 +146,7 @@ public class Hope : MonoBehaviour
         }
 
         if (!_speakSource.isPlaying) {
+            Debug.Log($"Hope 触发碰撞语音。SpeakSource:{_speakSource.isPlaying}");
             _speakSource.clip = AudioManager.Instance.GetCollideClip();
             _speakSource.loop = false;
             _speakSource.time = 0.6f;
@@ -172,6 +173,7 @@ public class Hope : MonoBehaviour
                 Debug.Log("Hope 触发静置语音");
                 _speakSource.clip = AudioManager.Instance.GetHopeStaticClip();
                 _speakSource.loop = false;
+                _speakSource.volume = 1;
                 _speakSource.Play();
             }
             //不论是否播放都清空，否则播放时也会计时，会显得语音连接的太紧
@@ -198,7 +200,7 @@ public class Hope : MonoBehaviour
 
         //先检查旋转
         if (_isRotating) {
-            Debug.Log("Hope 正在转向");
+            //Debug.Log("Hope 正在转向");
             //旋转插值
             _collider.transform.rotation = Quaternion.Slerp(_collider.transform.rotation,
                 DirectionUtility.GetRotationQuaternion(_direction), rSpeed * Time.fixedDeltaTime);
@@ -207,13 +209,13 @@ public class Hope : MonoBehaviour
             //结束检查
             if (Mathf.Abs(rz) <= 10) {
                 _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);
-                Debug.Log("Hope 结束转向");
+                //Debug.Log("Hope 结束转向");
                 _isRotating = false;
             }
         }
         //再检查移动
         else if (_isMoving) {
-            Debug.Log("Hope 正在移动");
+            //Debug.Log("Hope 正在移动");
 
             //启动声音
             if (!_footSource.isPlaying) {
@@ -232,7 +234,7 @@ public class Hope : MonoBehaviour
             }
             //最后判断静止
             else {
-                Debug.Log("Hope 结束移动");
+                //Debug.Log("Hope 结束移动");
                 StopHope();
             }
         }
@@ -260,6 +262,7 @@ public class Hope : MonoBehaviour
     private void Update()
     {
         Debug.Log("HearSource:" + _hearSource.isPlaying);
+        Debug.Log("SpeakSource:" + _speakSource.isPlaying);
         //在输入模式下才接收输入
         if (GameManager.Instance.CanInput()) {
             PlayerInput();
@@ -288,7 +291,7 @@ public class Hope : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         //检测前方碰撞
         //播放碰撞语音：碰撞层级为 Wall && 角色正在移动
