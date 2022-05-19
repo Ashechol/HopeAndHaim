@@ -5,9 +5,13 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class Haim : MonoBehaviour
 {
+    enum Direction { Forward, Backward, LeftRight }
     AudioSource _footStep;
     Vector3 _dest;
     Light2D _selfLight;
+    Animator _anim;
+    bool _walk;
+    Direction _direction;
 
     [Header("Movement")]
     public float speed;
@@ -21,6 +25,8 @@ public class Haim : MonoBehaviour
     {
         _footStep = GetComponent<AudioSource>();
         _selfLight = GetComponentInChildren<Light2D>();
+        _anim = GetComponent<Animator>();
+        _direction = Direction.Forward;
     }
 
     void Start()
@@ -33,6 +39,8 @@ public class Haim : MonoBehaviour
     {
         HackCam();
         MoveToDestination();
+        _anim.SetBool("walk", _walk);
+        _anim.SetInteger("direction", ((int)_direction));
     }
 
     void SetDestination(Vector3 pos)
