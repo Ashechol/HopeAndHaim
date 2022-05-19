@@ -48,6 +48,23 @@ public class Haim : MonoBehaviour
         if (!_isHacking)
         {
             _dest = pos;
+
+            if (_dest.y - transform.position.y > 0)
+                _direction = Direction.Backward;
+
+            else if (_dest.y - transform.position.y < 0)
+                _direction = Direction.Forward;
+
+            else if (_dest.x - transform.position.x < 0)
+            {
+                _direction = Direction.LeftRight;
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (_dest.x - transform.position.x > 0)
+            {
+                _direction = Direction.LeftRight;
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
     }
 
@@ -65,10 +82,15 @@ public class Haim : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, _dest, speed * Time.deltaTime);
 
-        if (!ArriveAtDest() && !_footStep.isPlaying)
+        if (!ArriveAtDest())
         {
-            _footStep.Play();
+            _walk = true;
+
+            if (!_footStep.isPlaying)
+                _footStep.Play();
         }
+        else
+            _walk = false;
     }
 
     public bool ArriveAtDest()
