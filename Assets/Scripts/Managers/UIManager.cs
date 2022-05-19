@@ -44,4 +44,15 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         gameOverPanel.SetActive(true);
     }
+
+    public void ShowInformation(Sprite information)
+    {
+        infomationPanel.SetActive(true);
+        infomationPanel.GetComponent<InfomationUI>().SetInformation(information);
+    }
+
+    public void CloseInformation()
+    {
+        infomationPanel.SetActive(false);
+    }
 }
