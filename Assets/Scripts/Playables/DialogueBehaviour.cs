@@ -9,12 +9,12 @@ using UnityEngine.Playables;
 [System.Serializable]
 public class DialogueBehaviour : PlayableBehaviour
 {
-    private PlayableDirector director;
+    private PlayableDirector _director;
 
     //对话框内容
     [TextArea(8, 1)] public string dialogueLine;
     //字体尺寸
-    public int dialogueSize = 34;
+    public int dialogueSize = 30;
 
     //当前片段是否在播放
     private bool isClipPlayer = false;
@@ -27,7 +27,7 @@ public class DialogueBehaviour : PlayableBehaviour
     public override void OnPlayableCreate(Playable playable)
     {
         //获得 director
-        director = playable.GetGraph().GetResolver() as PlayableDirector;
+        _director = playable.GetGraph().GetResolver() as PlayableDirector;
     }
 
     //每一帧调用

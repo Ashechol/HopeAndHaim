@@ -7,30 +7,36 @@ using UnityEngine;
 /// </summary>
 public class AudioManager : Singleton<AudioManager>
 {
-    #region 音频组件
     //Hope 挂载的 AudioSources
-    private Hope hope;
-    #endregion
+    private Hope _hope;
 
-    //音频列表
-    public List<AudioClip> staticClips = new List<AudioClip>();
+    public AudioClip intercomClip;
+
+    public List<AudioClip> hopeStaticClips = new List<AudioClip>();
+    private int _hopeClipPointer = 0;
+
     public List<AudioClip> collideClips = new List<AudioClip>();
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        hope = GameObject.Find("Hope").GetComponent<Hope>();
-        if (hope == null)
-        {
-            Debug.LogWarning("AudioManager: 在当前场景没有获取到 Hope 组件");
-        }
+        _hope = GameManager.Instance.hope;
     }
 
-    #region 提供音频函数
-    //获得随机静态语音
-    public AudioClip GetStaticClip()
+    //获得随机 Hope 静态语音
+    public AudioClip GetHopeStaticClip()
     {
-        return null;
+        //不能采取随机播放，由于语音太少，随机同一句的频率太高，改为循环
+        if (_hopeClipPointer >= hopeStaticClips.Count) {
+            _hopeClipPointer = 0;
+        }
+        return hopeStaticClips[_hopeClipPointer++];
+    }
+
+    //更换 Hope 静置语音
+    public void ChangeHopeStaticClip(List<AudioClip> clips)
+    {
+        hopeStaticClips = clips;
+        _hopeClipPointer = 0;
     }
 
     //获得随机碰撞语音
@@ -38,31 +44,18 @@ public class AudioManager : Singleton<AudioManager>
     {
         return collideClips[Random.Range(0, collideClips.Count)];
     }
-    #endregion
 
-    #region 设置角色声音
     public void SetFootstep(AudioClip clip)
     {
-        if (hope != null)
-        {
-            hope.ChangeFootstep(clip);
+        if (_hope != null) {
+            _hope.ChangeFootstep(clip);
         }
-    }
-    #endregion
-
-    #region 设置背景音乐
-    public AudioClip GetSE(string clipName)
-    {
-        string path = "Audio/SE/" + clipName;
-        return Resources.Load(path) as AudioClip;
     }
 
     public void SetIntercomBgm()
     {
-        if (hope != null)
-        {
-            hope.ChangeBgm(GetSE("对讲机呲啦呲啦音效"));
+        if (_hope != null) {
+            _hope.ChangeBgm(intercomClip, false);
         }
     }
-    #endregion
 }

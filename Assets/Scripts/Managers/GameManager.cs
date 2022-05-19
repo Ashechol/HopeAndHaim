@@ -39,6 +39,11 @@ public class GameManager : Singleton<GameManager>
 
     public Vector3 PlayerPosition { get { return haim.transform.position; } }
 
+    public void RegisterHope(Hope hope)
+    {
+        this.hope = hope;
+    }
+
     public void RegisterHaim(Haim haim)
     {
         this.haim = haim;
@@ -57,12 +62,10 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneStart()
     {
         //根据 Director 状态设置 GameMode
-        if (TimelineManager.Instance.currentDirector.playOnAwake)
-        {
+        if (TimelineManager.Instance.currentDirector.playOnAwake) {
             gameMode = GameMode.GamePlay;
         }
-        else
-        {
+        else {
             gameMode = GameMode.Normal;
         }
     }
@@ -70,18 +73,14 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneUpdate()
     {
         //对话暂停时，需要按键恢复
-        if (gameMode == GameMode.DialogueMoment)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
+        if (gameMode == GameMode.DialogueMoment) {
+            if (Input.GetKeyDown(KeyCode.E)) {
                 TimelineManager.Instance.ResumeTimeline();
             }
         }
         //加速播放，调试用
-        else if (gameMode == GameMode.GamePlay)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
+        else if (gameMode == GameMode.GamePlay) {
+            if (Input.GetKeyDown(KeyCode.Q)) {
                 TimelineManager.Instance.SpeedUp();
             }
         }
@@ -89,16 +88,13 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeTwoUpdate()
     {
-        if (gameMode == GameMode.GameOver)
-        {
-            foreach (var observer in _observers)
-            {
+        if (gameMode == GameMode.GameOver) {
+            foreach (var observer in _observers) {
                 observer.GameOverNotify();
             }
         }
     }
 
-    #region GameMode 函数
     /// <summary>
     /// 判断当前的游戏模式是否接收用户输入
     /// </summary>
@@ -106,5 +102,4 @@ public class GameManager : Singleton<GameManager>
     {
         return gameMode == GameMode.Normal;
     }
-    #endregion
 }

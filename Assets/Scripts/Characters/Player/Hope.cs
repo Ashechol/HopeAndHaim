@@ -50,6 +50,23 @@ public class Hope : MonoBehaviour
     public bool IsMoving => _isMoving;
     #endregion
 
+    #region 剧情参数
+    //静止时长
+    [SerializeField]
+    private float _staticTime = 0;
+    //静态语音触发事件
+    public float staticPlotThreshold = 4f;
+    //剧情移动状态
+    private bool _isPlotMoving = false;
+    //剧情移动目标
+    private Vector3 _plotTarget;
+    //剧情移动时长
+    private float _plotDuration;
+    //剧情移动速度
+    private float _plotSpeed;
+    //记录原本的速度
+    private float _originalSpeed;
+    #endregion
 
     #region 提供外部
     public void ChangeFootstep(AudioClip clip)
@@ -66,6 +83,35 @@ public class Hope : MonoBehaviour
         _bgmSource.loop = isLoop;
         _bgmSource.Play();
     }
+    public void SetDirection(Direction direction)
+    {
+        _direction = direction;
+        _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);
+    }
+    public void StartHopeMovement()
+    {
+        _isMoving = true;
+        _isForward = true;
+    }
+    public void MoveToTarget(Vector3 target, float duration)
+    {
+        _isPlotMoving = true;
+        _plotTarget = target;
+        _plotDuration = duration;
+        //根据时长计算速度
+        float length = (target - transform.position).magnitude;
+        _plotSpeed = length / _plotDuration;
+    }
+    //剧情降速
+    public void LowSpeed()
+    {
+        _originalSpeed = speed;
+        speed = 10f;
+    }
+    public void OriginalSpeed()
+    {
+        speed = _originalSpeed;
+    }
     #endregion
 
     #region 功能函数
@@ -75,7 +121,7 @@ public class Hope : MonoBehaviour
     {
         _isForward = Input.GetKey(KeyCode.W);
         _isBackward = Input.GetKey(KeyCode.S);
-        //UNDONE: 考虑使用 GetKey 还是 GetKeyDown
+        //使用 GetKeyDown 可能出现按键被吞的感觉
         _isLeft = Input.GetKey(KeyCode.A);
         _isRight = Input.GetKey(KeyCode.D);
     }
@@ -88,25 +134,50 @@ public class Hope : MonoBehaviour
         _isForward = false;
         _isBackward = false;
         _rigidbody.velocity = Vector2.zero;
-        //UNDONE: 考虑 Pause 还是 Stop
         _footSource.Stop();
     }
 
     //播放 Hope 语音
     private void VoiceWallCollide()
     {
+        //碰撞语音有点过长，效果不太好，临时修改
+        if (_speakSource.isPlaying && _speakSource.time >= 2.5f) {
+            _speakSource.Stop();
+        }
+
         if (!_speakSource.isPlaying) {
-            //HACK: 调用了外部函数，可能修改
+            Debug.Log($"Hope 触发碰撞语音。SpeakSource:{_speakSource.isPlaying}");
             _speakSource.clip = AudioManager.Instance.GetCollideClip();
             _speakSource.loop = false;
             _speakSource.time = 0.6f;
             _speakSource.Play();
         }
-        //HACK: 碰撞语音有点过长，效果不太好，临时修改
+    }
+
+    //播放 Hope 静态语音
+    private void VoiceStatic()
+    {
+        //在没有移动时增加时间
+        if (!_isMoving) {
+            _staticTime += Time.deltaTime;
+        }
+        //移动时清空时间
         else {
-            if (_speakSource.time >= 2.5f) {
-                _speakSource.Stop();
+            _staticTime = 0;
+        }
+
+        //时间到达触发阈值
+        if (_staticTime >= staticPlotThreshold) {
+            //适合触发时：没有播放剧情语音，也没有播放撞墙语音
+            if (!_hearSource.isPlaying && !_speakSource.isPlaying) {
+                Debug.Log("Hope 触发静置语音");
+                _speakSource.clip = AudioManager.Instance.GetHopeStaticClip();
+                _speakSource.loop = false;
+                _speakSource.volume = 1;
+                _speakSource.Play();
             }
+            //不论是否播放都清空，否则播放时也会计时，会显得语音连接的太紧
+            _staticTime = 0;
         }
     }
 
@@ -129,23 +200,23 @@ public class Hope : MonoBehaviour
 
         //先检查旋转
         if (_isRotating) {
-            Debug.Log("Hope 正在转向");
+            //Debug.Log("Hope 正在转向");
             //旋转插值
             _collider.transform.rotation = Quaternion.Slerp(_collider.transform.rotation,
                 DirectionUtility.GetRotationQuaternion(_direction), rSpeed * Time.fixedDeltaTime);
             //解决 Slerp 问题：其运行到最后一点角度会变得极慢，因此当到一定角度内直接改变角度
-            //UNDONE: 原因不明的，当 Right 转向 Up 时会结束的更晚
-            float rz = _collider.transform.rotation.eulerAngles.z - DirectionUtility.GetRotationQuaternion(_direction).eulerAngles.z;
+            float rz = Quaternion.Angle(_collider.transform.rotation, DirectionUtility.GetRotationQuaternion(_direction));
             //结束检查
             if (Mathf.Abs(rz) <= 10) {
                 _collider.transform.rotation = DirectionUtility.GetRotationQuaternion(_direction);
-                Debug.Log("Hope 结束转向");
+                //Debug.Log("Hope 结束转向");
                 _isRotating = false;
             }
         }
         //再检查移动
         else if (_isMoving) {
-            Debug.Log("Hope 正在移动");
+            //Debug.Log("Hope 正在移动");
+
             //启动声音
             if (!_footSource.isPlaying) {
                 _footSource.Play();
@@ -163,7 +234,7 @@ public class Hope : MonoBehaviour
             }
             //最后判断静止
             else {
-                Debug.Log("Hope 结束移动");
+                //Debug.Log("Hope 结束移动");
                 StopHope();
             }
         }
@@ -184,11 +255,23 @@ public class Hope : MonoBehaviour
         _footSource = transform.Find("Footstep").GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        GameManager.Instance.RegisterHope(this);
+    }
     private void Update()
     {
+        Debug.Log("HearSource:" + _hearSource.isPlaying);
+        Debug.Log("SpeakSource:" + _speakSource.isPlaying);
         //在输入模式下才接收输入
         if (GameManager.Instance.CanInput()) {
             PlayerInput();
+            //在非角色行动时不应该播放静止语音
+            VoiceStatic();
+        }
+        //检查剧情语音时，是否有静置语音
+        if (_hearSource.isPlaying) {
+            _speakSource.Stop();
         }
 
         //显示朝向
@@ -197,10 +280,18 @@ public class Hope : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HopeMovement();
+        if (_isPlotMoving) {
+            transform.position = Vector3.MoveTowards(transform.position, _plotTarget, _plotSpeed * Time.deltaTime);
+            if (transform.position == _plotTarget) {
+                _isPlotMoving = false;
+            }
+        }
+        else {
+            HopeMovement();
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         //检测前方碰撞
         //播放碰撞语音：碰撞层级为 Wall && 角色正在移动
