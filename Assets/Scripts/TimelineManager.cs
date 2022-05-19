@@ -44,7 +44,7 @@ public class TimelineManager : Singleton<TimelineManager>
     {
         Debug.Log("恢复游戏");
         GameManager.Instance.gameMode = GameManager.GameMode.Normal;
-        currentDirector.playOnAwake = false;
+        //currentDirector.playOnAwake = false;
     }
 
     //调试用，加速播放 Timeline

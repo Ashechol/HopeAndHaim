@@ -12,7 +12,9 @@ public class AudioManager : Singleton<AudioManager>
 
     public AudioClip intercomClip;
 
-    public List<AudioClip> staticClips = new List<AudioClip>();
+    public List<AudioClip> hopeStaticClips = new List<AudioClip>();
+    private int _hopeClipPointer = 0;
+
     public List<AudioClip> collideClips = new List<AudioClip>();
 
     private void Start()
@@ -20,10 +22,21 @@ public class AudioManager : Singleton<AudioManager>
         _hope = GameManager.Instance.hope;
     }
 
-    //获得随机静态语音
-    public AudioClip GetStaticClip()
+    //获得随机 Hope 静态语音
+    public AudioClip GetHopeStaticClip()
     {
-        return null;
+        //不能采取随机播放，由于语音太少，随机同一句的频率太高，改为循环
+        if (_hopeClipPointer >= hopeStaticClips.Count) {
+            _hopeClipPointer = 0;
+        }
+        return hopeStaticClips[_hopeClipPointer++];
+    }
+
+    //更换 Hope 静置语音
+    public void ChangeHopeStaticClip(List<AudioClip> clips)
+    {
+        hopeStaticClips = clips;
+        _hopeClipPointer = 0;
     }
 
     //获得随机碰撞语音

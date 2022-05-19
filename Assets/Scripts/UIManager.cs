@@ -52,11 +52,15 @@ public class UIManager : Singleton<UIManager>
     //隐藏对话框
     public void CleanDialogue()
     {
+        //不知道为什么会出现空引用，显示 Text 已被摧毁
+        if (dialogue == null) {
+            return;
+        }
+
         if (dialogue.gameObject.activeSelf) {
             dialogue.text = "";
 
-            //不知道为什么会出现空引用
-            dialogue?.gameObject.SetActive(false);
+            dialogue.gameObject.SetActive(false);
         }
     }
 }

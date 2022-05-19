@@ -14,7 +14,7 @@ public class DialogueBehaviour : PlayableBehaviour
     //对话框内容
     [TextArea(8, 1)] public string dialogueLine;
     //字体尺寸
-    public int dialogueSize = 34;
+    public int dialogueSize = 30;
 
     //当前片段是否在播放
     private bool isClipPlayer = false;

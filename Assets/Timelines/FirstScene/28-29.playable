@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 10.596958333333333
+  m_Time: 10.296958333333333
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 20865c07a1cce4c45b86fd2c20047de5, type: 2}
@@ -124,7 +124,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: 28
   - m_Version: 1
-    m_Start: 5.3
+    m_Start: 5
     m_ClipIn: 0
     m_Asset: {fileID: -3140656071390140837}
     m_Duration: 5.296958333333333
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: "\u5927\u95E8\u5F00\u542F\u58F0\uFF0C\u5728\u8FDC\u5904"
   - m_Version: 1
-    m_Start: 10.596958333333333
+    m_Start: 10.296958333333333
     m_ClipIn: 0
     m_Asset: {fileID: 3409067765987813377}
     m_Duration: 10.056
@@ -289,10 +289,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 4.283333333333333
+    m_Start: 4.45
     m_ClipIn: 0
     m_Asset: {fileID: -1346109306896182467}
-    m_Duration: 1
+    m_Duration: 0.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: -4954572657161619338}
     m_EaseInDuration: 0
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     dialogueLine: "\u3010\u8BF7\u6309E\u952E\uFF0C\u6253\u5F00\u76D1\u72F1\u5927\u95E8\u3011"
-    dialogueSize: 34
+    dialogueSize: 30
     requirePause: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 20.65295833333333
+  m_Time: 20.352958333333333
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 7f7848d9abcb7534aa59779633f15626, type: 2}
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 5.3
+  m_Time: 5
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: dd854cd223ae6114db009f11fb40705e, type: 2}

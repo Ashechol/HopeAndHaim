@@ -51,6 +51,11 @@ public class Hope : MonoBehaviour
     #endregion
 
     #region 剧情参数
+    //静止时长
+    [SerializeField]
+    private float _staticTime = 0;
+    //静态语音触发事件
+    public float staticPlotThreshold = 4f;
     //剧情移动状态
     private bool _isPlotMoving = false;
     //剧情移动目标
@@ -148,6 +153,32 @@ public class Hope : MonoBehaviour
         }
     }
 
+    //播放 Hope 静态语音
+    private void VoiceStatic()
+    {
+        //在没有移动时增加时间
+        if (!_isMoving) {
+            _staticTime += Time.deltaTime;
+        }
+        //移动时清空时间
+        else {
+            _staticTime = 0;
+        }
+
+        //时间到达触发阈值
+        if (_staticTime >= staticPlotThreshold) {
+            //适合触发时：没有播放剧情语音，也没有播放撞墙语音
+            if (!_hearSource.isPlaying && !_speakSource.isPlaying) {
+                Debug.Log("Hope 触发静置语音");
+                _speakSource.clip = AudioManager.Instance.GetHopeStaticClip();
+                _speakSource.loop = false;
+                _speakSource.Play();
+            }
+            //不论是否播放都清空，否则播放时也会计时，会显得语音连接的太紧
+            _staticTime = 0;
+        }
+    }
+
     //Hope 移动逻辑
     private void HopeMovement()
     {
@@ -183,6 +214,7 @@ public class Hope : MonoBehaviour
         //再检查移动
         else if (_isMoving) {
             Debug.Log("Hope 正在移动");
+
             //启动声音
             if (!_footSource.isPlaying) {
                 _footSource.Play();
@@ -227,9 +259,16 @@ public class Hope : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log("HearSource:" + _hearSource.isPlaying);
         //在输入模式下才接收输入
         if (GameManager.Instance.CanInput()) {
             PlayerInput();
+            //在非角色行动时不应该播放静止语音
+            VoiceStatic();
+        }
+        //检查剧情语音时，是否有静置语音
+        if (_hearSource.isPlaying) {
+            _speakSource.Stop();
         }
 
         //显示朝向
