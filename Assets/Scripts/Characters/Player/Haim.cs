@@ -19,12 +19,14 @@ public class Haim : MonoBehaviour
 
     [Header("Basic")]
     public float speed;
+    public float sightRadius = 1.5f;
     public bool hasKey = false;
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
     private bool _isHacking;
     public SecurityCamera securityCamera;
+    public float camSightRadius;
 
     void Awake()
     {
@@ -38,6 +40,7 @@ public class Haim : MonoBehaviour
     {
         GameManager.Instance.haim = this;
         _dest = transform.position;
+        _selfLight.pointLightOuterRadius = sightRadius;
     }
 
     void Update()
@@ -110,7 +113,7 @@ public class Haim : MonoBehaviour
                 _interactions[_interactionId].Interact();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab) && !_isHacking)
             {
                 _interactionId = ClampIndex(_interactionId + 1);
             }
@@ -139,7 +142,7 @@ public class Haim : MonoBehaviour
         if (canHack)
         {
             Stop();
-            securityCamera.TurnOn();
+            securityCamera.TurnOn(camSightRadius);
             securityCamera.hacking = true;
             _isHacking = true;
             _selfLight.enabled = false;
@@ -154,6 +157,12 @@ public class Haim : MonoBehaviour
             _selfLight.enabled = true;
             canHack = true;
         }
+    }
+
+    public void GetSightBuff(float buffMultiplier)
+    {
+        sightRadius *= buffMultiplier;
+        _selfLight.pointLightOuterRadius = sightRadius;
     }
 
 
@@ -181,7 +190,7 @@ public class Haim : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("Wall"))
         {
-            _dest = (transform.position - _dest).normalized * 0.25f + transform.position;
+            _dest = (transform.position - _dest).normalized * 0.05f + transform.position;
         }
     }
 }

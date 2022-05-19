@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, ICanInteract
 {
-    public enum ItemType { Normal, Buffer, Key }
+    public enum ItemType { Normal, Key, RedPotion, BluePotion, SignalBuffer }
     AudioSource _interactSound;
     bool _canInteract;
     bool _showing;
@@ -14,7 +14,7 @@ public class Item : MonoBehaviour, ICanInteract
     public Sprite information;
     public AudioClip dialog;
     public ItemType itemType;
-    public float buffMutiplier;
+    public float buffMultiplier;
 
     void Awake()
     {
@@ -57,16 +57,34 @@ public class Item : MonoBehaviour, ICanInteract
             if (dialog != null)
                 GameManager.Instance.dialog.PlayDiaglog(dialog);
 
-            if (itemType == ItemType.Buffer)
-                Destroy(gameObject);
-
-            if (itemType == ItemType.Key)
-            {
-                Destroy(gameObject);
-                GameManager.Instance.haim.hasKey = true;
-            }
+            ItemTypeCheck();
 
         }
 
+    }
+
+    void ItemTypeCheck()
+    {
+        if (itemType != ItemType.Normal)
+        {
+            Destroy(gameObject);
+
+            switch (itemType)
+            {
+                case ItemType.Key:
+                    GameManager.Instance.haim.hasKey = true;
+                    break;
+                case ItemType.RedPotion:
+                    GameManager.Instance.haim.speed *= buffMultiplier;
+                    break;
+                case ItemType.BluePotion:
+                    GameManager.Instance.haim.GetSightBuff(buffMultiplier);
+                    break;
+                case ItemType.SignalBuffer:
+                    GameManager.Instance.haim.camSightRadius *= buffMultiplier;
+                    break;
+            }
+
+        }
     }
 }

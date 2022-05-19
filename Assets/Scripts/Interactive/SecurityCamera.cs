@@ -47,8 +47,9 @@ public class SecurityCamera : MonoBehaviour, ICanInteract
         transform.Rotate(euler);
     }
 
-    public void TurnOn()
+    public void TurnOn(float sightRadius)
     {
+        _camLight.pointLightOuterRadius = sightRadius;
         _camLight.enabled = true;
         _camSound.clip = switchSound;
         _camSound.Play();

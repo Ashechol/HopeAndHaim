@@ -115,7 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   information: {fileID: 21300000, guid: d527ccb11c6410b469b8b4a65764f13b, type: 3}
   dialog: {fileID: 8300000, guid: bb8472ffe3214b946923fa3fa36c4ab7, type: 3}
-  itemType: 1
+  itemType: 4
+  buffMultiplier: 2
 --- !u!82 &7991904193271599417
 AudioSource:
   m_ObjectHideFlags: 0
