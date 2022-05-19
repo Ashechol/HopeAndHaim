@@ -19,6 +19,9 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //对话框
     public Text dialogue;
 
+    //提示框
+    public Text hint;
+
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
 
@@ -71,6 +74,31 @@ public class UIManager : Singleton<UIManager>, IGameObserver
             dialogue.text = "";
 
             dialogue.gameObject.SetActive(false);
+        }
+    }
+
+    //显示游戏提示
+    public void DisplayHint(string txt, int size)
+    {
+        if (!hint.gameObject.activeSelf) {
+            hint.gameObject.SetActive(true);
+        }
+
+        hint.text = txt;
+        hint.fontSize = size;
+    }
+
+    //隐藏提示框
+    public void CleanHint()
+    {
+        if (hint == null) {
+            return;
+        }
+
+        if (hint.gameObject.activeSelf) {
+            hint.text = "";
+
+            hint.gameObject.SetActive(false);
         }
     }
 

@@ -10,7 +10,6 @@ public class FinalDoor : MonoBehaviour
     public int fontSize = 34;
 
     public AudioClip plotClip;
-    public AudioClip openDoorClip;
 
     private Hope _hope;
 
@@ -25,18 +24,7 @@ public class FinalDoor : MonoBehaviour
     {
         if (GameManager.Instance.CanInput() && _canInput) {
             if (Input.GetKeyDown(KeyCode.E)) {
-                Debug.Log("第一幕最后演出");
-                GameManager.Instance.gameMode = GameManager.GameMode.GamePlay;
-                _hope.StopHope();
-                //播放开门声
-                _hope.HearSource.clip = openDoorClip;
-                _hope.HearSource.loop = false;
-                _hope.HearSource.Play();
-
-                if (!_hope.HearSource.isPlaying) {
-                    Debug.Log("第一幕结束");
-                    //TODO: 播放间幕
-                }
+                GameManager.Instance.isEpisodeOneEnd = true;
             }
         }
     }

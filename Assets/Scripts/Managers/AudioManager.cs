@@ -11,6 +11,7 @@ public class AudioManager : Singleton<AudioManager>
     private Hope _hope;
 
     public AudioClip intercomClip;
+    public AudioClip openDoorClip;
 
     public List<AudioClip> hopeStaticClips = new List<AudioClip>();
     private int _hopeClipPointer = 0;
