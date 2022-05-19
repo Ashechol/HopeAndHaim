@@ -57,6 +57,15 @@ public class Item : MonoBehaviour, ICanInteract
             if (dialog != null)
                 GameManager.Instance.dialog.PlayDiaglog(dialog);
 
+            if (itemType == ItemType.Buffer)
+                Destroy(gameObject);
+
+            if (itemType == ItemType.Key)
+            {
+                Destroy(gameObject);
+                GameManager.Instance.haim.hasKey = true;
+            }
+
         }
 
     }

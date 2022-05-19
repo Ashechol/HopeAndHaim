@@ -5,9 +5,9 @@ using UnityEngine;
 public class Door : MonoBehaviour, ICanInteract
 {
     Animator _anim;
-    Collider2D _coll;
     SpriteRenderer _renderer;
     AudioSource _sound;
+    Collider2D _coll;
     bool _isOpen;
 
     [Header("Lock And Key")]
@@ -16,22 +16,19 @@ public class Door : MonoBehaviour, ICanInteract
     void Awake()
     {
         _anim = GetComponent<Animator>();
-        _coll = GetComponent<Collider2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _sound = GetComponent<AudioSource>();
+        _coll = transform.GetChild(0).GetComponent<Collider2D>();
     }
 
     void Update()
     {
-        PlayerNearBy();
-        _anim.SetBool("open", _isOpen);
+
     }
 
-    void PlayerNearBy()
+    void OnTriggerEnter2D(Collider2D coll)
     {
-        var collider = Physics2D.OverlapCircle(transform.position, 1.0f);
-
-        if (collider.CompareTag("Player"))
+        if (coll.CompareTag("Player"))
         {
             GameManager.Instance.haim.AddInteraction(this);
 
@@ -41,20 +38,29 @@ public class Door : MonoBehaviour, ICanInteract
             else
                 _renderer.sortingOrder = 1;
         }
+    }
 
-        else if (_isOpen)
+    void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.CompareTag("Player"))
         {
-            _sound.Play();
-            _isOpen = false;
-            _coll.enabled = true;
+            if (_isOpen)
+            {
+                _sound.Play();
+                _anim.SetBool("open", false);
+                _isOpen = false;
+                _coll.enabled = true;
+            }
+            Debug.Log("Remove");
             GameManager.Instance.haim.RemoveInteraction(this);
         }
     }
 
     public void Interact()
     {
-        if (!_isOpen && !isLock)
+        if (!_isOpen && (!isLock || GameManager.Instance.haim.hasKey))
         {
+            _anim.SetBool("open", true);
             _isOpen = true;
             _coll.enabled = false;
             _sound.Play();

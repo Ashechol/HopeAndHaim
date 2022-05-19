@@ -104,18 +104,21 @@ public class Haim : MonoBehaviour
         if (_interactions.Count != 0)
         {
             if (Input.GetKeyDown(KeyCode.E))
+            {
+                Stop();
+                _interactionId = ClampIndex(_interactionId);
                 _interactions[_interactionId].Interact();
+            }
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                _interactionId = ChooseInteraction(_interactionId);
+                _interactionId = ClampIndex(_interactionId + 1);
             }
         }
     }
 
-    int ChooseInteraction(int interactionId)
+    int ClampIndex(int interactionId)
     {
-        interactionId++;
         if (interactionId >= _interactions.Count)
             interactionId = 0;
 
@@ -178,7 +181,7 @@ public class Haim : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("Wall"))
         {
-            _dest = (transform.position - _dest).normalized * 0.1f + transform.position;
+            _dest = (transform.position - _dest).normalized * 0.25f + transform.position;
         }
     }
 }
