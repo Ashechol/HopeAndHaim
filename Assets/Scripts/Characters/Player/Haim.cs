@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
+public enum MoveDirection { Forward, Backward, LeftRight }
 public class Haim : MonoBehaviour
 {
     AudioSource _footStep;
     Vector3 _dest;
     Light2D _selfLight;
+    Animator _anim;
+    bool _walk;
+    MoveDirection _direction;
 
     [Header("Movement")]
     public float speed;
@@ -21,6 +25,8 @@ public class Haim : MonoBehaviour
     {
         _footStep = GetComponent<AudioSource>();
         _selfLight = GetComponentInChildren<Light2D>();
+        _anim = GetComponent<Animator>();
+        _direction = MoveDirection.Forward;
     }
 
     void Start()
@@ -33,6 +39,8 @@ public class Haim : MonoBehaviour
     {
         HackCam();
         MoveToDestination();
+        _anim.SetBool("walk", _walk);
+        _anim.SetInteger("direction", (int)_direction);
     }
 
     void SetDestination(Vector3 pos)
@@ -40,6 +48,23 @@ public class Haim : MonoBehaviour
         if (!_isHacking)
         {
             _dest = pos;
+
+            if (_dest.y - transform.position.y > 0)
+                _direction = MoveDirection.Backward;
+
+            else if (_dest.y - transform.position.y < 0)
+                _direction = MoveDirection.Forward;
+
+            else if (_dest.x - transform.position.x < 0)
+            {
+                _direction = MoveDirection.LeftRight;
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (_dest.x - transform.position.x > 0)
+            {
+                _direction = MoveDirection.LeftRight;
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
     }
 
@@ -57,10 +82,15 @@ public class Haim : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, _dest, speed * Time.deltaTime);
 
-        if (!ArriveAtDest() && !_footStep.isPlaying)
+        if (!ArriveAtDest())
         {
-            _footStep.Play();
+            _walk = true;
+
+            if (!_footStep.isPlaying)
+                _footStep.Play();
         }
+        else
+            _walk = false;
     }
 
     public bool ArriveAtDest()

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 419364478955408062}
   - component: {fileID: 419364478955408063}
+  - component: {fileID: 8110663348322610024}
   - component: {fileID: 419364478955408056}
   - component: {fileID: 419364478955408057}
   - component: {fileID: 6125108470750308069}
@@ -85,6 +86,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8110663348322610024
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419364478955408060}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 7a11faa69ef950043ab76f54f96de3e7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!195 &419364478955408056
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -119,8 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f00f485df71a0a4d876ba80e303df8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRadius: 1.5
-  sightAngle: 70
+  sightRadius: 2
+  sightAngle: 180
 --- !u!58 &6125108470750308069
 CircleCollider2D:
   m_ObjectHideFlags: 0
