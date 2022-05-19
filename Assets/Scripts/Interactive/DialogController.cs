@@ -27,19 +27,27 @@ public class DialogController : MonoBehaviour
 
     IEnumerator Begining()
     {
+        GameManager.Instance.gameMode = GameManager.GameMode.DialogueMoment;
+
         _voice.clip = voiceClips[0];
         _voice.Play();
 
-        while (_voice.isPlaying)
+        while (_voice.isPlaying && !Input.GetKeyDown(KeyCode.E))
             yield return null;
+
+        _voice.Stop();
 
         _voice.clip = voiceClips[1];
         _voice.Play();
 
-        while (_voice.isPlaying)
+        while (_voice.isPlaying && !Input.GetKeyDown(KeyCode.E))
             yield return null;
 
+        _voice.Stop();
+
         UIManager.Instance.ShowBeginingTip();
+
+        GameManager.Instance.gameMode = GameManager.GameMode.Normal;
     }
 
     public void PlayDiaglog(AudioClip dialog)

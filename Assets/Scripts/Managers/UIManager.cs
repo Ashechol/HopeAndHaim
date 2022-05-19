@@ -107,5 +107,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public void GameOverNotify()
     {
         gameOverPanel.SetActive(true);
+        tipsUI.gameObject.SetActive(false);
+        infomationPanel.SetActive(false);
     }
 }
