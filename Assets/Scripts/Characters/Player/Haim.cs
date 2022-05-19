@@ -65,22 +65,22 @@ public class Haim : MonoBehaviour
         {
             _dest = pos;
 
-            if (_dest.y - transform.position.y > 0)
-                _direction = MoveDirection.Backward;
+            Vector2 vec = (_dest - transform.position).normalized;
+            float dot = Vector2.Dot(transform.up, vec);
+            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-            else if (_dest.y - transform.position.y < 0)
+            if (angle <= 45)
+                _direction = MoveDirection.Backward;
+            else if (angle <= 135)
+                _direction = MoveDirection.LeftRight;
+            else
                 _direction = MoveDirection.Forward;
 
-            else if (_dest.x - transform.position.x < 0)
-            {
-                _direction = MoveDirection.LeftRight;
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (_dest.x - transform.position.x > 0)
-            {
-                _direction = MoveDirection.LeftRight;
+            if (_dest.x - transform.position.x > 0)
                 transform.localScale = new Vector3(-1, 1, 1);
-            }
+            else
+                transform.localScale = new Vector3(1, 1, 1);
+
         }
     }
 
@@ -125,7 +125,7 @@ public class Haim : MonoBehaviour
 
     public bool ArriveAtDest()
     {
-        return (_dest - transform.position).sqrMagnitude < 0.3f;
+        return (_dest - transform.position).sqrMagnitude < 0.1f;
     }
 
     /// <summary>

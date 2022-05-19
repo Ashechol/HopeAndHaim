@@ -50,7 +50,12 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     public void ReLoadScene()
     {
-        if (skipBegining == false) skipBegining = true;
+        if (skipBegining == false)
+        {
+            skipBegining = true;
+            GameManager.Instance.gameMode = GameManager.GameMode.Normal;
+            UIManager.Instance.gameOverPanel.SetActive(false);
+        }
 
         StartCoroutine(LoadScene(CurrentScene.name));
     }

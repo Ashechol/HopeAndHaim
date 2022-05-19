@@ -33,6 +33,9 @@ public class GameManager : Singleton<GameManager>
     {
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
             EpisodeOneStart();
+
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode Two")
+            EpisodeTwoStart();
     }
 
     void Update()
@@ -92,6 +95,11 @@ public class GameManager : Singleton<GameManager>
                 TimelineManager.Instance.SpeedUp();
             }
         }
+    }
+
+    void EpisodeTwoStart()
+    {
+        gameMode = GameMode.Normal;
     }
 
     void EpisodeTwoUpdate()

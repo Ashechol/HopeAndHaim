@@ -22,6 +22,12 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this);
+    }
+
     void Start()
     {
         _currentScene = SceneManager.GetActiveScene();
