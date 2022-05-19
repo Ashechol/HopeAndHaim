@@ -349,7 +349,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 419364478955408060, guid: aeac9b37ff2323e45b9e7ae7e3f2a9d5, type: 3}
       propertyPath: m_Name
-      value: Monster 1 (1)
+      value: Monster 2 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 419364478955408062, guid: aeac9b37ff2323e45b9e7ae7e3f2a9d5, type: 3}
       propertyPath: m_RootOrder
@@ -2677,7 +2677,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 419364478955408060, guid: 878f4ac4929aa4849af96981199dfce4, type: 3}
       propertyPath: m_Name
-      value: Monster 2
+      value: Monster 1
       objectReference: {fileID: 0}
     - target: {fileID: 419364478955408062, guid: 878f4ac4929aa4849af96981199dfce4, type: 3}
       propertyPath: m_RootOrder
@@ -2721,6 +2721,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 419364478955408062, guid: 878f4ac4929aa4849af96981199dfce4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460310508500345083, guid: 878f4ac4929aa4849af96981199dfce4, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2820,7 +2824,7 @@ RectTransform:
   - {fileID: 107336844}
   - {fileID: 652559101}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2949,7 +2953,7 @@ Transform:
   - {fileID: 381163096}
   - {fileID: 1285893186}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &963067692 stripped
 Transform:
@@ -22338,7 +22342,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 419364478955408060, guid: aeac9b37ff2323e45b9e7ae7e3f2a9d5, type: 3}
       propertyPath: m_Name
-      value: Monster 1
+      value: Monster 2
       objectReference: {fileID: 0}
     - target: {fileID: 419364478955408062, guid: aeac9b37ff2323e45b9e7ae7e3f2a9d5, type: 3}
       propertyPath: m_RootOrder
@@ -22682,7 +22686,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 419364478955408060, guid: 878f4ac4929aa4849af96981199dfce4, type: 3}
       propertyPath: m_Name
-      value: Monster 2 (1)
+      value: Monster 1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 419364478955408062, guid: 878f4ac4929aa4849af96981199dfce4, type: 3}
       propertyPath: m_RootOrder

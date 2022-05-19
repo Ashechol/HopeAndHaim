@@ -8,6 +8,9 @@ public class EnemyController : MonoBehaviour
 {
     NavMeshAgent _agent;
     Transform _target;
+    Animator _anim;
+    MoveDirection _direction;
+    bool _walk = false;
 
     [Header("Sight")]
     public float sightRadius;
@@ -16,9 +19,12 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
+        _anim = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
+
+        _direction = MoveDirection.Forward;
     }
 
     void Start()
@@ -29,6 +35,8 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         MoveToPlayer();
+        _anim.SetInteger("direction", (int)_direction);
+        _anim.SetBool("walk", _walk);
     }
 
     bool FoundPlayer()
@@ -56,7 +64,27 @@ public class EnemyController : MonoBehaviour
             float threshold = Mathf.Cos(Mathf.Deg2Rad * sightAngle);
 
             if (dot >= threshold)
+            {
+                _walk = true;
                 _agent.destination = _target.position;
+            }
+        }
+
+        if (_agent.destination.y - transform.position.y > 0)
+            _direction = MoveDirection.Backward;
+
+        else if (_agent.destination.y - transform.position.y < 0)
+            _direction = MoveDirection.Forward;
+
+        else if (_agent.destination.x - transform.position.x < 0)
+        {
+            _direction = MoveDirection.LeftRight;
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (_agent.destination.x - transform.position.x > 0)
+        {
+            _direction = MoveDirection.LeftRight;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
 
     }

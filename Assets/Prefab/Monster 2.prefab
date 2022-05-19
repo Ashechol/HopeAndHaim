@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 419364478955408062}
   - component: {fileID: 419364478955408063}
+  - component: {fileID: 3422715888994205491}
   - component: {fileID: 419364478955408056}
   - component: {fileID: 419364478955408057}
+  - component: {fileID: 343834208673921159}
   m_Layer: 0
   m_Name: Monster 2
   m_TagString: Untagged
@@ -73,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: b50d964c7aff6a640ae3900d649ad562, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84d2e26844d8bea479d0c8c68387bd14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,6 +86,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3422715888994205491
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419364478955408060}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 58241eab0f8399f43944a68b18d4cbff, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!195 &419364478955408056
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -103,7 +124,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.28
-  m_BaseOffset: 0.64
+  m_BaseOffset: 0.58
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &419364478955408057
@@ -118,5 +139,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f00f485df71a0a4d876ba80e303df8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRadius: 1.5
-  sightAngle: 70
+  sightRadius: 2
+  sightAngle: 180
+--- !u!58 &343834208673921159
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419364478955408060}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.64

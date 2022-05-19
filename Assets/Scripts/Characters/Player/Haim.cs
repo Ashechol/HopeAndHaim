@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
+public enum MoveDirection { Forward, Backward, LeftRight }
 public class Haim : MonoBehaviour
 {
-    enum Direction { Forward, Backward, LeftRight }
     AudioSource _footStep;
     Vector3 _dest;
     Light2D _selfLight;
     Animator _anim;
     bool _walk;
-    Direction _direction;
+    MoveDirection _direction;
 
     [Header("Movement")]
     public float speed;
@@ -26,7 +26,7 @@ public class Haim : MonoBehaviour
         _footStep = GetComponent<AudioSource>();
         _selfLight = GetComponentInChildren<Light2D>();
         _anim = GetComponent<Animator>();
-        _direction = Direction.Forward;
+        _direction = MoveDirection.Forward;
     }
 
     void Start()
@@ -40,7 +40,7 @@ public class Haim : MonoBehaviour
         HackCam();
         MoveToDestination();
         _anim.SetBool("walk", _walk);
-        _anim.SetInteger("direction", ((int)_direction));
+        _anim.SetInteger("direction", (int)_direction);
     }
 
     void SetDestination(Vector3 pos)
@@ -50,19 +50,19 @@ public class Haim : MonoBehaviour
             _dest = pos;
 
             if (_dest.y - transform.position.y > 0)
-                _direction = Direction.Backward;
+                _direction = MoveDirection.Backward;
 
             else if (_dest.y - transform.position.y < 0)
-                _direction = Direction.Forward;
+                _direction = MoveDirection.Forward;
 
             else if (_dest.x - transform.position.x < 0)
             {
-                _direction = Direction.LeftRight;
+                _direction = MoveDirection.LeftRight;
                 transform.localScale = new Vector3(1, 1, 1);
             }
             else if (_dest.x - transform.position.x > 0)
             {
-                _direction = Direction.LeftRight;
+                _direction = MoveDirection.LeftRight;
                 transform.localScale = new Vector3(-1, 1, 1);
             }
         }
