@@ -220,10 +220,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 58673937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a300543905d1b42880a95d82f987ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 71a9b828ff485ac4fa32ed3f791e7e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontSize: 34
+  fontSize: 30
   plotClip: {fileID: 8300000, guid: 7c2b925039e529241bcb6733f67e0aee, type: 3}
   openDoorClip: {fileID: 8300000, guid: 8691379a440b4404b8bb6ef9ae6cc7b8, type: 3}
 --- !u!1 &79918924
@@ -806,6 +806,7 @@ GameObject:
   - component: {fileID: 436486872}
   - component: {fileID: 436486873}
   - component: {fileID: 436486874}
+  - component: {fileID: 436486875}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -874,9 +875,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fd1f23cf5cb144d80c5038810c6a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 134139049}
-  GameOverPanel: {fileID: 0}
   curtain: {fileID: 270790436}
+  dialogue: {fileID: 134139049}
+  gameOverPanel: {fileID: 0}
+  infomationPanel: {fileID: 0}
 --- !u!114 &436486874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,6 +892,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDirector: {fileID: 1167488413}
+--- !u!114 &436486875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436486869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0057054bfc17f1948833cee7fec74765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skipBegining: 0
 --- !u!1 &481804208
 GameObject:
   m_ObjectHideFlags: 0
@@ -17064,7 +17079,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.014588118, y: 0}
+  m_Offset: {x: -0.30630994, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -17075,7 +17090,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.3460717, y: 6.321313}
+  m_Size: {x: 5.7042756, y: 6.321313}
   m_EdgeRadius: 0
 --- !u!1 &1506095006
 GameObject:

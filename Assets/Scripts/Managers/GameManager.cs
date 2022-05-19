@@ -88,16 +88,13 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeTwoUpdate()
     {
-        if (gameMode == GameMode.GameOver)
-        {
-            foreach (var observer in _observers)
-            {
+        if (gameMode == GameMode.GameOver) {
+            foreach (var observer in _observers) {
                 observer.GameOverNotify();
             }
         }
     }
 
-    #region GameMode 函数
     /// <summary>
     /// 判断当前的游戏模式是否接收用户输入
     /// </summary>
