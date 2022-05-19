@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class Surveillance : MonoBehaviour
+public class SecurityCamera : MonoBehaviour, ICanInteract
 {
     Light2D _camLight;
     AudioSource _camSound;
@@ -88,7 +89,8 @@ public class Surveillance : MonoBehaviour
         if (coll.CompareTag("Player"))
         {
             GameManager.Instance.haim.canHack = true;
-            GameManager.Instance.haim.cam = this;
+            GameManager.Instance.haim.securityCamera = this;
+            GameManager.Instance.haim.AddInteraction(this);
         }
     }
 
@@ -97,7 +99,13 @@ public class Surveillance : MonoBehaviour
         if (coll.CompareTag("Player"))
         {
             GameManager.Instance.haim.canHack = false;
-            GameManager.Instance.haim.cam = null;
+            GameManager.Instance.haim.securityCamera = null;
+            GameManager.Instance.haim.RemoveInteraction(this);
         }
+    }
+
+    public void Interact()
+    {
+        GameManager.Instance.haim.HackCam();
     }
 }

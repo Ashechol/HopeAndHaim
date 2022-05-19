@@ -12,6 +12,11 @@ public class Haim : MonoBehaviour
     Animator _anim;
     bool _walk;
     MoveDirection _direction;
+    bool _holdKey;
+
+    // Player Interact
+    List<ICanInteract> _interactions = new List<ICanInteract>();
+    int _interactionId;
 
     [Header("Movement")]
     public float speed;
@@ -19,7 +24,7 @@ public class Haim : MonoBehaviour
     [Header("Hack Surveillance Camera")]
     public bool canHack;
     private bool _isHacking;
-    public Surveillance cam;
+    public SecurityCamera securityCamera;
 
     void Awake()
     {
@@ -37,10 +42,20 @@ public class Haim : MonoBehaviour
 
     void Update()
     {
-        HackCam();
         MoveToDestination();
+        Interact();
         _anim.SetBool("walk", _walk);
         _anim.SetInteger("direction", (int)_direction);
+    }
+
+    void OnEnable()
+    {
+        MouseManager.Instance.OnMouseClicked += SetDestination;
+    }
+
+    void OnDisable()
+    {
+        MouseManager.Instance.OnMouseClicked -= SetDestination;
     }
 
     void SetDestination(Vector3 pos)
@@ -68,16 +83,6 @@ public class Haim : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        MouseManager.Instance.OnMouseClicked += SetDestination;
-    }
-
-    void OnDisable()
-    {
-        MouseManager.Instance.OnMouseClicked -= SetDestination;
-    }
-
     void MoveToDestination()
     {
         transform.position = Vector3.MoveTowards(transform.position, _dest, speed * Time.deltaTime);
@@ -93,6 +98,30 @@ public class Haim : MonoBehaviour
             _walk = false;
     }
 
+    void Interact()
+    {
+        if (_interactions.Count != 0)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                _interactions[_interactionId].Interact();
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                _interactionId = ChooseInteraction(_interactionId);
+            }
+        }
+    }
+
+    int ChooseInteraction(int interactionId)
+    {
+        interactionId++;
+        if (interactionId >= _interactions.Count)
+            interactionId = 0;
+
+        return interactionId;
+    }
+
+
     public bool ArriveAtDest()
     {
         return (_dest - transform.position).sqrMagnitude < 0.3f;
@@ -101,27 +130,37 @@ public class Haim : MonoBehaviour
     /// <summary>
     /// 黑入摄像机
     /// </summary>
-    void HackCam()
+    public void HackCam()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canHack)
+        if (canHack)
         {
             Stop();
-            _dest = transform.position;
-            cam.TurnOn();
-            cam.hacking = true;
+            securityCamera.TurnOn();
+            securityCamera.hacking = true;
             _isHacking = true;
             _selfLight.enabled = false;
             canHack = false;
         }
 
-        else if (Input.GetKeyDown(KeyCode.Escape) && _isHacking)
+        else if (_isHacking)
         {
-            cam.TurnOff();
-            cam.hacking = false;
+            securityCamera.TurnOff();
+            securityCamera.hacking = false;
             _isHacking = false;
             _selfLight.enabled = true;
             canHack = true;
         }
+    }
+
+
+    public void AddInteraction(ICanInteract interaction)
+    {
+        _interactions.Add(interaction);
+    }
+
+    public void RemoveInteraction(ICanInteract interaction)
+    {
+        _interactions.Remove(interaction);
     }
 
     public void Stop()

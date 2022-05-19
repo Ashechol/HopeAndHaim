@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, ICanInteract
 {
     bool _canInteract;
     bool _showing;
@@ -11,23 +11,7 @@ public class Item : MonoBehaviour
 
     void Update()
     {
-        if (_canInteract)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (!_showing)
-                {
-                    UIManager.Instance.ShowInformation(information);
-                    _showing = true;
-                }
-                else
-                {
-                    UIManager.Instance.CloseInformation();
-                    _showing = false;
-                }
-            }
 
-        }
     }
 
 
@@ -36,6 +20,7 @@ public class Item : MonoBehaviour
         if (coll.CompareTag("Player"))
         {
             _canInteract = true;
+            GameManager.Instance.haim.AddInteraction(this);
         }
     }
 
@@ -44,6 +29,24 @@ public class Item : MonoBehaviour
         if (coll.CompareTag("Player"))
         {
             _canInteract = false;
+            GameManager.Instance.haim.RemoveInteraction(this);
+        }
+    }
+
+    public void Interact()
+    {
+        if (_canInteract)
+        {
+            if (!_showing)
+            {
+                UIManager.Instance.ShowInformation(information);
+                _showing = true;
+            }
+            else
+            {
+                UIManager.Instance.CloseInformation();
+                _showing = false;
+            }
         }
     }
 }
