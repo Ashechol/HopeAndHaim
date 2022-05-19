@@ -9,8 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : Singleton<UIManager>, IGameObserver
 {
-    private Scene _currentScene;
-
     //全屏黑幕
     public Image curtain;
 
@@ -21,6 +19,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
+    public TipsUI tipsUI;
 
     protected override void Awake()
     {
@@ -30,7 +29,6 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     void Start()
     {
-        _currentScene = SceneManager.GetActiveScene();
         GameManager.Instance.AddObserver(this);
     }
 
@@ -41,7 +39,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void Update()
     {
-        if (_currentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
     }
 
@@ -84,11 +82,6 @@ public class UIManager : Singleton<UIManager>, IGameObserver
         }
     }
 
-    public void GameOverNotify()
-    {
-        gameOverPanel.SetActive(true);
-    }
-
     public void ShowInformation(Sprite information)
     {
         infomationPanel.SetActive(true);
@@ -98,5 +91,21 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public void CloseInformation()
     {
         infomationPanel.SetActive(false);
+    }
+
+    public void ShowBeginingTip()
+    {
+        if (tipsUI != null)
+            StartCoroutine(tipsUI.beginingTip.ShowTip());
+    }
+
+    public void ShowDoorLockTip()
+    {
+        StartCoroutine(tipsUI.DoorLockTip());
+    }
+
+    public void GameOverNotify()
+    {
+        gameOverPanel.SetActive(true);
     }
 }

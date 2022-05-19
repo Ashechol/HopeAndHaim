@@ -45,7 +45,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     public void LoadFirstLevel()
     {
-        StartCoroutine(LoadScene("Episode One"));
+        StartCoroutine(LoadScene("Episode-1"));
     }
 
     public void ReLoadScene()

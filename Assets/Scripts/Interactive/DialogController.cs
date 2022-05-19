@@ -35,6 +35,11 @@ public class DialogController : MonoBehaviour
 
         _voice.clip = voiceClips[1];
         _voice.Play();
+
+        while (_voice.isPlaying)
+            yield return null;
+
+        UIManager.Instance.ShowBeginingTip();
     }
 
     public void PlayDiaglog(AudioClip dialog)

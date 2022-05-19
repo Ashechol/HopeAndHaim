@@ -58,8 +58,14 @@ public class Door : MonoBehaviour, ICanInteract
 
     public void Interact()
     {
-        if (!_isOpen && (!isLock || GameManager.Instance.haim.hasKey))
+        if (!_isOpen)
         {
+            if (isLock && !GameManager.Instance.haim.hasKey)
+            {
+                UIManager.Instance.ShowDoorLockTip();
+                return;
+            }
+
             _anim.SetBool("open", true);
             _isOpen = true;
             _coll.enabled = false;

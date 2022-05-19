@@ -31,19 +31,19 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneStart();
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode Two")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
             EpisodeTwoStart();
     }
 
     void Update()
     {
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode Two")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
             EpisodeTwoUpdate();
     }
 
@@ -100,6 +100,7 @@ public class GameManager : Singleton<GameManager>
     void EpisodeTwoStart()
     {
         gameMode = GameMode.Normal;
+        UIManager.Instance.ShowBeginingTip();
     }
 
     void EpisodeTwoUpdate()
