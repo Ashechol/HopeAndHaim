@@ -9,8 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : Singleton<UIManager>, IGameObserver
 {
-    private Scene _currentScene;
-
     //全屏黑幕
     public Image curtain;
 
@@ -21,10 +19,16 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
+    public TipsUI tipsUI;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
-        _currentScene = SceneManager.GetActiveScene();
         GameManager.Instance.AddObserver(this);
     }
 
@@ -35,13 +39,14 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void Update()
     {
-        if (_currentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
     }
 
     private void EpisodeOneUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.C)) {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
             _underCurtain = !_underCurtain;
             curtain.gameObject.SetActive(_underCurtain);
         }
@@ -50,7 +55,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示对话框
     public void DisplayDialogue(string txt, int size)
     {
-        if (!dialogue.gameObject.activeSelf) {
+        if (!dialogue.gameObject.activeSelf)
+        {
             //Debug.Log("显示对话框");
             dialogue.gameObject.SetActive(true);
         }
@@ -63,19 +69,45 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public void CleanDialogue()
     {
         //不知道为什么会出现空引用，显示 Text 已被摧毁
-        if (dialogue == null) {
+        if (dialogue == null)
+        {
             return;
         }
 
-        if (dialogue.gameObject.activeSelf) {
+        if (dialogue.gameObject.activeSelf)
+        {
             dialogue.text = "";
 
             dialogue.gameObject.SetActive(false);
         }
     }
 
+    public void ShowInformation(Sprite information)
+    {
+        infomationPanel.SetActive(true);
+        infomationPanel.GetComponent<InfomationUI>().SetInformation(information);
+    }
+
+    public void CloseInformation()
+    {
+        infomationPanel.SetActive(false);
+    }
+
+    public void ShowBeginingTip()
+    {
+        if (tipsUI != null)
+            StartCoroutine(tipsUI.beginingTip.ShowTip());
+    }
+
+    public void ShowDoorLockTip()
+    {
+        StartCoroutine(tipsUI.DoorLockTip());
+    }
+
     public void GameOverNotify()
     {
         gameOverPanel.SetActive(true);
+        tipsUI.gameObject.SetActive(false);
+        infomationPanel.SetActive(false);
     }
 }

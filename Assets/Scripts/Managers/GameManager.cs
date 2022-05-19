@@ -21,19 +21,29 @@ public class GameManager : Singleton<GameManager>
     public Hope hope;
     // Haim one of the main actors
     public Haim haim;
+    public DialogController dialog;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneStart();
+
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
+            EpisodeTwoStart();
     }
 
     void Update()
     {
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode One")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode Two")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
             EpisodeTwoUpdate();
     }
 
@@ -42,11 +52,6 @@ public class GameManager : Singleton<GameManager>
     public void RegisterHope(Hope hope)
     {
         this.hope = hope;
-    }
-
-    public void RegisterHaim(Haim haim)
-    {
-        this.haim = haim;
     }
 
     public void AddObserver(IGameObserver observer)
@@ -62,10 +67,12 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneStart()
     {
         //根据 Director 状态设置 GameMode
-        if (TimelineManager.Instance.currentDirector.playOnAwake) {
+        if (TimelineManager.Instance.currentDirector.playOnAwake)
+        {
             gameMode = GameMode.GamePlay;
         }
-        else {
+        else
+        {
             gameMode = GameMode.Normal;
         }
     }
@@ -73,23 +80,35 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneUpdate()
     {
         //对话暂停时，需要按键恢复
-        if (gameMode == GameMode.DialogueMoment) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+        if (gameMode == GameMode.DialogueMoment)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 TimelineManager.Instance.ResumeTimeline();
             }
         }
         //加速播放，调试用
-        else if (gameMode == GameMode.GamePlay) {
-            if (Input.GetKeyDown(KeyCode.Q)) {
+        else if (gameMode == GameMode.GamePlay)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
                 TimelineManager.Instance.SpeedUp();
             }
         }
     }
 
+    void EpisodeTwoStart()
+    {
+        gameMode = GameMode.Normal;
+        UIManager.Instance.ShowBeginingTip();
+    }
+
     void EpisodeTwoUpdate()
     {
-        if (gameMode == GameMode.GameOver) {
-            foreach (var observer in _observers) {
+        if (gameMode == GameMode.GameOver)
+        {
+            foreach (var observer in _observers)
+            {
                 observer.GameOverNotify();
             }
         }
