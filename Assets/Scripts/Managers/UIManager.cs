@@ -29,6 +29,9 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         _currentScene = SceneManager.GetActiveScene();
         GameManager.Instance.AddObserver(this);
+
+        if (_currentScene.name == "Start Scene")
+            StartScene_Start();
     }
 
     void OnDisale()
@@ -38,7 +41,9 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void Update()
     {
-        if (_currentScene.name == "Episode One")
+        if (_currentScene.name == "Start Scene")
+            StartScene_Update();
+        else if (_currentScene.name == "Episode One")
             EpisodeOneUpdate();
     }
 
@@ -106,4 +111,75 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         gameOverPanel.SetActive(true);
     }
+
+    #region 开始界面
+    private Fader _faderStartScene;
+
+    private Image _logoOfStartScene;
+
+    private CanvasGroup _menuOfStartScene;
+
+    private bool _isFadingStartScene = false;
+
+    //标题渐入
+    private void LogoFadeIn()
+    {
+        _logoOfStartScene.color = Color.Lerp(_logoOfStartScene.color, Color.white, 1f * Time.deltaTime);
+    }
+
+    //菜单渐入
+    private void MenuFadeIn()
+    {
+        _menuOfStartScene.alpha = Mathf.Lerp(_menuOfStartScene.alpha, 1, 1f * Time.deltaTime);
+    }
+
+    private void ClickBtnStart()
+    {
+        Debug.Log("开始按钮");
+    }
+
+    private void ClickBtnQuit()
+    {
+        Debug.Log("退出按钮");
+    }
+
+    private void StartFadeIn()
+    {
+        //开始渐入
+        _isFadingStartScene = true;
+    }
+
+    private void StartScene_Start()
+    {
+        _faderStartScene = GameObject.Find("Fader").GetComponent<Fader>();
+        _faderStartScene.AddEndAction(StartFadeIn);
+
+        _logoOfStartScene = GameObject.Find("Logo").GetComponent<Image>();
+
+        GameObject menu = GameObject.Find("Menu");
+        _menuOfStartScene = menu.GetComponent<CanvasGroup>();
+        menu.transform.Find("BtnStart").GetComponent<Button>().onClick.AddListener(ClickBtnStart);
+        menu.transform.Find("BtnQuit").GetComponent<Button>().onClick.AddListener(ClickBtnQuit);
+    }
+
+    private void StartScene_Update()
+    {
+        if (_isFadingStartScene) {
+            //标题渐入
+            LogoFadeIn();
+
+            //菜单渐入
+            if (_logoOfStartScene.color.a >= 0.9) {
+                _logoOfStartScene.color = Color.white;
+
+                MenuFadeIn();
+
+                if (_menuOfStartScene.alpha >= 0.9) {
+                    _menuOfStartScene.alpha = 1;
+                    _isFadingStartScene = false;
+                }
+            }
+        }
+    }
+    #endregion
 }

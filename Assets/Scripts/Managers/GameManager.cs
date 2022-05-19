@@ -129,4 +129,5 @@ public class GameManager : Singleton<GameManager>
     {
         return gameMode == GameMode.Normal;
     }
+
 }
