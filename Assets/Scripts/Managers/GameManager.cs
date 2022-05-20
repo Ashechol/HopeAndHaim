@@ -136,7 +136,7 @@ public class GameManager : Singleton<GameManager>
             //中断玩家输入
             if (gameMode == GameMode.Gameplay) {
                 Debug.Log("第一幕最后演出");
-                gameMode = GameMode.Dialog;
+                gameMode = GameMode.Timeline;
                 hope.StopHope();
                 //播放开门声
                 hope.HearSource.clip = AudioManager.Instance.openDoorClip;
