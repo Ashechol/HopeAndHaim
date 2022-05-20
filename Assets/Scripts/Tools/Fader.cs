@@ -17,13 +17,13 @@ public abstract class Fader<T> : MonoBehaviour
     //淡入淡出速度
     public float fSpeed = 1f;
     //结束阈值
-    public float threshold = 0.08f;
+    public float threshold = 0.05f;
     //是否为淡入
     public bool isFadeIn = true;
     //是否结束
     public bool isEnd = false;
     //结束时执行函数
-    public event UnityAction _actions;
+    public event UnityAction endActions;
 
     //是否为第一次执行
     private bool _isFirstTime = true;
@@ -39,13 +39,13 @@ public abstract class Fader<T> : MonoBehaviour
     //开始淡入
     protected virtual void FadeInStart()
     {
-        Debug.Log("开始淡入");
+        //Debug.Log("开始淡入");
     }
 
     //开始淡出
     protected virtual void FadeOutStart()
     {
-        Debug.Log("开始淡出");
+        //Debug.Log("开始淡出");
     }
 
     protected virtual void Start()
@@ -88,8 +88,8 @@ public abstract class Fader<T> : MonoBehaviour
     //淡入淡出结束
     protected virtual void AllEnd()
     {
-        Debug.Log("淡入淡出结束");
-        _actions?.Invoke();
+        //Debug.Log("淡入淡出结束");
+        endActions?.Invoke();
     }
 
     public void StartFading()

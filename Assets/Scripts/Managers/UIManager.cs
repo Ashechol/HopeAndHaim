@@ -34,11 +34,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         GameManager.Instance.AddObserver(this);
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Start Scene")
-            StartScene_Start();
-
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
-        {
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1") {
             GameObject.Instantiate(episodeOneCanvas);
             curtain = episodeOneCanvas.transform.GetChild(0).GetComponent<Image>();
             var panel = episodeOneCanvas.transform.GetChild(1);
@@ -46,8 +42,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
             hint = panel.GetChild(1).GetComponent<Text>();
         }
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
-        {
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2") {
             GameObject.Instantiate(episodeTwoCanvas);
         }
     }
@@ -59,10 +54,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void Update()
     {
-        //if (SceneLoadManager.Instance.CurrentScene.name == "Start Scene")
-        //    StartScene_Update();
-        //else if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
-        //    EpisodeOneUpdate();
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
+            EpisodeOneUpdate();
     }
 
     private void EpisodeOneUpdate()
