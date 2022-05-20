@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     [Header("Episode Two UI")]
     public GameObject gameOverPanel;
+    public GameObject lastQuestionPanel;
     public GameObject infomationPanel;
     public TipsUI tipsUI;
 

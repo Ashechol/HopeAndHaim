@@ -85,9 +85,6 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeOneUpdate()
     {
-        // SceneLoad Debug
-        if (Input.GetKeyDown(KeyCode.End))
-            SceneLoadManager.Instance.LoadLevel("Episode-2");
 
         //对话暂停时，需要按键恢复
         if (gameMode == GameMode.Dialog) {
