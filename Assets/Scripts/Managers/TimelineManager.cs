@@ -51,12 +51,10 @@ public class TimelineManager : Singleton<TimelineManager>
     public void SpeedUp()
     {
         isSpeedUp = !isSpeedUp;
-        if (isSpeedUp)
-        {
+        if (isSpeedUp) {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(5);
         }
-        else
-        {
+        else {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
         }
     }
@@ -64,10 +62,15 @@ public class TimelineManager : Singleton<TimelineManager>
     //解决 Timeline bug, 手动置剧情语音 Source 停止播放
     public void StopAudioSource()
     {
-        if (_hope != null)
-        {
+        if (_hope != null) {
             _hope.HearSource.Stop();
         }
+    }
+
+    //特殊的跳过第一幕开头语音数秒, 因为实在静止太久了
+    public void Skip5sInEpisodeOne()
+    {
+        currentDirector.time = 6;
     }
     #endregion
 }

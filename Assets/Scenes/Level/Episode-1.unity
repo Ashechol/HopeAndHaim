@@ -1530,7 +1530,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 600e493b17467ca45adf0ff3b80859f7, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -1613,6 +1613,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 8f12747ebaf83a145a82efba7809c5c8, type: 2}
     - {fileID: 11400000, guid: a675a539a672cf64ba24b26569924103, type: 2}
     - {fileID: 11400000, guid: bb3e6536b3061ff488ee5456432b70c4, type: 2}
+    - {fileID: 11400000, guid: 050967038bf2b8a499814e2fb11582fa, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1745,6 +1746,20 @@ MonoBehaviour:
         - m_Target: {fileID: 873944317}
           m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
           m_MethodName: StopAudioSource
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 873944317}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+          m_MethodName: Skip5sInEpisodeOne
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
