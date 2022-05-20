@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     dialogueLine: "\u3010\u8BF7\u6309 E \u952E\uFF0C\u6361\u8D77\u5BF9\u8BB2\u673A\u3011"
-    dialogueSize: 30
+    dialogueSize: 56
     requirePause: 1
 --- !u!114 &3951039677523317543
 MonoBehaviour:
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     dialogueLine: "\u3010\u6309\u4F4FW\u952E\u524D\u8FDB\uFF0CS\u952E\u540E\u9000\u3002\u6309\u4E0BA\u952E\u5DE6\u8F6C90\u5EA6\uFF0CD\u952E\u53F3\u8F6C90\u5EA6\u3011"
-    dialogueSize: 28
+    dialogueSize: 56
     requirePause: 0
 --- !u!114 &6863779141485460612
 MonoBehaviour:
