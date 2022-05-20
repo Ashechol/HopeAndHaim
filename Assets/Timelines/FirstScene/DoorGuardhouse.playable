@@ -480,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: 59d77efe09c5e5c4ca045a786237044e, type: 3}
+  m_Clip: {fileID: 8300000, guid: 8691379a440b4404b8bb6ef9ae6cc7b8, type: 3}
   m_Loop: 0
   m_bufferingTime: 0.1
   m_ClipProperties:

@@ -68,4 +68,25 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     {
         StartCoroutine(LoadScene("Ending"));
     }
+
+    #region ArnoClare
+    private AsyncOperation _preloadAsync;
+    public bool finishPreload => _preloadAsync.isDone;
+    IEnumerator PreloadScene(string sceneName)
+    {
+        _preloadAsync = SceneManager.LoadSceneAsync(sceneName);
+        _preloadAsync.allowSceneActivation = false;
+        while (!_preloadAsync.isDone) {
+            yield return null;
+        }
+    }
+    public void PreloadLevel(string sceneName)
+    {
+        StartCoroutine(PreloadScene(sceneName));
+    }
+    public void LoadIn()
+    {
+        _preloadAsync.allowSceneActivation = true;
+    }
+    #endregion
 }
