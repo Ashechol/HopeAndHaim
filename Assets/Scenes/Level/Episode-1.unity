@@ -828,11 +828,8 @@ MonoBehaviour:
   gameMode: 1
   hope: {fileID: 1011864770}
   haim: {fileID: 0}
-<<<<<<< HEAD
-  isEpisodeOneEnd: 0
-=======
   dialog: {fileID: 0}
->>>>>>> dev-ash
+  isEpisodeOneEnd: 0
 --- !u!4 &436486871
 Transform:
   m_ObjectHideFlags: 0
@@ -1335,7 +1332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25.944}
+  m_AnchoredPosition: {x: 0, y: 25.94397}
   m_SizeDelta: {x: -200, y: 144.8819}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &852404214
@@ -17023,7 +17020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1425761444
 MonoBehaviour:
   m_ObjectHideFlags: 0

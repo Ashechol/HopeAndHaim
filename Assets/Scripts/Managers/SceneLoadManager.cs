@@ -58,9 +58,9 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         if (skipBegining == false)
         {
             skipBegining = true;
-            GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
-            UIManager.Instance.gameOverPanel.SetActive(false);
         }
+        GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
+        UIManager.Instance.gameOverPanel.SetActive(false);
 
         StartCoroutine(LoadScene(CurrentScene.name));
     }
