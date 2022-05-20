@@ -19,29 +19,36 @@ public class Middle1t2Process : MonoBehaviour
 
     private void Update()
     {
-        if (_canSkip) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
+        if (_canSkip)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
                 //跳过处理
                 video.Stop();
             }
         }
-        else if (video.isPlaying && video.time >= 10) {
+        else if (video.isPlaying && video.time >= 10)
+        {
             _canSkip = true;
             _showHint = true;
         }
 
-        if (_showHint && video.isPlaying) {
-            if (video.time <= 20) {
+        if (_showHint && video.isPlaying)
+        {
+            if (video.time <= 20)
+            {
                 hint.StartFading();
             }
-            else {
+            else
+            {
                 hint.isFadeIn = false;
                 hint.Reset();
                 hint.StartFading();
             }
         }
 
-        if (_canSkip && !video.isPlaying) {
+        if (_canSkip && !video.isPlaying)
+        {
             LoadNextScene();
         }
     }

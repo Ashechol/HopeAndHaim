@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(this);
     }
 
     //第一幕进入结束状态
@@ -75,10 +76,12 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneStart()
     {
         //根据 Director 状态设置 GameMode
-        if (TimelineManager.Instance.currentDirector.playOnAwake) {
+        if (TimelineManager.Instance.currentDirector.playOnAwake)
+        {
             gameMode = GameMode.Timeline;
         }
-        else {
+        else
+        {
             gameMode = GameMode.Gameplay;
         }
     }
@@ -87,14 +90,18 @@ public class GameManager : Singleton<GameManager>
     {
 
         //对话暂停时，需要按键恢复
-        if (gameMode == GameMode.Dialog) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+        if (gameMode == GameMode.Dialog)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 TimelineManager.Instance.ResumeTimeline();
             }
         }
         //加速播放，调试用
-        else if (gameMode == GameMode.Timeline) {
-            if (Input.GetKeyDown(KeyCode.L)) {
+        else if (gameMode == GameMode.Timeline)
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
                 TimelineManager.Instance.SpeedUp();
             }
         }
@@ -109,13 +116,16 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeTwoUpdate()
     {
-        if (gameMode == GameMode.GameOver) {
-            foreach (var observer in _observers) {
+        if (gameMode == GameMode.GameOver)
+        {
+            foreach (var observer in _observers)
+            {
                 observer.GameOverNotify();
             }
         }
 
-        if (GameManager.Instance.gameMode == GameManager.GameMode.Dialog) {
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Dialog)
+        {
             if (Input.anyKey && !Input.GetKeyDown(KeyCode.E))
                 UIManager.Instance.ShowSkipTip();
         }
@@ -124,9 +134,11 @@ public class GameManager : Singleton<GameManager>
     //第一幕结束逻辑
     private void EpisodeOneEnd()
     {
-        if (isEpisodeOneEnd) {
+        if (isEpisodeOneEnd)
+        {
             //中断玩家输入
-            if (gameMode == GameMode.Gameplay) {
+            if (gameMode == GameMode.Gameplay)
+            {
                 Debug.Log("第一幕最后演出");
                 gameMode = GameMode.Dialog;
                 hope.StopHope();
@@ -136,7 +148,8 @@ public class GameManager : Singleton<GameManager>
                 hope.HearSource.Play();
             }
             //开门语音播放完毕
-            else if (!hope.HearSource.isPlaying) {
+            else if (!hope.HearSource.isPlaying)
+            {
                 Debug.Log("第一幕结束");
                 //TODO: 播放间幕
                 SceneLoadManager.Instance.LoadLevel("Middle-1-2");
