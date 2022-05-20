@@ -141,7 +141,6 @@ public class GameManager : Singleton<GameManager>
             //开门语音播放完毕
             else if (!hope.HearSource.isPlaying) {
                 Debug.Log("第一幕结束");
-                //TODO: 播放间幕
                 SceneLoadManager.Instance.LoadLevel("Middle-1-2");
             }
         }
