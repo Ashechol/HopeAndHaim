@@ -33,16 +33,21 @@ public class Ending : MonoBehaviour
                 break;
         }
 
-        videoPlayer.Play();
+        StartCoroutine(PlayEndingMovie());
+
     }
 
-    void Update()
+    IEnumerator PlayEndingMovie()
     {
-        Debug.Log(videoPlayer.isPlaying);
+        videoPlayer.Play();
 
-        //TODO: 过场动画播放完回到主菜单
-        // if (!videoPlayer.isPlaying)
-        //     SceneLoadManager.Instance.LoadMainMenu();
+        while (!videoPlayer.isPlaying)
+            yield return null;
+
+        while (videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.Space))
+            yield return null;
+
+        SceneLoadManager.Instance.LoadMainMenu();
     }
 
 }

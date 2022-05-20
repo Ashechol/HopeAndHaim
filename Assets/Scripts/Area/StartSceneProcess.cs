@@ -50,7 +50,8 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
         //淡入后，菜单淡入
         logo.endActions += menu.StartFading;
         //菜单开始淡入时，才激活按钮
-        logo.endActions += () => {
+        logo.endActions += () =>
+        {
             btnStart.enabled = true;
             btnQuit.enabled = true;
         };
@@ -114,18 +115,22 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
         asyncOperation.allowSceneActivation = false;
 
         //加载中
-        while (!asyncOperation.isDone) {
+        while (!asyncOperation.isDone)
+        {
 
             //如果内容还没显示完，则不进行下一步
-            while (!content.isEnd) {
+            while (!content.isEnd)
+            {
                 yield return null;
             }
 
             //加载完成
-            if (asyncOperation.progress >= 0.9f) {
+            if (asyncOperation.progress >= 0.9f)
+            {
                 //显示空格提示
                 hint.StartFading();
-                if (Input.GetKeyDown(KeyCode.Space)) {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
                     //播放空格音效
                     audioSource.clip = spaceClip;
                     audioSource.Play();
@@ -139,7 +144,8 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
                     fader.StartFading();
 
                     //等待淡出结束
-                    while (!bgm.isEnd || !fader.isEnd) {
+                    while (!bgm.isEnd || !fader.isEnd)
+                    {
                         yield return null;
                     }
 

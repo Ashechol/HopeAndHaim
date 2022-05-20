@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 1
+  gameEnding: 0
   hope: {fileID: 0}
   haim: {fileID: 0}
   dialog: {fileID: 0}
@@ -85,11 +86,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fd1f23cf5cb144d80c5038810c6a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  episodeOneCanvas: {fileID: 3823266634243674346, guid: 707af50d643a8764d85d78157f97391b, type: 3}
   curtain: {fileID: 0}
   dialogue: {fileID: 0}
   hint: {fileID: 0}
-  episodeTwoCanvas: {fileID: 8393478859734848511, guid: 9da840d3793b6f54885e1c16e92988b2, type: 3}
   gameOverPanel: {fileID: 0}
   infomationPanel: {fileID: 0}
   tipsUI: {fileID: 0}
@@ -118,4 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0057054bfc17f1948833cee7fec74765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneFaderPrefab: {fileID: 3180402193033908543, guid: 8a17a7d37f565074881791226dae64e6, type: 3}
   skipBegining: 0
+  fadeInDuration: 2
+  fadeOutDuration: 2

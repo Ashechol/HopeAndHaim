@@ -62,7 +62,7 @@ public class Haim : MonoBehaviour
         GameManager.Instance.haim = null;
     }
 
-    void SetDestination(Vector3 pos)
+    public void SetDestination(Vector3 pos)
     {
         if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
         {
