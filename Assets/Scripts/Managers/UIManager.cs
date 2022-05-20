@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>, IGameObserver
 {
     [Header("Episode One UI")]
-    public GameObject episodeOneCanvas;
     //全屏黑幕
     public Image curtain;
     private bool _underCurtain = true;
@@ -20,7 +19,6 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public Text hint;
 
     [Header("Episode Two UI")]
-    public GameObject episodeTwoCanvas;
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
     public TipsUI tipsUI;
@@ -33,18 +31,6 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     void Start()
     {
         GameManager.Instance.AddObserver(this);
-
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1") {
-            GameObject.Instantiate(episodeOneCanvas);
-            curtain = episodeOneCanvas.transform.GetChild(0).GetComponent<Image>();
-            var panel = episodeOneCanvas.transform.GetChild(1);
-            dialogue = panel.GetChild(0).GetComponent<Text>();
-            hint = panel.GetChild(1).GetComponent<Text>();
-        }
-
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2") {
-            GameObject.Instantiate(episodeTwoCanvas);
-        }
     }
 
     void OnDisale()
@@ -70,7 +56,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示对话框
     public void DisplayDialogue(string txt, int size)
     {
-        if (!dialogue.gameObject.activeSelf) {
+        if (!dialogue.gameObject.activeSelf)
+        {
             //Debug.Log("显示对话框");
             dialogue.gameObject.SetActive(true);
         }
@@ -83,11 +70,13 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public void CleanDialogue()
     {
         //不知道为什么会出现空引用，显示 Text 已被摧毁
-        if (dialogue == null) {
+        if (dialogue == null)
+        {
             return;
         }
 
-        if (dialogue.gameObject.activeSelf) {
+        if (dialogue.gameObject.activeSelf)
+        {
             dialogue.text = "";
 
             dialogue.gameObject.SetActive(false);
@@ -97,7 +86,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示游戏提示
     public void DisplayHint(string txt, int size)
     {
-        if (!hint.gameObject.activeSelf) {
+        if (!hint.gameObject.activeSelf)
+        {
             hint.gameObject.SetActive(true);
         }
 
@@ -108,11 +98,13 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //隐藏提示框
     public void CleanHint()
     {
-        if (hint == null) {
+        if (hint == null)
+        {
             return;
         }
 
-        if (hint.gameObject.activeSelf) {
+        if (hint.gameObject.activeSelf)
+        {
             hint.text = "";
 
             hint.gameObject.SetActive(false);
@@ -134,6 +126,12 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         if (tipsUI != null)
             StartCoroutine(tipsUI.beginingTip.ShowTip());
+    }
+
+    public void ShowSkipTip()
+    {
+        if (tipsUI != null)
+            tipsUI.beginingTip.ShowSkipTip(2);
     }
 
     public void ShowDoorLockTip()
