@@ -18,7 +18,6 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this);
     }
 
     void Start()
@@ -28,14 +27,13 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     IEnumerator LoadScene(string sceneName)
     {
-        // 开始加载画面渐出
-        // SceneFader fade = Instantiate(sceneFaderPrefab);
-        // yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
+        SceneFader fade = Instantiate(sceneFaderPrefab);
+        yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
+
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
-        // 加载完毕画面渐进
-        // yield return StartCoroutine(fade.FadeIn(fadeInDuration));
+        yield return StartCoroutine(fade.FadeIn(fadeInDuration));
 
         yield break;
     }
