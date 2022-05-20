@@ -46,6 +46,5 @@ public class CanvasGroupFader : Fader<CanvasGroup>
     protected override void FadeOutEnd()
     {
         target.alpha = 0;
-        target.enabled = false;
     }
 }

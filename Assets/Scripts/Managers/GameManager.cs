@@ -17,9 +17,12 @@ public class GameManager : Singleton<GameManager>
         Hacking,        // 玩家黑入摄像机
         GameOver        // 游戏结束
     }
+
+    public enum GameEnding { NewLife, Exile, Obey }
     List<IGameObserver> _observers = new List<IGameObserver>();
 
     public GameMode gameMode;
+    public GameEnding gameEnding;
     public Hope hope;
     // Haim one of the main actors
     public Haim haim;
@@ -111,7 +114,6 @@ public class GameManager : Singleton<GameManager>
     void EpisodeTwoStart()
     {
         gameMode = GameMode.Gameplay;
-        UIManager.Instance.ShowBeginingTip();
     }
 
     void EpisodeTwoUpdate()
@@ -122,6 +124,12 @@ public class GameManager : Singleton<GameManager>
             {
                 observer.GameOverNotify();
             }
+        }
+
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Dialog)
+        {
+            if (Input.anyKey && !Input.GetKeyDown(KeyCode.E))
+                UIManager.Instance.ShowSkipTip();
         }
     }
 

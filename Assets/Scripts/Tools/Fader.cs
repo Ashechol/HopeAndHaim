@@ -17,18 +17,31 @@ public abstract class Fader<T> : MonoBehaviour
     //淡入淡出速度
     public float fSpeed = 1f;
     //结束阈值
-    public float threshold = 0.08f;
+    public float threshold = 0.05f;
     //是否为淡入
     public bool isFadeIn = true;
     //是否结束
     public bool isEnd = false;
     //结束时执行函数
-    public event UnityAction _actions;
+    public event UnityAction endActions;
 
     //是否为第一次执行
     private bool _isFirstTime = true;
     //是否正在淡入淡出中
     private bool _isFading = false;
+
+    //重置状态
+    public void Reset()
+    {
+        if (isFadeIn) {
+            FadeInInit();
+        }
+        else {
+            FadeOutInit();
+        }
+        isEnd = false;
+        _isFirstTime = false;
+    }
 
     //淡入初始化
     protected abstract void FadeInInit();
@@ -39,30 +52,34 @@ public abstract class Fader<T> : MonoBehaviour
     //开始淡入
     protected virtual void FadeInStart()
     {
-        Debug.Log("开始淡入");
+        //Debug.Log("开始淡入");
     }
 
     //开始淡出
     protected virtual void FadeOutStart()
     {
-        Debug.Log("开始淡出");
+        //Debug.Log("开始淡出");
     }
 
     protected virtual void Start()
     {
-        if (target == null) {
+        if (target == null)
+        {
             target = GetComponent<T>();
         }
 
         //target 初始化
-        if (isFadeIn) {
+        if (isFadeIn)
+        {
             FadeInInit();
         }
-        else {
+        else
+        {
             FadeOutInit();
         }
 
-        if (startOnWake) {
+        if (startOnWake)
+        {
             StartFading();
         }
     }
@@ -88,8 +105,8 @@ public abstract class Fader<T> : MonoBehaviour
     //淡入淡出结束
     protected virtual void AllEnd()
     {
-        Debug.Log("淡入淡出结束");
-        _actions?.Invoke();
+        //Debug.Log("淡入淡出结束");
+        endActions?.Invoke();
     }
 
     public void StartFading()
@@ -100,22 +117,28 @@ public abstract class Fader<T> : MonoBehaviour
     protected virtual void Update()
     {
         //开始淡入淡出
-        if (_isFirstTime && _isFading) {
-            if (isFadeIn) {
+        if (_isFirstTime && _isFading)
+        {
+            if (isFadeIn)
+            {
                 FadeInStart();
             }
-            else {
+            else
+            {
                 FadeOutStart();
             }
             _isFirstTime = false;
         }
 
         //淡入淡出
-        if (_isFading) {
+        if (_isFading)
+        {
             //淡入
-            if (isFadeIn) {
+            if (isFadeIn)
+            {
                 FadeIn();
-                if (IsFadeInEnd()) {
+                if (IsFadeInEnd())
+                {
                     FadeInEnd();
                     _isFading = false;
 
@@ -125,9 +148,11 @@ public abstract class Fader<T> : MonoBehaviour
                 }
             }
             //淡出
-            else {
+            else
+            {
                 FadeOut();
-                if (IsFadeOutEnd()) {
+                if (IsFadeOutEnd())
+                {
                     FadeOutEnd();
                     _isFading = false;
 
