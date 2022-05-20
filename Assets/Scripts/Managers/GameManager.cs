@@ -111,7 +111,6 @@ public class GameManager : Singleton<GameManager>
     void EpisodeTwoStart()
     {
         gameMode = GameMode.Gameplay;
-        UIManager.Instance.ShowBeginingTip();
     }
 
     void EpisodeTwoUpdate()
@@ -122,6 +121,12 @@ public class GameManager : Singleton<GameManager>
             {
                 observer.GameOverNotify();
             }
+        }
+
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Dialog)
+        {
+            if (Input.anyKey && !Input.GetKeyDown(KeyCode.E))
+                UIManager.Instance.ShowSkipTip();
         }
     }
 
