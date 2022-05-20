@@ -64,8 +64,8 @@ public class Fader : MonoBehaviour
             }
         }
         else {
-            isEnd = true;
             _actions?.Invoke();
+            isEnd = true;
         }
     }
 
