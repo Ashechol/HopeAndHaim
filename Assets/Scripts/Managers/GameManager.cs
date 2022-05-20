@@ -29,6 +29,9 @@ public class GameManager : Singleton<GameManager>
         DontDestroyOnLoad(this);
     }
 
+    //第一幕进入结束状态
+    public bool isEpisodeOneEnd = false;
+
     void Start()
     {
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
@@ -95,6 +98,8 @@ public class GameManager : Singleton<GameManager>
                 TimelineManager.Instance.SpeedUp();
             }
         }
+
+        EpisodeOneEnd();
     }
 
     void EpisodeTwoStart()
@@ -114,6 +119,28 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    //第一幕结束逻辑
+    private void EpisodeOneEnd()
+    {
+        if (isEpisodeOneEnd) {
+            //中断玩家输入
+            if (gameMode == GameMode.Normal) {
+                Debug.Log("第一幕最后演出");
+                gameMode = GameMode.GamePlay;
+                hope.StopHope();
+                //播放开门声
+                hope.HearSource.clip = AudioManager.Instance.openDoorClip;
+                hope.HearSource.loop = false;
+                hope.HearSource.Play();
+            }
+            //开门语音播放完毕
+            else if (!hope.HearSource.isPlaying) {
+                Debug.Log("第一幕结束");
+                //TODO: 播放间幕
+            }
+        }
+    }
+
     /// <summary>
     /// 判断当前的游戏模式是否接收用户输入
     /// </summary>
@@ -121,4 +148,5 @@ public class GameManager : Singleton<GameManager>
     {
         return gameMode == GameMode.Normal;
     }
+
 }

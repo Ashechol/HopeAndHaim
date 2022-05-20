@@ -48,6 +48,9 @@ public class Hope : MonoBehaviour
     //移动中
     private bool _isMoving;
     public bool IsMoving => _isMoving;
+    //静置行为
+    private bool _isInStatic = false;
+    public bool IsInStatic => _isInStatic;
     #endregion
 
     #region 剧情参数
@@ -157,27 +160,21 @@ public class Hope : MonoBehaviour
     //播放 Hope 静态语音
     private void VoiceStatic()
     {
-        //在没有移动时增加时间
-        if (!_isMoving) {
-            _staticTime += Time.deltaTime;
-        }
-        //移动时清空时间
-        else {
-            _staticTime = 0;
+        //适合触发时：没有播放剧情语音，也没有播放撞墙语音
+        if (!_hearSource.isPlaying && !_speakSource.isPlaying) {
+            Debug.Log("Hope 触发静置语音");
+            _speakSource.clip = AudioManager.Instance.GetHopeStaticClip();
+            _speakSource.loop = false;
+            _speakSource.volume = 1;
+            _speakSource.Play();
         }
 
-        //时间到达触发阈值
-        if (_staticTime >= staticPlotThreshold) {
-            //适合触发时：没有播放剧情语音，也没有播放撞墙语音
-            if (!_hearSource.isPlaying && !_speakSource.isPlaying) {
-                Debug.Log("Hope 触发静置语音");
-                _speakSource.clip = AudioManager.Instance.GetHopeStaticClip();
-                _speakSource.loop = false;
-                _speakSource.volume = 1;
-                _speakSource.Play();
-            }
-            //不论是否播放都清空，否则播放时也会计时，会显得语音连接的太紧
-            _staticTime = 0;
+    }
+
+    private void StaticInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            GameManager.Instance.isEpisodeOneEnd = true;
         }
     }
 
@@ -240,6 +237,48 @@ public class Hope : MonoBehaviour
         }
     }
 
+    //Hope 静置逻辑
+    private void HopeStatic()
+    {
+        //静置状态
+        if (_isInStatic) {
+            //接收静置输入
+            StaticInput();
+
+            //触发静置语音
+            VoiceStatic();
+
+            //静置状态解除
+            if (_isMoving) {
+                _isInStatic = false;
+                //隐藏提示
+                UIManager.Instance.CleanHint();
+            }
+        }
+        //非静置状态
+        else {
+            //不移动增加时间
+            if (!_isMoving) {
+                _staticTime += Time.deltaTime;
+            }
+            //移动清空
+            else {
+                _staticTime = 0;
+            }
+
+            //进入静置
+            if (_staticTime >= staticPlotThreshold) {
+                _isInStatic = true;
+
+                //静置状态下不记录静置时间
+                _staticTime = 0;
+
+                //显示静置提示
+                UIManager.Instance.DisplayHint("点击空格键跳过该关卡", 30);
+            }
+        }
+    }
+
     #endregion
 
     #region 循环函数
@@ -266,8 +305,8 @@ public class Hope : MonoBehaviour
         //在输入模式下才接收输入
         if (GameManager.Instance.CanInput()) {
             PlayerInput();
-            //在非角色行动时不应该播放静止语音
-            VoiceStatic();
+            //在非角色行动时不应该执行静置行为
+            HopeStatic();
         }
         //检查剧情语音时，是否有静置语音
         if (_hearSource.isPlaying) {

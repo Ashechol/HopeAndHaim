@@ -225,7 +225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fontSize: 30
   plotClip: {fileID: 8300000, guid: 7c2b925039e529241bcb6733f67e0aee, type: 3}
-  openDoorClip: {fileID: 8300000, guid: 8691379a440b4404b8bb6ef9ae6cc7b8, type: 3}
 --- !u!1 &79918924
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +436,7 @@ GameObject:
   - component: {fileID: 134139050}
   - component: {fileID: 134139049}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,8 +458,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -68.00001, y: -40}
+  m_AnchoredPosition: {x: 0, y: 18.4}
+  m_SizeDelta: {x: -68, y: -69.2095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134139049
 MonoBehaviour:
@@ -829,6 +828,7 @@ MonoBehaviour:
   gameMode: 1
   hope: {fileID: 1011864770}
   haim: {fileID: 0}
+  isEpisodeOneEnd: 0
 --- !u!4 &436486871
 Transform:
   m_ObjectHideFlags: 0
@@ -856,6 +856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intercomClip: {fileID: 8300000, guid: 49086ddd23c649245ab608e1bc015b85, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 8691379a440b4404b8bb6ef9ae6cc7b8, type: 3}
   hopeStaticClips:
   - {fileID: 8300000, guid: d13b71e892646dc4ab02d7e8828d234a, type: 3}
   - {fileID: 8300000, guid: a5b01a60b71dd5242af04721816d3e33, type: 3}
@@ -877,6 +878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curtain: {fileID: 270790436}
   dialogue: {fileID: 134139049}
+  hint: {fileID: 484452455}
   gameOverPanel: {fileID: 0}
   infomationPanel: {fileID: 0}
 --- !u!114 &436486874
@@ -972,6 +974,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &484452453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 484452454}
+  - component: {fileID: 484452456}
+  - component: {fileID: 484452455}
+  m_Layer: 5
+  m_Name: Hint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &484452454
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484452453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 852404213}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -45.3}
+  m_SizeDelta: {x: -68, y: -114}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &484452455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484452453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: df717c41110a28f4da5cc92900d6adc8, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 30
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &484452456
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484452453}
+  m_CullTransparentMesh: 1
 --- !u!1 &612634132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,13 +1324,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 134139048}
+  - {fileID: 484452454}
   m_Father: {fileID: 1425761447}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: -200, y: 127.889}
+  m_AnchoredPosition: {x: 0, y: 25.944}
+  m_SizeDelta: {x: -200, y: 144.8819}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &852404214
 MonoBehaviour:
