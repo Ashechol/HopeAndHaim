@@ -10,8 +10,8 @@ public class Haim : MonoBehaviour
     Vector3 _dest;
     Light2D _selfLight;
     Animator _anim;
-    bool _walk;
     MoveDirection _direction;
+    bool _walk;
 
     // Player Interact
     List<ICanInteract> _interactions = new List<ICanInteract>();
@@ -25,7 +25,6 @@ public class Haim : MonoBehaviour
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
-    private bool _isHacking;
     public SecurityCamera securityCamera;
     public float camSightRadius;
 
