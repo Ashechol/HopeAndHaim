@@ -1534,9 +1534,17 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 9008184210457070280, guid: 44ac1f6380694aa4fae64ad35f3b0b4e, type: 3}
+      propertyPath: farDistance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008184210457070280, guid: 44ac1f6380694aa4fae64ad35f3b0b4e, type: 3}
       propertyPath: sightRadius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9008184210457070280, guid: 44ac1f6380694aa4fae64ad35f3b0b4e, type: 3}
+      propertyPath: followCamera
+      value: 
+      objectReference: {fileID: 1710177363}
     - target: {fileID: 9008184210457070280, guid: 44ac1f6380694aa4fae64ad35f3b0b4e, type: 3}
       propertyPath: camSightRadius
       value: 4
@@ -34986,7 +34994,7 @@ MonoBehaviour:
   m_Follow: {fileID: 404794174}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 2.65
+    OrthographicSize: 2.6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -35809,7 +35817,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.65
+  orthographic size: 2.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

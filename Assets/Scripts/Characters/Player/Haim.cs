@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using Cinemachine;
 
 public enum MoveDirection { Forward, Backward, LeftRight }
 public class Haim : MonoBehaviour
@@ -27,6 +28,9 @@ public class Haim : MonoBehaviour
     public bool canHack;
     public SecurityCamera securityCamera;
     public float camSightRadius;
+    public CinemachineVirtualCamera followCamera;
+    public float farDistance = 4;
+    public float nearDistance = 2.6f;
 
     void Awake()
     {
@@ -41,6 +45,7 @@ public class Haim : MonoBehaviour
         GameManager.Instance.haim = this;
         _dest = transform.position;
         _selfLight.pointLightOuterRadius = sightRadius;
+
     }
 
     void Update()
@@ -173,6 +178,9 @@ public class Haim : MonoBehaviour
             canHack = false;
 
             GameManager.Instance.gameMode = GameManager.GameMode.Hacking;
+            followCamera.Follow = securityCamera.transform;
+            followCamera.m_Lens.OrthographicSize = farDistance;
+            // StartCoroutine(FollowCameraAway());
         }
 
         else if (GameManager.Instance.gameMode == GameManager.GameMode.Hacking)
@@ -183,8 +191,33 @@ public class Haim : MonoBehaviour
             canHack = true;
 
             GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
+            followCamera.Follow = transform;
+            followCamera.m_Lens.OrthographicSize = nearDistance;
+            // StartCoroutine(FollowCameraClose());
         }
     }
+
+    // IEnumerator FollowCameraAway()
+    // {
+    //     StopCoroutine(FollowCameraClose());
+    //     while (farDistance - followCamera.m_Lens.OrthographicSize > 0.05f)
+    //     {
+    //         followCamera.m_Lens.OrthographicSize = Mathf.Lerp(followCamera.m_Lens.OrthographicSize,
+    //                                                         farDistance, 5 * Time.deltaTime);
+    //         yield return null;
+    //     }
+    // }
+
+    // IEnumerator FollowCameraClose()
+    // {
+    //     StopCoroutine(FollowCameraAway());
+    //     while (followCamera.m_Lens.OrthographicSize - closeDistance > 0.05f)
+    //     {
+    //         followCamera.m_Lens.OrthographicSize = Mathf.Lerp(followCamera.m_Lens.OrthographicSize,
+    //                                                         closeDistance, 5 * Time.deltaTime);
+    //         yield return null;
+    //     }
+    // }
 
     public void GetSightBuff(float buffMultiplier)
     {
