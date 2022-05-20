@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 
     //第一幕进入结束状态
