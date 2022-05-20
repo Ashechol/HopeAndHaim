@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour
+public class ChoiceUI : MonoBehaviour
 {
     Button yesBtn, noBtn;
 
@@ -15,19 +15,19 @@ public class GameOverUI : MonoBehaviour
         yesBtn.onClick.AddListener(ChooseYes);
         noBtn.onClick.AddListener(ChooseNo);
     }
-    void Start()
+
+    protected virtual void Start()
     {
-        UIManager.Instance.gameOverPanel = this.gameObject;
         gameObject.SetActive(false);
     }
 
-    void ChooseYes()
+    protected virtual void ChooseYes()
     {
-        SceneLoadManager.Instance.LoadEnding(GameManager.GameEnding.Obey);
+
     }
 
-    void ChooseNo()
+    protected virtual void ChooseNo()
     {
-        SceneLoadManager.Instance.ReLoadScene();
+
     }
 }
