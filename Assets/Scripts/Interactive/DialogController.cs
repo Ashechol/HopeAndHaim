@@ -27,7 +27,7 @@ public class DialogController : MonoBehaviour
 
     IEnumerator Begining()
     {
-        GameManager.Instance.gameMode = GameManager.GameMode.DialogueMoment;
+        GameManager.Instance.gameMode = GameManager.GameMode.Dialog;
 
         _voice.clip = voiceClips[0];
         _voice.Play();
@@ -47,7 +47,7 @@ public class DialogController : MonoBehaviour
 
         UIManager.Instance.ShowBeginingTip();
 
-        GameManager.Instance.gameMode = GameManager.GameMode.Normal;
+        GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
     }
 
     public void PlayDiaglog(AudioClip dialog)

@@ -24,7 +24,6 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this);
     }
 
     void Start()

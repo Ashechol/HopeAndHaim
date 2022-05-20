@@ -24,7 +24,7 @@ public class TimelineManager : Singleton<TimelineManager>
     public void PauseTimeline()
     {
         //设置为对话暂停模式
-        GameManager.Instance.gameMode = GameManager.GameMode.DialogueMoment;
+        GameManager.Instance.gameMode = GameManager.GameMode.Dialog;
         //设置播放速度为 0, 即暂停
         currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(0);
     }
@@ -32,7 +32,7 @@ public class TimelineManager : Singleton<TimelineManager>
     //恢复 TL
     public void ResumeTimeline()
     {
-        GameManager.Instance.gameMode = GameManager.GameMode.GamePlay;
+        GameManager.Instance.gameMode = GameManager.GameMode.Timeline;
         //恢复播放
         currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
         //关闭对话框
@@ -43,7 +43,7 @@ public class TimelineManager : Singleton<TimelineManager>
     public void ResumeGame()
     {
         //Debug.Log("恢复游戏");
-        GameManager.Instance.gameMode = GameManager.GameMode.Normal;
+        GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
         //currentDirector.playOnAwake = false;
     }
 
@@ -51,10 +51,12 @@ public class TimelineManager : Singleton<TimelineManager>
     public void SpeedUp()
     {
         isSpeedUp = !isSpeedUp;
-        if (isSpeedUp) {
+        if (isSpeedUp)
+        {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(5);
         }
-        else {
+        else
+        {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
         }
     }
@@ -62,7 +64,8 @@ public class TimelineManager : Singleton<TimelineManager>
     //解决 Timeline bug, 手动置剧情语音 Source 停止播放
     public void StopAudioSource()
     {
-        if (_hope != null) {
+        if (_hope != null)
+        {
             _hope.HearSource.Stop();
         }
     }
