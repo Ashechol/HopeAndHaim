@@ -65,8 +65,9 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         StartCoroutine(LoadScene(CurrentScene.name));
     }
 
-    public void LoadEnding()
+    public void LoadEnding(GameManager.GameEnding gameEnding)
     {
+        GameManager.Instance.gameEnding = gameEnding;
         StartCoroutine(LoadScene("Ending"));
     }
 }

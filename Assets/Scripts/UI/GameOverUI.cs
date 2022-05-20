@@ -12,12 +12,22 @@ public class GameOverUI : MonoBehaviour
         yesBtn = transform.GetChild(1).GetComponent<Button>();
         noBtn = transform.GetChild(2).GetComponent<Button>();
 
-        yesBtn.onClick.AddListener(SceneLoadManager.Instance.LoadEnding);
-        noBtn.onClick.AddListener(SceneLoadManager.Instance.ReLoadScene);
+        yesBtn.onClick.AddListener(ChooseYes);
+        noBtn.onClick.AddListener(ChooseNo);
     }
     void Start()
     {
         UIManager.Instance.gameOverPanel = this.gameObject;
         gameObject.SetActive(false);
+    }
+
+    void ChooseYes()
+    {
+        SceneLoadManager.Instance.LoadEnding(GameManager.GameEnding.Obey);
+    }
+
+    void ChooseNo()
+    {
+        SceneLoadManager.Instance.ReLoadScene();
     }
 }

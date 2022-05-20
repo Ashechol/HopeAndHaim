@@ -36480,6 +36480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
+  gameEnding: 0
   hope: {fileID: 0}
   haim: {fileID: 0}
   dialog: {fileID: 0}
@@ -36510,11 +36511,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fd1f23cf5cb144d80c5038810c6a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  episodeOneCanvas: {fileID: 0}
   curtain: {fileID: 0}
   dialogue: {fileID: 0}
   hint: {fileID: 0}
-  episodeTwoCanvas: {fileID: 8393478859734848511, guid: 9da840d3793b6f54885e1c16e92988b2, type: 3}
   gameOverPanel: {fileID: 0}
   infomationPanel: {fileID: 0}
   tipsUI: {fileID: 0}
