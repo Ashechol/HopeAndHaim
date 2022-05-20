@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>, IGameObserver
 {
     [Header("Episode One UI")]
-    public GameObject episodeOneCanvas;
     //全屏黑幕
     public Image curtain;
     private bool _underCurtain = true;
@@ -20,7 +19,6 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public Text hint;
 
     [Header("Episode Two UI")]
-    public GameObject episodeTwoCanvas;
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
     public TipsUI tipsUI;
@@ -34,6 +32,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         GameManager.Instance.AddObserver(this);
 
+<<<<<<< HEAD
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1") {
             GameObject.Instantiate(episodeOneCanvas);
             curtain = episodeOneCanvas.transform.GetChild(0).GetComponent<Image>();
@@ -45,6 +44,10 @@ public class UIManager : Singleton<UIManager>, IGameObserver
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2") {
             GameObject.Instantiate(episodeTwoCanvas);
         }
+=======
+        if (SceneLoadManager.Instance.CurrentScene.name == "Start Scene")
+            StartScene_Start();
+>>>>>>> dev-ash
     }
 
     void OnDisale()
@@ -133,6 +136,12 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         if (tipsUI != null)
             StartCoroutine(tipsUI.beginingTip.ShowTip());
+    }
+
+    public void ShowSkipTip()
+    {
+        if (tipsUI != null)
+            tipsUI.beginingTip.ShowSkipTip(2);
     }
 
     public void ShowDoorLockTip()

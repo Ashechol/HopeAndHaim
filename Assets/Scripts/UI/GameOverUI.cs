@@ -12,7 +12,7 @@ public class GameOverUI : MonoBehaviour
         yesBtn = transform.GetChild(1).GetComponent<Button>();
         noBtn = transform.GetChild(2).GetComponent<Button>();
 
-        yesBtn.onClick.AddListener(SceneLoadManager.Instance.LoadEndingOne);
+        yesBtn.onClick.AddListener(SceneLoadManager.Instance.LoadEnding);
         noBtn.onClick.AddListener(SceneLoadManager.Instance.ReLoadScene);
     }
     void Start()
