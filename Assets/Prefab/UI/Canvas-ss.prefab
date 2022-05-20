@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 179222616}
+  bgm: {fileID: 1831840965702204479}
   fader: {fileID: 1831840965770142706}
   logo: {fileID: 1831840966741849217}
   menu: {fileID: 1831840966835837114}

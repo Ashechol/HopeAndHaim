@@ -54,13 +54,14 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void Update()
     {
+        //第一幕中检测 M 键按下，关闭幕布
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
     }
 
     private void EpisodeOneUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.C)) {
+        if (Input.GetKeyDown(KeyCode.M)) {
             _underCurtain = !_underCurtain;
             curtain.gameObject.SetActive(_underCurtain);
         }

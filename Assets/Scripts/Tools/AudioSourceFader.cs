@@ -56,6 +56,6 @@ public class AudioSourceFader : Fader<AudioSource>
     protected override void FadeOutEnd()
     {
         target.volume = 0;
-        target.enabled = false;
+        target.Stop();
     }
 }

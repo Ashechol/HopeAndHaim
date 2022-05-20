@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class StartSceneProcess : Singleton<StartSceneProcess>
 {
     public ImageFader background;
+    public AudioSourceFader bgm;
     public RawImageFader fader;
     public ImageFader logo;
     public CanvasGroupFader menu;
@@ -26,6 +27,7 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
     public AudioClip spaceClip;
 
     private bool _isPreloading = false;
+    private bool _isLoading = false;
 
     //加载界面随机显示内容
     private List<string> _contentList = new List<string>() {
@@ -57,12 +59,23 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
     {
         if (_isPreloading) {
             //TODO: 预加载
+            bool finish = true;
 
-            //加载完成显示按键提示
+            if (content.isEnd && finish && !_isLoading) {
+                hint.StartFading();
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    Debug.Log("按下空格");
+                    _isLoading = true;
 
-            //接收按键并播放音频
-
-            //画面暗淡等
+                    audioSource.clip = spaceClip;
+                    audioSource.Play();
+                    //背景音频渐渐淡出
+                    bgm.endActions += LoadNextScene;
+                    bgm.isFadeIn = false;
+                    bgm.Reset();
+                    bgm.StartFading();
+                }
+            }
         }
     }
 
@@ -88,6 +101,10 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
 
     private void StartLoading()
     {
+        //失活 button
+        btnStart.enabled = false;
+        btnQuit.enabled = false;
+
         _isPreloading = true;
 
         background.StartFading();
@@ -98,5 +115,10 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
         title.text = _titleList[index];
 
         loading.StartFading();
+    }
+
+    private void LoadNextScene()
+    {
+        //TODO: 一点点淡出切换场景
     }
 }

@@ -30,6 +30,19 @@ public abstract class Fader<T> : MonoBehaviour
     //是否正在淡入淡出中
     private bool _isFading = false;
 
+    //重置状态
+    public void Reset()
+    {
+        if (isFadeIn) {
+            FadeInInit();
+        }
+        else {
+            FadeOutInit();
+        }
+        isEnd = false;
+        _isFirstTime = false;
+    }
+
     //淡入初始化
     protected abstract void FadeInInit();
 
