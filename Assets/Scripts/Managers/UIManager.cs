@@ -33,7 +33,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         GameManager.Instance.AddObserver(this);
 
-        if (_currentScene.name == "Start Scene")
+        if (SceneLoadManager.Instance.CurrentScene.name == "Start Scene")
             StartScene_Start();
     }
 
@@ -92,7 +92,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示游戏提示
     public void DisplayHint(string txt, int size)
     {
-        if (!hint.gameObject.activeSelf) {
+        if (!hint.gameObject.activeSelf)
+        {
             hint.gameObject.SetActive(true);
         }
 
@@ -103,11 +104,13 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //隐藏提示框
     public void CleanHint()
     {
-        if (hint == null) {
+        if (hint == null)
+        {
             return;
         }
 
-        if (hint.gameObject.activeSelf) {
+        if (hint.gameObject.activeSelf)
+        {
             hint.text = "";
 
             hint.gameObject.SetActive(false);
@@ -195,17 +198,20 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void StartScene_Update()
     {
-        if (_isFadingStartScene) {
+        if (_isFadingStartScene)
+        {
             //标题渐入
             LogoFadeIn();
 
             //菜单渐入
-            if (_logoOfStartScene.color.a >= 0.9) {
+            if (_logoOfStartScene.color.a >= 0.9)
+            {
                 _logoOfStartScene.color = Color.white;
 
                 MenuFadeIn();
 
-                if (_menuOfStartScene.alpha >= 0.9) {
+                if (_menuOfStartScene.alpha >= 0.9)
+                {
                     _menuOfStartScene.alpha = 1;
                     _isFadingStartScene = false;
                 }

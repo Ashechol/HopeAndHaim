@@ -128,11 +128,13 @@ public class GameManager : Singleton<GameManager>
     //第一幕结束逻辑
     private void EpisodeOneEnd()
     {
-        if (isEpisodeOneEnd) {
+        if (isEpisodeOneEnd)
+        {
             //中断玩家输入
-            if (gameMode == GameMode.Normal) {
+            if (gameMode == GameMode.Gameplay)
+            {
                 Debug.Log("第一幕最后演出");
-                gameMode = GameMode.GamePlay;
+                gameMode = GameMode.Dialog;
                 hope.StopHope();
                 //播放开门声
                 hope.HearSource.clip = AudioManager.Instance.openDoorClip;
@@ -140,7 +142,8 @@ public class GameManager : Singleton<GameManager>
                 hope.HearSource.Play();
             }
             //开门语音播放完毕
-            else if (!hope.HearSource.isPlaying) {
+            else if (!hope.HearSource.isPlaying)
+            {
                 Debug.Log("第一幕结束");
                 //TODO: 播放间幕
             }
