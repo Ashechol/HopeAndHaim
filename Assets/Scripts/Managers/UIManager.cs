@@ -27,6 +27,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -48,7 +49,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void EpisodeOneUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.M)) {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
             _underCurtain = !_underCurtain;
             curtain.gameObject.SetActive(_underCurtain);
         }
