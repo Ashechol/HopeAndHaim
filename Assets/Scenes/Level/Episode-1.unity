@@ -17062,7 +17062,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3823266633035144236, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3823266633035144238, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_Text
@@ -17142,7 +17142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3823266633388341486, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3823266633603306428, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_SizeDelta.y

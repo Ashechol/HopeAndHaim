@@ -20,41 +20,33 @@ public class Middle1t2Process : MonoBehaviour
     private void Update()
     {
         //能跳过
-        if (_canSkip)
-        {
+        if (_canSkip) {
             //接收跳过按键
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
+            if (Input.GetKeyDown(KeyCode.Space)) {
                 SkipAction();
             }
         }
         //不能跳过，则判断何时能够跳过并显示提示——当视频播放 10s 后
-        else if (video.isPlaying && video.time >= 10)
-        {
+        else if (video.isPlaying && video.time >= 10) {
             _canSkip = true;
             _showHint = true;
             hint.StartFading();
         }
 
-        if (_showHint && video.isPlaying)
-        {
-            if (video.time <= 20)
-            {
+        if (_showHint && video.isPlaying) {
+            if (video.time <= 20) {
                 hint.StartFading();
             }
-            else
-            {
+            else {
                 hint.isFadeIn = false;
                 hint.Reset();
                 hint.StartFading();
             }
         }
 
-        if (_canSkip && !video.isPlaying)
-        {
+        if (_canSkip && !video.isPlaying) {
             //判断提示是否不再显示
-            if (_showHint && video.isPlaying && video.time >= 20)
-            {
+            if (_showHint && video.isPlaying && video.time >= 20) {
                 _showHint = false;
                 hint.isFadeIn = false;
                 hint.Reset();
@@ -62,8 +54,7 @@ public class Middle1t2Process : MonoBehaviour
             }
 
             //视频不再播放时载入下一场景
-            if (!video.isPlaying)
-            {
+            if (!video.isPlaying) {
                 LoadNextScene();
             }
         }
@@ -72,7 +63,6 @@ public class Middle1t2Process : MonoBehaviour
     //跳过时的行为
     private void SkipAction()
     {
-        //TODO: 间幕动画淡出？
         video.Stop();
     }
 
