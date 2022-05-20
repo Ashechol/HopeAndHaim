@@ -14,6 +14,7 @@ public class InfomationUI : MonoBehaviour
     void Start()
     {
         UIManager.Instance.infomationPanel = this.gameObject;
+        gameObject.SetActive(false);
     }
 
     public void SetInformation(Sprite information)

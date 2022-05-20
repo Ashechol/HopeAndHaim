@@ -22,33 +22,42 @@ public static class DirectionUtility
     /// <param name="left">是否左转</param>
     static public Direction ChangeDirection(Direction direction, bool left)
     {
-        switch (direction) {
+        switch (direction)
+        {
             case Direction.Left:
-                if (left) {
+                if (left)
+                {
                     return Direction.Down;
                 }
-                else {
+                else
+                {
                     return Direction.Up;
                 }
             case Direction.Right:
-                if (left) {
+                if (left)
+                {
                     return Direction.Up;
                 }
-                else {
+                else
+                {
                     return Direction.Down;
                 }
             case Direction.Up:
-                if (left) {
+                if (left)
+                {
                     return Direction.Left;
                 }
-                else {
+                else
+                {
                     return Direction.Right;
                 }
             case Direction.Down:
-                if (left) {
+                if (left)
+                {
                     return Direction.Right;
                 }
-                else {
+                else
+                {
                     return Direction.Left;
                 }
         }
@@ -62,7 +71,8 @@ public static class DirectionUtility
     /// <param name="direction"></param>
     static public Vector3 GetDirectionVector(Direction direction)
     {
-        switch (direction) {
+        switch (direction)
+        {
             case Direction.Left:
                 return Vector3.left;
             case Direction.Right:
@@ -82,7 +92,8 @@ public static class DirectionUtility
     /// <param name="direction"></param>
     static public Quaternion GetRotationQuaternion(Direction direction)
     {
-        switch (direction) {
+        switch (direction)
+        {
             case Direction.Left:
                 return Quaternion.Euler(0, 0, 90);
             case Direction.Right:

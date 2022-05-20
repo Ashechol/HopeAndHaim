@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1035766342625497511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035766342625497509}
+  - component: {fileID: 1035766342625497508}
+  - component: {fileID: 1035766342625497514}
+  - component: {fileID: 1035766342625497515}
+  - component: {fileID: 1035766342625497512}
+  - component: {fileID: 1035766342625497513}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1035766342625497509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035766342625497511}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1035766342625497508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035766342625497511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f01c40731835c4ea76164c4d64843d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMode: 1
+  hope: {fileID: 0}
+  haim: {fileID: 0}
+  dialog: {fileID: 0}
+  isEpisodeOneEnd: 0
+--- !u!114 &1035766342625497514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035766342625497511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a1bdf406ced02a47baa4f851f555ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intercomClip: {fileID: 8300000, guid: 49086ddd23c649245ab608e1bc015b85, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 8691379a440b4404b8bb6ef9ae6cc7b8, type: 3}
+  hopeStaticClips:
+  - {fileID: 8300000, guid: d13b71e892646dc4ab02d7e8828d234a, type: 3}
+  - {fileID: 8300000, guid: a5b01a60b71dd5242af04721816d3e33, type: 3}
+  collideClips:
+  - {fileID: 8300000, guid: 4eb1201cc099215468df17d2bbbef07d, type: 3}
+  - {fileID: 8300000, guid: deb110adcd6e6d74595e98f80b912216, type: 3}
+  - {fileID: 8300000, guid: 359dae836115b2d43a30757a077c5901, type: 3}
+--- !u!114 &1035766342625497515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035766342625497511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fd1f23cf5cb144d80c5038810c6a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  episodeOneCanvas: {fileID: 3823266634243674346, guid: 707af50d643a8764d85d78157f97391b, type: 3}
+  curtain: {fileID: 0}
+  dialogue: {fileID: 0}
+  hint: {fileID: 0}
+  episodeTwoCanvas: {fileID: 8393478859734848511, guid: 9da840d3793b6f54885e1c16e92988b2, type: 3}
+  gameOverPanel: {fileID: 0}
+  infomationPanel: {fileID: 0}
+  tipsUI: {fileID: 0}
+--- !u!114 &1035766342625497512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035766342625497511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8acff851533384ba63045d01d66a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDirector: {fileID: 0}
+--- !u!114 &1035766342625497513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035766342625497511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0057054bfc17f1948833cee7fec74765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skipBegining: 0

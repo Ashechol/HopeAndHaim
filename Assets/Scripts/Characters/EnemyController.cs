@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
+        _agent.destination = transform.position;
 
         _direction = MoveDirection.Forward;
     }

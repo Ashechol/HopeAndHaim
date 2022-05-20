@@ -10,8 +10,8 @@ public class Haim : MonoBehaviour
     Vector3 _dest;
     Light2D _selfLight;
     Animator _anim;
-    bool _walk;
     MoveDirection _direction;
+    bool _walk;
 
     // Player Interact
     List<ICanInteract> _interactions = new List<ICanInteract>();
@@ -25,7 +25,6 @@ public class Haim : MonoBehaviour
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
-    private bool _isHacking;
     public SecurityCamera securityCamera;
     public float camSightRadius;
 
@@ -106,7 +105,8 @@ public class Haim : MonoBehaviour
     void Interact()
     {
         UIManager.Instance.tipsUI.interactionTips.ShowTip();
-        if (_interactions.Count != 0)
+
+        if (CanInteract())
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -121,6 +121,28 @@ public class Haim : MonoBehaviour
                 _interactionId = ClampIndex(_interactionId + 1);
             }
         }
+    }
+
+    bool CanInteract()
+    {
+        if (_interactions.Count != 0)
+        {
+            switch (GameManager.Instance.gameMode)
+            {
+                case GameManager.GameMode.Dialog:
+                    return false;
+                case GameManager.GameMode.GameOver:
+                    return false;
+                case GameManager.GameMode.Information:
+                    return true;
+                case GameManager.GameMode.Gameplay:
+                    return true;
+                case GameManager.GameMode.Hacking:
+                    return true;
+            }
+        }
+
+        return false;
     }
 
     int ClampIndex(int interactionId)

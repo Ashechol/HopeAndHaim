@@ -146,6 +146,7 @@ public class GameManager : Singleton<GameManager>
             {
                 Debug.Log("第一幕结束");
                 //TODO: 播放间幕
+                SceneLoadManager.Instance.LoadLevel("Episode-2");
             }
         }
     }

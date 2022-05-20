@@ -9,7 +9,7 @@ public class TipsUI : MonoBehaviour
     public BeginingTip beginingTip;
     public Text doorTip;
 
-    void Start()
+    void Awake()
     {
         UIManager.Instance.tipsUI = this;
     }
