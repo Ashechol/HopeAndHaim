@@ -13,13 +13,21 @@ public class Haim : MonoBehaviour
     bool _walk;
     MoveDirection _direction;
 
-    [Header("Movement")]
+    // Player Interact
+    List<ICanInteract> _interactions = new List<ICanInteract>();
+    int _interactionId;
+    public int InteractionsCnt { get { return _interactions.Count; } }
+
+    [Header("Basic")]
     public float speed;
+    public float sightRadius = 1.5f;
+    public bool hasKey = false;
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
     private bool _isHacking;
-    public Surveillance cam;
+    public SecurityCamera securityCamera;
+    public float camSightRadius;
 
     void Awake()
     {
@@ -31,41 +39,17 @@ public class Haim : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.RegisterHaim(this);
+        GameManager.Instance.haim = this;
         _dest = transform.position;
+        _selfLight.pointLightOuterRadius = sightRadius;
     }
 
     void Update()
     {
-        HackCam();
         MoveToDestination();
+        Interact();
         _anim.SetBool("walk", _walk);
         _anim.SetInteger("direction", (int)_direction);
-    }
-
-    void SetDestination(Vector3 pos)
-    {
-        if (!_isHacking)
-        {
-            _dest = pos;
-
-            if (_dest.y - transform.position.y > 0)
-                _direction = MoveDirection.Backward;
-
-            else if (_dest.y - transform.position.y < 0)
-                _direction = MoveDirection.Forward;
-
-            else if (_dest.x - transform.position.x < 0)
-            {
-                _direction = MoveDirection.LeftRight;
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (_dest.x - transform.position.x > 0)
-            {
-                _direction = MoveDirection.LeftRight;
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-        }
     }
 
     void OnEnable()
@@ -76,6 +60,32 @@ public class Haim : MonoBehaviour
     void OnDisable()
     {
         MouseManager.Instance.OnMouseClicked -= SetDestination;
+        GameManager.Instance.haim = null;
+    }
+
+    void SetDestination(Vector3 pos)
+    {
+        if (!_isHacking)
+        {
+            _dest = pos;
+
+            Vector2 vec = (_dest - transform.position).normalized;
+            float dot = Vector2.Dot(transform.up, vec);
+            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+            if (angle <= 45)
+                _direction = MoveDirection.Backward;
+            else if (angle <= 135)
+                _direction = MoveDirection.LeftRight;
+            else
+                _direction = MoveDirection.Forward;
+
+            if (_dest.x - transform.position.x > 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+            else
+                transform.localScale = new Vector3(1, 1, 1);
+
+        }
     }
 
     void MoveToDestination()
@@ -93,35 +103,78 @@ public class Haim : MonoBehaviour
             _walk = false;
     }
 
+    void Interact()
+    {
+        if (_interactions.Count != 0)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Stop();
+                _interactionId = ClampIndex(_interactionId);
+                _interactions[_interactionId].Interact();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab) && !_isHacking)
+            {
+                _interactionId = ClampIndex(_interactionId + 1);
+            }
+        }
+    }
+
+    int ClampIndex(int interactionId)
+    {
+        if (interactionId >= _interactions.Count)
+            interactionId = 0;
+
+        return interactionId;
+    }
+
+
     public bool ArriveAtDest()
     {
-        return (_dest - transform.position).sqrMagnitude < 0.3f;
+        return (_dest - transform.position).sqrMagnitude < 0.1f;
     }
 
     /// <summary>
     /// 黑入摄像机
     /// </summary>
-    void HackCam()
+    public void HackCam()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canHack)
+        if (canHack)
         {
             Stop();
-            _dest = transform.position;
-            cam.TurnOn();
-            cam.hacking = true;
+            securityCamera.TurnOn(camSightRadius);
+            securityCamera.hacking = true;
             _isHacking = true;
             _selfLight.enabled = false;
             canHack = false;
         }
 
-        else if (Input.GetKeyDown(KeyCode.Escape) && _isHacking)
+        else if (_isHacking)
         {
-            cam.TurnOff();
-            cam.hacking = false;
+            securityCamera.TurnOff();
+            securityCamera.hacking = false;
             _isHacking = false;
             _selfLight.enabled = true;
             canHack = true;
         }
+    }
+
+    public void GetSightBuff(float buffMultiplier)
+    {
+        sightRadius *= buffMultiplier;
+        _selfLight.pointLightOuterRadius = sightRadius;
+    }
+
+
+    public void AddInteraction(ICanInteract interaction)
+    {
+        _interactions.Add(interaction);
+    }
+
+    public void RemoveInteraction(ICanInteract interaction)
+    {
+        _interactions.Remove(interaction);
     }
 
     public void Stop()
@@ -138,7 +191,7 @@ public class Haim : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("Wall"))
         {
-            _dest = (transform.position - _dest).normalized * 0.1f + transform.position;
+            _dest = (transform.position - _dest).normalized * 0.05f + transform.position;
         }
     }
 }

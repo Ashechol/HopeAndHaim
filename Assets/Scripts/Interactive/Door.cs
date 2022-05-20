@@ -2,64 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, ICanInteract
 {
     Animator _anim;
-    Collider2D _coll;
     SpriteRenderer _renderer;
     AudioSource _sound;
+    Collider2D _coll;
     bool _isOpen;
 
     [Header("Lock And Key")]
     public bool isLock;
-    public int keyCode;
 
     void Awake()
     {
         _anim = GetComponent<Animator>();
-        _coll = GetComponent<Collider2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _sound = GetComponent<AudioSource>();
+        _coll = transform.GetChild(0).GetComponent<Collider2D>();
     }
 
     void Update()
     {
-        OpenDoor();
-        _anim.SetBool("open", _isOpen);
+
     }
 
-    void OpenDoor()
+    void OnTriggerEnter2D(Collider2D coll)
     {
-        if (PlayerNearBy() && Input.GetKeyDown(KeyCode.E) && !_isOpen)
+        if (coll.CompareTag("Player"))
         {
+            GameManager.Instance.haim.AddInteraction(this);
+
+            if ((GameManager.Instance.PlayerPosition
+            - transform.position).sqrMagnitude < 0.5f && _isOpen)
+                _renderer.sortingOrder = 3;
+            else
+                _renderer.sortingOrder = 1;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.CompareTag("Player"))
+        {
+            if (_isOpen)
+            {
+                _sound.Play();
+                _anim.SetBool("open", false);
+                _isOpen = false;
+                _coll.enabled = true;
+            }
+            Debug.Log("Remove");
+            GameManager.Instance.haim.RemoveInteraction(this);
+        }
+    }
+
+    public void Interact()
+    {
+        if (!_isOpen)
+        {
+            if (isLock && !GameManager.Instance.haim.hasKey)
+            {
+                UIManager.Instance.ShowDoorLockTip();
+                return;
+            }
+
+            _anim.SetBool("open", true);
             _isOpen = true;
             _coll.enabled = false;
             _sound.Play();
         }
-
-        if ((GameManager.Instance.PlayerPosition
-            - transform.position).sqrMagnitude < 0.5f && _isOpen)
-            _renderer.sortingOrder = 3;
-        else
-            _renderer.sortingOrder = 1;
     }
-
-    bool PlayerNearBy()
-    {
-        var collider = Physics2D.OverlapCircle(transform.position, 1.0f);
-
-        if (collider.CompareTag("Player"))
-            return true;
-
-        if (_isOpen)
-        {
-            _sound.Play();
-            _isOpen = false;
-            _coll.enabled = true;
-        }
-
-        return false;
-    }
-
-
 }
