@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this);
+        // DontDestroyOnLoad(this);
     }
 
     //第一幕进入结束状态
@@ -87,9 +87,6 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeOneUpdate()
     {
-        // SceneLoad Debug
-        if (Input.GetKeyDown(KeyCode.End))
-            SceneLoadManager.Instance.LoadLevel("Episode-2");
 
         //对话暂停时，需要按键恢复
         if (gameMode == GameMode.Dialog)

@@ -23281,7 +23281,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0057054bfc17f1948833cee7fec74765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneFaderPrefab: {fileID: 3180402193033908543, guid: 8a17a7d37f565074881791226dae64e6, type: 3}
   skipBegining: 0
+  fadeInDuration: 2
+  fadeOutDuration: 2
 --- !u!4 &1323662203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455445624629572958, guid: 3ce543f6e36a0f4428411adb7fac9729, type: 3}

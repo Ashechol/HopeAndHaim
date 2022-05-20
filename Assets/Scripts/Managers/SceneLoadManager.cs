@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
-    // public SceneFader sceneFaderPrefab;
-    // bool fadeInGameOver;  // 保证收到EndNotify只执行一次SceneFade
+    public SceneFader sceneFaderPrefab;
+    bool fadeInGameOver;
     bool sceneLoadComplete;
 
     public bool skipBegining = false;
+    public float fadeInDuration;
+    public float fadeOutDuration;
 
     public Scene CurrentScene { get { return SceneManager.GetActiveScene(); } }
 
@@ -27,13 +29,13 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     IEnumerator LoadScene(string sceneName)
     {
         // 开始加载画面渐出
-        // SceneFader fade = Instantiate(sceneFaderPrefab);
-        // yield return StartCoroutine(fade.FadeOut(1.7f));
+        SceneFader fade = Instantiate(sceneFaderPrefab);
+        yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
         // 加载完毕画面渐进
-        // yield return StartCoroutine(fade.FadeIn(2f));
+        yield return StartCoroutine(fade.FadeIn(fadeInDuration));
 
         yield break;
     }

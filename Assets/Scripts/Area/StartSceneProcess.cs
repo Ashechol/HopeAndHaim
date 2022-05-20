@@ -55,7 +55,8 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
 
     private void Update()
     {
-        if (_isPreloading) {
+        if (_isPreloading)
+        {
             //TODO: 预加载
 
             //加载完成显示按键提示
