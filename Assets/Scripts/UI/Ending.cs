@@ -38,8 +38,11 @@ public class Ending : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(videoPlayer.isPlaying);
+
+        //TODO: 过场动画播放完回到主菜单
         // if (!videoPlayer.isPlaying)
-        //     SceneLoadManager.Instance.LoadFirstLevel();
+        //     SceneLoadManager.Instance.LoadMainMenu();
     }
 
 }
