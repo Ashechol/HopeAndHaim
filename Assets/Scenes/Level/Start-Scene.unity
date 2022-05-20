@@ -123,30 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &179222610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1831840965702204475, guid: 4b092b65d9dbbb545b8d690f8b697d3a, type: 3}
-  m_PrefabInstance: {fileID: 1303663144}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &179222616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179222610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae37bb17428e6b4185df215038761c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startOnWake: 0
-  target: {fileID: 0}
-  fSpeed: 1.5
-  threshold: 0.05
-  isFadeIn: 0
-  isEnd: 0
-  targetColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &885007080
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,10 +192,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1831840965724030531, guid: 4b092b65d9dbbb545b8d690f8b697d3a, type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 179222616}
     - target: {fileID: 1831840965724030584, guid: 4b092b65d9dbbb545b8d690f8b697d3a, type: 3}
       propertyPath: m_Name
       value: Canvas-ss
