@@ -31,7 +31,6 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this);
     }
 
     //第一幕进入结束状态
@@ -39,6 +38,7 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        Debug.Log($"当前场景:{SceneLoadManager.Instance.CurrentScene.name}");
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneStart();
 
@@ -142,7 +142,7 @@ public class GameManager : Singleton<GameManager>
             else if (!hope.HearSource.isPlaying) {
                 Debug.Log("第一幕结束");
                 //TODO: 播放间幕
-                SceneLoadManager.Instance.LoadLevel("Episode-2");
+                SceneLoadManager.Instance.LoadLevel("Middle-1-2");
             }
         }
     }
