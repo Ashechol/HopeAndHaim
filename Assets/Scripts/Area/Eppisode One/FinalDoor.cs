@@ -22,18 +22,40 @@ public class FinalDoor : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< HEAD
         if (GameManager.Instance.CanInput() && _canInput) {
             if (Input.GetKeyDown(KeyCode.E)) {
                 GameManager.Instance.isEpisodeOneEnd = true;
+=======
+        if (GameManager.Instance.CanInput() && _canInput)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("第一幕最后演出");
+                GameManager.Instance.gameMode = GameManager.GameMode.Timeline;
+                _hope.StopHope();
+                //播放开门声
+                _hope.HearSource.clip = openDoorClip;
+                _hope.HearSource.loop = false;
+                _hope.HearSource.Play();
+
+                if (!_hope.HearSource.isPlaying)
+                {
+                    Debug.Log("第一幕结束");
+                    //TODO: 播放间幕
+                }
+>>>>>>> dev-ash
             }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             //播放语音
-            if (!_hope.HearSource.isPlaying) {
+            if (!_hope.HearSource.isPlaying)
+            {
                 _hope.HearSource.clip = plotClip;
                 _hope.HearSource.Play();
             }
@@ -46,7 +68,8 @@ public class FinalDoor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             //隐藏文字
             UIManager.Instance.CleanDialogue();
 

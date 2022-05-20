@@ -45,13 +45,13 @@ public class Item : MonoBehaviour, ICanInteract
         if (!_showing)
         {
             UIManager.Instance.ShowInformation(information);
-            GameManager.Instance.gameMode = GameManager.GameMode.DialogueMoment;
+            GameManager.Instance.gameMode = GameManager.GameMode.Information;
             _showing = true;
         }
         else
         {
             UIManager.Instance.CloseInformation();
-            GameManager.Instance.gameMode = GameManager.GameMode.Normal;
+            GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
             _showing = false;
 
             if (dialog != null)
@@ -84,7 +84,6 @@ public class Item : MonoBehaviour, ICanInteract
                     GameManager.Instance.haim.camSightRadius *= buffMultiplier;
                     break;
             }
-
         }
     }
 }

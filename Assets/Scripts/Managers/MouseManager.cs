@@ -21,7 +21,7 @@ public class MouseManager : Singleton<MouseManager>
     void Update()
     {
         if (GameManager.Instance.haim.ArriveAtDest() &&
-            GameManager.Instance.gameMode == GameManager.GameMode.Normal)
+            GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
             MouseControll();
     }
 

@@ -65,7 +65,7 @@ public class Haim : MonoBehaviour
 
     void SetDestination(Vector3 pos)
     {
-        if (!_isHacking)
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
         {
             _dest = pos;
 
@@ -105,6 +105,7 @@ public class Haim : MonoBehaviour
 
     void Interact()
     {
+        UIManager.Instance.tipsUI.interactionTips.ShowTip();
         if (_interactions.Count != 0)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -114,7 +115,8 @@ public class Haim : MonoBehaviour
                 _interactions[_interactionId].Interact();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab) && !_isHacking)
+            if (Input.GetKeyDown(KeyCode.Tab) &&
+                GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
             {
                 _interactionId = ClampIndex(_interactionId + 1);
             }
@@ -145,18 +147,20 @@ public class Haim : MonoBehaviour
             Stop();
             securityCamera.TurnOn(camSightRadius);
             securityCamera.hacking = true;
-            _isHacking = true;
             _selfLight.enabled = false;
             canHack = false;
+
+            GameManager.Instance.gameMode = GameManager.GameMode.Hacking;
         }
 
-        else if (_isHacking)
+        else if (GameManager.Instance.gameMode == GameManager.GameMode.Hacking)
         {
             securityCamera.TurnOff();
             securityCamera.hacking = false;
-            _isHacking = false;
             _selfLight.enabled = true;
             canHack = true;
+
+            GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
         }
     }
 

@@ -25,10 +25,12 @@ public class TimelineArea : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         //尽管不太可能，但还是检测一下
-        if (!_isFirst && collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
+        if (!_isFirst && collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
             _isFirst = true;
-            if (isInPlotMode) {
-                GameManager.Instance.gameMode = GameManager.GameMode.GamePlay;
+            if (isInPlotMode)
+            {
+                GameManager.Instance.gameMode = GameManager.GameMode.Timeline;
             }
             //播放 Timeline
             _director.playableAsset = asset;

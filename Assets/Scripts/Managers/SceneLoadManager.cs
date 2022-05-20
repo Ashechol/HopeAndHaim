@@ -38,6 +38,11 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         yield break;
     }
 
+    public void LoadLevel(string name)
+    {
+        StartCoroutine(LoadScene(name));
+    }
+
     public void LoadMainMenu()
     {
         StartCoroutine(LoadScene("Main Menu"));
@@ -53,7 +58,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         if (skipBegining == false)
         {
             skipBegining = true;
-            GameManager.Instance.gameMode = GameManager.GameMode.Normal;
+            GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
             UIManager.Instance.gameOverPanel.SetActive(false);
         }
 

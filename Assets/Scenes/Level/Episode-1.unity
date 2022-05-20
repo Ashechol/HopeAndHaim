@@ -828,7 +828,11 @@ MonoBehaviour:
   gameMode: 1
   hope: {fileID: 1011864770}
   haim: {fileID: 0}
+<<<<<<< HEAD
   isEpisodeOneEnd: 0
+=======
+  dialog: {fileID: 0}
+>>>>>>> dev-ash
 --- !u!4 &436486871
 Transform:
   m_ObjectHideFlags: 0
@@ -881,6 +885,7 @@ MonoBehaviour:
   hint: {fileID: 484452455}
   gameOverPanel: {fileID: 0}
   infomationPanel: {fileID: 0}
+  tipsUI: {fileID: 0}
 --- !u!114 &436486874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17018,7 +17023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1425761444
 MonoBehaviour:
   m_ObjectHideFlags: 0

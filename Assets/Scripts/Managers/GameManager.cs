@@ -10,9 +10,11 @@ public class GameManager : Singleton<GameManager>
 {
     public enum GameMode
     {
-        Normal,         // 操控角色
-        GamePlay,       // 播放动画
-        DialogueMoment, // 对话暂停
+        Gameplay,       // 可操控模式
+        Timeline,       // 播放动画
+        Dialog,         // 对话
+        Information,    // 物品信息
+        Hacking,        // 玩家黑入摄像机
         GameOver        // 游戏结束
     }
     List<IGameObserver> _observers = new List<IGameObserver>();
@@ -72,18 +74,22 @@ public class GameManager : Singleton<GameManager>
         //根据 Director 状态设置 GameMode
         if (TimelineManager.Instance.currentDirector.playOnAwake)
         {
-            gameMode = GameMode.GamePlay;
+            gameMode = GameMode.Timeline;
         }
         else
         {
-            gameMode = GameMode.Normal;
+            gameMode = GameMode.Gameplay;
         }
     }
 
     void EpisodeOneUpdate()
     {
+        // SceneLoad Debug
+        if (Input.GetKeyDown(KeyCode.End))
+            SceneLoadManager.Instance.LoadLevel("Episode-2");
+
         //对话暂停时，需要按键恢复
-        if (gameMode == GameMode.DialogueMoment)
+        if (gameMode == GameMode.Dialog)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -91,7 +97,7 @@ public class GameManager : Singleton<GameManager>
             }
         }
         //加速播放，调试用
-        else if (gameMode == GameMode.GamePlay)
+        else if (gameMode == GameMode.Timeline)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -104,7 +110,7 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeTwoStart()
     {
-        gameMode = GameMode.Normal;
+        gameMode = GameMode.Gameplay;
         UIManager.Instance.ShowBeginingTip();
     }
 
@@ -146,7 +152,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public bool CanInput()
     {
-        return gameMode == GameMode.Normal;
+        return gameMode == GameMode.Gameplay;
     }
 
 }
