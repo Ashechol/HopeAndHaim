@@ -6,78 +6,56 @@ using UnityEngine.Events;
 /// <summary>
 /// 控制 AudioSource 淡入淡出
 /// </summary>
-public class AudioSourceFader : MonoBehaviour
+public class AudioSourceFader : Fader<AudioSource>
 {
-    //可自行拖拽，也可以自动获取
-    public AudioSource source;
-    //淡入淡出速度
-    public float fSpeed = 1f;
-    //是否为淡入
-    public bool isFadeIn = true;
-    //是否结束
-    public bool isEnd = false;
-    //结束阈值
-    public float threshold = 0.08f;
-    //结束时执行函数
-    private event UnityAction _actions;
+    //淡入目标值
+    public float targetVolume = 1;
 
-    //是否正在淡入淡出中
-    private bool _isFading = false;
-
-    private void Start()
+    protected override void FadeIn()
     {
-        if (source == null) {
-            source = GetComponent<AudioSource>();
-        }
-        source.enabled = true;
-
-        if (isFadeIn) {
-            source.volume = 0;
-        }
-        else {
-            source.volume = 1;
-        }
-
-        _isFading = true;
-        source.Play();
+        target.volume = Mathf.Lerp(target.volume, targetVolume, fSpeed * Time.deltaTime);
     }
 
-    private void Update()
+    protected override void FadeOut()
     {
-        if (_isFading) {
-            if (isFadeIn) {
-                FadeIn();
-                if (source.volume >= 1 - threshold) {
-                    source.volume = 1;
-                    _isFading = false;
-                }
-            }
-            else {
-                FadeOut();
-                if (source.volume <= threshold) {
-                    source.volume = 0;
-                    source.enabled = false;
-                    _isFading = false;
-                }
-            }
-        }
-        else {
-
-        }
+        target.volume = Mathf.Lerp(target.volume, 0, fSpeed * Time.deltaTime);
     }
 
-    private void FadeIn()
+    protected override void FadeInInit()
     {
-        source.volume = Mathf.Lerp(source.volume, 1, fSpeed * Time.deltaTime);
+        target.enabled = true;
+        target.volume = 0;
     }
 
-    private void FadeOut()
+    protected override void FadeOutInit()
     {
-        source.volume = Mathf.Lerp(source.volume, 0, fSpeed * Time.deltaTime);
+
     }
 
-    public void AddEndAction(UnityAction action)
+    protected override void FadeInStart()
     {
-        _actions += action;
+        base.FadeInStart();
+        target.Play();
+    }
+
+    protected override bool IsFadeInEnd()
+    {
+        return target.volume >= targetVolume - threshold;
+    }
+
+    protected override bool IsFadeOutEnd()
+    {
+        return target.volume <= threshold;
+    }
+
+    protected override void FadeInEnd()
+    {
+        target.volume = targetVolume;
+    }
+
+    protected override void FadeOutEnd()
+    {
+        target.volume = 0;
+        target.enabled = false;
     }
 }
