@@ -29,12 +29,15 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     IEnumerator LoadScene(string sceneName)
     {
         SceneFader fade = Instantiate(sceneFaderPrefab);
-        yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
+
+        if (sceneName != "Middle-1-2")
+            yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
 
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
-        yield return StartCoroutine(fade.FadeIn(fadeInDuration));
+        if (sceneName != "Middle-1-2")
+            yield return StartCoroutine(fade.FadeIn(fadeInDuration));
 
         yield break;
     }

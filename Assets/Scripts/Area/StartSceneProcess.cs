@@ -80,7 +80,8 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
         audioSource.clip = mouseClip;
         audioSource.Play();
 
-        //TODO: 退出游戏
+        // 退出游戏
+        Application.Quit();
     }
 
     private void StartLoading()

@@ -27,7 +27,8 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip GetHopeStaticClip()
     {
         //不能采取随机播放，由于语音太少，随机同一句的频率太高，改为循环
-        if (_hopeClipPointer >= hopeStaticClips.Count) {
+        if (_hopeClipPointer >= hopeStaticClips.Count)
+        {
             _hopeClipPointer = 0;
         }
         return hopeStaticClips[_hopeClipPointer++];
@@ -48,14 +49,16 @@ public class AudioManager : Singleton<AudioManager>
 
     public void SetFootstep(AudioClip clip)
     {
-        if (_hope != null) {
+        if (_hope != null)
+        {
             _hope.ChangeFootstep(clip);
         }
     }
 
     public void SetIntercomBgm()
     {
-        if (_hope != null) {
+        if (_hope != null)
+        {
             _hope.ChangeBgm(intercomClip, false);
         }
     }
