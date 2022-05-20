@@ -9,17 +9,18 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : Singleton<UIManager>, IGameObserver
 {
+    [Header("Episode One UI")]
+    public GameObject episodeOneCanvas;
     //全屏黑幕
     public Image curtain;
-
     private bool _underCurtain = true;
-
     //对话框
     public Text dialogue;
-
     //提示框
     public Text hint;
 
+    [Header("Episode Two UI")]
+    public GameObject episodeTwoCanvas;
     public GameObject gameOverPanel;
     public GameObject infomationPanel;
     public TipsUI tipsUI;
@@ -33,8 +34,22 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     {
         GameManager.Instance.AddObserver(this);
 
-        //if (SceneLoadManager.Instance.CurrentScene.name == "Start Scene")
-        //    StartScene_Start();
+        if (SceneLoadManager.Instance.CurrentScene.name == "Start Scene")
+            StartScene_Start();
+
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
+        {
+            GameObject.Instantiate(episodeOneCanvas);
+            curtain = episodeOneCanvas.transform.GetChild(0).GetComponent<Image>();
+            var panel = episodeOneCanvas.transform.GetChild(1);
+            dialogue = panel.GetChild(0).GetComponent<Text>();
+            hint = panel.GetChild(1).GetComponent<Text>();
+        }
+
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
+        {
+            GameObject.Instantiate(episodeTwoCanvas);
+        }
     }
 
     void OnDisale()

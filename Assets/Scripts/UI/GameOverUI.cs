@@ -18,5 +18,6 @@ public class GameOverUI : MonoBehaviour
     void Start()
     {
         UIManager.Instance.gameOverPanel = this.gameObject;
+        gameObject.SetActive(false);
     }
 }
