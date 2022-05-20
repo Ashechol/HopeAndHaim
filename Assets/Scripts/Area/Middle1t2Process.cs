@@ -25,19 +25,16 @@ public class Middle1t2Process : MonoBehaviour
     private void Update()
     {
         //视频在播放
-        if (video.isPlaying)
-        {
+        if (video.isPlaying) {
             //没有显示提示 && 视频过 10s
-            if (!_showHint && video.time >= 10)
-            {
+            if (!_showHint && video.time >= 10) {
                 _showHint = true;
                 hint.StartFading();
                 //接收跳过输入
                 StartCoroutine(MiddleSceneAction());
             }
             //显示了提示 && 视频过 20s
-            else if (_showHint && video.time >= 20)
-            {
+            else if (_showHint && video.time >= 20) {
                 hint.isFadeIn = false;
                 hint.Reset();
                 hint.StartFading();
@@ -51,8 +48,7 @@ public class Middle1t2Process : MonoBehaviour
     private IEnumerator MiddleSceneAction()
     {
         //能播放能跳过
-        while (video.isPlaying && !_skip)
-        {
+        while (video.isPlaying && !_skip) {
             yield return null;
         }
 
@@ -64,7 +60,6 @@ public class Middle1t2Process : MonoBehaviour
 
     private void LoadNextScene()
     {
-        //TODO: 加载场景
         Debug.Log("加载下一场景");
         SceneLoadManager.Instance.LoadLevel("Episode-2");
     }
