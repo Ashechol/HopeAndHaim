@@ -46,7 +46,6 @@ public class Middle1t2Process : MonoBehaviour
         }
     }
 
-
     private void LoadNextScene()
     {
         Debug.Log("加载下一场景");

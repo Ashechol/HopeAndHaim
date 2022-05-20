@@ -45,13 +45,21 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
     {
         audioSource = GetComponent<AudioSource>();
 
+        //淡入后，标体淡入
         fader.endActions += logo.StartFading;
+        //淡入后，菜单淡入
         logo.endActions += menu.StartFading;
+        //菜单开始淡入时，才激活按钮
+        logo.endActions += () => {
+            btnStart.enabled = true;
+            btnQuit.enabled = true;
+        };
+
         btnStart.onClick.AddListener(ButtonStart);
         btnQuit.onClick.AddListener(ButtonQuit);
 
         loading.endActions += content.StartFading;
-        //content.endActions += () => { StartCoroutine(PreLoadFirstScene()); };
+        content.endActions += () => { StartCoroutine(PreLoadFirstScene()); };
     }
 
     private void ButtonStart()
@@ -93,7 +101,7 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
         loading.StartFading();
 
         //开启预加载
-        StartCoroutine(PreLoadFirstScene());
+        //StartCoroutine(PreLoadFirstScene());
     }
 
     IEnumerator PreLoadFirstScene()
