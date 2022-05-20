@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 
     //第一幕进入结束状态
@@ -150,7 +151,6 @@ public class GameManager : Singleton<GameManager>
             else if (!hope.HearSource.isPlaying)
             {
                 Debug.Log("第一幕结束");
-                //TODO: 播放间幕
                 SceneLoadManager.Instance.LoadLevel("Middle-1-2");
             }
         }

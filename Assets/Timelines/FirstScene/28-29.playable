@@ -390,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     dialogueLine: "\u3010\u8BF7\u6309E\u952E\uFF0C\u6253\u5F00\u76D1\u72F1\u5927\u95E8\u3011"
-    dialogueSize: 30
+    dialogueSize: 56
     requirePause: 1
 --- !u!114 &11400000
 MonoBehaviour:
