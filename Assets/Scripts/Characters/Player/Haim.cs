@@ -16,6 +16,7 @@ public class Haim : MonoBehaviour
     // Player Interact
     List<ICanInteract> _interactions = new List<ICanInteract>();
     int _interactionId;
+    public int InteractionsCnt { get { return _interactions.Count; } }
 
     [Header("Basic")]
     public float speed;
