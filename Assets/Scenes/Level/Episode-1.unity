@@ -685,6 +685,7 @@ MonoBehaviour:
   dialogue: {fileID: 1038697120}
   hint: {fileID: 758362689}
   gameOverPanel: {fileID: 0}
+  lastQuestionPanel: {fileID: 0}
   infomationPanel: {fileID: 0}
   tipsUI: {fileID: 0}
 --- !u!1 &481804208
@@ -1529,7 +1530,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 600e493b17467ca45adf0ff3b80859f7, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
