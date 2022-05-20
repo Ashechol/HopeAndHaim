@@ -19,55 +19,47 @@ public class Middle1t2Process : MonoBehaviour
 
     private void Update()
     {
-        //能跳过
-        if (_canSkip) {
-            //接收跳过按键
-            if (Input.GetKeyDown(KeyCode.Space)) {
+        //视频在播放
+        if (video.isPlaying) {
+            //没有显示提示 && 视频过 10s
+            if (!_showHint && video.time >= 10) {
+                _canSkip = true;
+                _showHint = true;
+                hint.StartFading();
+                //接收跳过输入
+                StartCoroutine(MiddleSceneAction());
+            }
+            //显示了提示 && 视频过 20s
+            else if (_showHint && video.time >= 20) {
+                hint.isFadeIn = false;
+                hint.Reset();
+                hint.StartFading();
+            }
+        }
+    }
+
+    private IEnumerator MiddleSceneAction()
+    {
+        //能播放能跳过
+        while (_canSkip && video.isPlaying) {
+            if (Input.GetKeyDown(KeyCode.Space))
                 SkipAction();
-            }
-        }
-        //不能跳过，则判断何时能够跳过并显示提示——当视频播放 10s 后
-        else if (video.isPlaying && video.time >= 10) {
-            _canSkip = true;
-            _showHint = true;
-            hint.StartFading();
+            yield return null;
         }
 
-        if (_showHint && video.isPlaying) {
-            if (video.time <= 20) {
-                hint.StartFading();
-            }
-            else {
-                hint.isFadeIn = false;
-                hint.Reset();
-                hint.StartFading();
-            }
-        }
-
-        if (_canSkip && !video.isPlaying) {
-            //判断提示是否不再显示
-            if (_showHint && video.isPlaying && video.time >= 20) {
-                _showHint = false;
-                hint.isFadeIn = false;
-                hint.Reset();
-                hint.StartFading();
-            }
-
-            //视频不再播放时载入下一场景
-            if (!video.isPlaying) {
-                LoadNextScene();
-            }
-        }
+        LoadNextScene();
     }
 
     //跳过时的行为
     private void SkipAction()
     {
+        _canSkip = false;
         video.Stop();
     }
 
     private void LoadNextScene()
     {
         //TODO: 加载场景
+        Debug.Log("加载下一场景");
     }
 }
