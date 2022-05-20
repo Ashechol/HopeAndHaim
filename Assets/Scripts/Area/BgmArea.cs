@@ -20,7 +20,8 @@ public class BgmArea : MonoBehaviour
 
     protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-        if (isStop) {
+        if (isStop)
+        {
             StopBgm();
         }
     }
