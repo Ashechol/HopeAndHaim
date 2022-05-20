@@ -18,7 +18,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -28,13 +28,12 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     IEnumerator LoadScene(string sceneName)
     {
-        // 开始加载画面渐出
         SceneFader fade = Instantiate(sceneFaderPrefab);
         yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
 
+
         yield return SceneManager.LoadSceneAsync(sceneName);
 
-        // 加载完毕画面渐进
         yield return StartCoroutine(fade.FadeIn(fadeInDuration));
 
         yield break;
@@ -50,14 +49,10 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         StartCoroutine(LoadScene("Main Menu"));
     }
 
-    public void LoadFirstLevel()
-    {
-        StartCoroutine(LoadScene("Episode-1"));
-    }
-
     public void ReLoadScene()
     {
-        if (skipBegining == false) {
+        if (skipBegining == false)
+        {
             skipBegining = true;
         }
         GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
@@ -79,7 +74,8 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     {
         _preloadAsync = SceneManager.LoadSceneAsync(sceneName);
         _preloadAsync.allowSceneActivation = false;
-        while (!_preloadAsync.isDone) {
+        while (!_preloadAsync.isDone)
+        {
             yield return null;
         }
     }
