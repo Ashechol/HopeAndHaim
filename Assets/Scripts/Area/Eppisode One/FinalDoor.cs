@@ -11,6 +11,9 @@ public class FinalDoor : MonoBehaviour
 
     public AudioClip plotClip;
 
+    //音响淡出器
+    public AudioSourceFader soundFader;
+
     private Hope _hope;
 
     private bool _canInput;
@@ -18,27 +21,29 @@ public class FinalDoor : MonoBehaviour
     private void Start()
     {
         _hope = GameManager.Instance.hope;
+        //淡出后才结束
+        soundFader.endActions += () => {
+            GameManager.Instance.isEpisodeOneEnd = true;
+        };
     }
 
     private void Update()
     {
-        if (GameManager.Instance.CanInput() && _canInput)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
+        if (GameManager.Instance.CanInput() && _canInput) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                //音响淡出
+                soundFader.StartFading();
 
-                GameManager.Instance.isEpisodeOneEnd = true;
+                //GameManager.Instance.isEpisodeOneEnd = true;
             }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
             //播放语音
-            if (!_hope.HearSource.isPlaying)
-            {
+            if (!_hope.HearSource.isPlaying && !soundFader.isEnd) {
                 _hope.HearSource.clip = plotClip;
                 _hope.HearSource.Play();
             }
@@ -51,8 +56,7 @@ public class FinalDoor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
             //隐藏文字
             UIManager.Instance.CleanDialogue();
 
