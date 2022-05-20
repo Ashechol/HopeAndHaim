@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
+  gameEnding: 0
   hope: {fileID: 0}
   haim: {fileID: 0}
   dialog: {fileID: 0}

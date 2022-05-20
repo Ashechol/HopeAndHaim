@@ -59,7 +59,8 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
     {
         if (_isPreloading) {
             //TODO: 预加载
-            bool finish = true;
+            SceneLoadManager.Instance.PreloadLevel("Episode-1");
+            bool finish = SceneLoadManager.Instance.finishPreload;
 
             if (content.isEnd && finish && !_isLoading) {
                 hint.StartFading();
@@ -74,6 +75,11 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
                     bgm.isFadeIn = false;
                     bgm.Reset();
                     bgm.StartFading();
+                    //背景渐渐淡出
+                    fader.endActions += LoadNextScene;
+                    fader.isFadeIn = false;
+                    fader.Reset();
+                    fader.StartFading();
                 }
             }
         }
@@ -119,6 +125,9 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
 
     private void LoadNextScene()
     {
-        //TODO: 一点点淡出切换场景
+        if (bgm.isEnd && fader.isEnd) {
+            //TODO: 进入下一场景
+            SceneLoadManager.Instance.LoadIn();
+        }
     }
 }
