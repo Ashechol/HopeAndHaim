@@ -55,8 +55,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     public void ReLoadScene()
     {
-        if (skipBegining == false)
-        {
+        if (skipBegining == false) {
             skipBegining = true;
         }
         GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
