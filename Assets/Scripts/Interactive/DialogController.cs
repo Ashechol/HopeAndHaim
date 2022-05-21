@@ -26,11 +26,6 @@ public class DialogController : MonoBehaviour
             StartCoroutine(Begining());
     }
 
-    void Update()
-    {
-
-    }
-
     void OnDisable()
     {
         GameManager.Instance.dialog = null;
@@ -94,6 +89,16 @@ public class DialogController : MonoBehaviour
         }
         else
             dialogReady = false;
+    }
+
+    public void PlayRandomIdle()
+    {
+        if (!_voice.isPlaying)
+        {
+            int clipIndex = Random.Range(0, 2);
+
+            PlayDiaglog(idleClips[clipIndex]);
+        }
     }
 
     IEnumerator NextDialogTimer()
