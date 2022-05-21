@@ -36330,6 +36330,10 @@ PrefabInstance:
       propertyPath: dialogNextTime
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6481637088423920075, guid: 70d19786026eeda49b2b5bd6fd985ad1, type: 3}
+      propertyPath: diceChanceTime
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70d19786026eeda49b2b5bd6fd985ad1, type: 3}
 --- !u!1001 &7554255483911194532

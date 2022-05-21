@@ -12,7 +12,8 @@ public class DialogController : MonoBehaviour
     public float dialogPlayChance = 0.2f;
     public float diceChanceTime = 20;
     public bool dialogReady;
-    bool canRandom;
+    bool _canRandom;
+    bool _timering;
 
     void Awake()
     {
@@ -67,28 +68,28 @@ public class DialogController : MonoBehaviour
         if (dialog.Count == 0)
             return;
 
-        if (canRandom == false)
+        if (!_timering && !_canRandom)
             StartCoroutine(NextDialogTimer());
 
-        if (canRandom == true)
+        if (_canRandom == true)
         {
-            canRandom = false;
             dialogReady = Random.Range(0f, 1f) < dialogPlayChance;
             Debug.Log("Dice! " + dialogReady);
+
+
+            if (dialogReady && !_voice.isPlaying)
+            {
+                dialogReady = false;
+
+                int clipIndex = Random.Range(0, dialog.Count);
+
+                PlayDiaglog(dialog[clipIndex]);
+
+                dialog.Remove(dialog[clipIndex]);
+
+                _canRandom = false;
+            }
         }
-
-        if (dialogReady && !_voice.isPlaying)
-        {
-            dialogReady = false;
-
-            int clipIndex = Random.Range(0, dialog.Count);
-
-            PlayDiaglog(dialog[clipIndex]);
-
-            dialog.Remove(dialog[clipIndex]);
-        }
-        else
-            dialogReady = false;
     }
 
     public void PlayRandomIdle()
@@ -104,6 +105,7 @@ public class DialogController : MonoBehaviour
     IEnumerator NextDialogTimer()
     {
         float timer = diceChanceTime;
+        _timering = true;
 
         while (timer > 0)
         {
@@ -111,7 +113,7 @@ public class DialogController : MonoBehaviour
             timer -= Time.deltaTime;
             yield return null;
         }
-
-        canRandom = true;
+        _canRandom = true;
+        _timering = false;
     }
 }
