@@ -26,7 +26,10 @@ public class TimelineManager : Singleton<TimelineManager>
     {
         //检查跳过剧情
         if (_canSkip) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                //隐藏提示
+                UIManager.Instance.CleanHint();
+                //跳过剧情
                 currentDirector.Stop();
                 ResumeGame();
             }
@@ -93,7 +96,7 @@ public class TimelineManager : Singleton<TimelineManager>
         //TODO: 第一次游玩判断
         //判断是否开启跳过
         if (true) {
-            UIManager.Instance.DisplayHint("按下E键跳过剧情", 44);
+            UIManager.Instance.DisplayHint("按下空格键跳过剧情", 44);
             _canSkip = true;
         }
     }
