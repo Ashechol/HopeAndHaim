@@ -1550,6 +1550,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 9008184210457070280, guid: 44ac1f6380694aa4fae64ad35f3b0b4e, type: 3}
+      propertyPath: idleTimer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008184210457070280, guid: 44ac1f6380694aa4fae64ad35f3b0b4e, type: 3}
       propertyPath: farDistance
       value: 6
       objectReference: {fileID: 0}
