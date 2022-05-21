@@ -23,6 +23,8 @@ public class Haim : MonoBehaviour
     public float speed;
     public float sightRadius = 1.5f;
     public bool hasKey = false;
+    public float idleTimer = 5;
+    public bool isIdle;
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
@@ -69,6 +71,7 @@ public class Haim : MonoBehaviour
 
     public void SetDestination(Vector3 pos)
     {
+        GameManager.Instance.dialog.PlayRandomDialog();
         if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
         {
             _dest = pos;
@@ -197,6 +200,7 @@ public class Haim : MonoBehaviour
         }
     }
 
+    //TODO: 镜头平滑切换
     // IEnumerator FollowCameraAway()
     // {
     //     StopCoroutine(FollowCameraClose());
