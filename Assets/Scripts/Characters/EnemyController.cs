@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     Transform _target;
     Animator _anim;
     MoveDirection _direction;
+    AudioSource _monsterHowl;
     bool _walk = false;
 
     [Header("Sight")]
@@ -20,6 +21,7 @@ public class EnemyController : MonoBehaviour
     void Awake()
     {
         _anim = GetComponent<Animator>();
+        _monsterHowl = GetComponent<AudioSource>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
@@ -35,7 +37,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        MoveToPlayer();
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
+            MoveToPlayer();
         _anim.SetInteger("direction", (int)_direction);
         _anim.SetBool("walk", _walk);
     }
@@ -60,6 +63,8 @@ public class EnemyController : MonoBehaviour
     {
         if (FoundPlayer())
         {
+            if (!_monsterHowl.isPlaying)
+                _monsterHowl.Play();
             var vectorToTarget = (_target.position - transform.position).normalized;
             float dot = Vector3.Dot(-transform.up, vectorToTarget);
             float threshold = Mathf.Cos(Mathf.Deg2Rad * sightAngle);
@@ -96,6 +101,7 @@ public class EnemyController : MonoBehaviour
         {
             GameManager.Instance.gameMode = GameManager.GameMode.GameOver;
             GameManager.Instance.haim.Die();
+            GetComponent<EnemyController>().enabled = false;
         }
 
     }

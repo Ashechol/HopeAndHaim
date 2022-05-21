@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
     // Haim one of the main actors
     public Haim haim;
     public DialogController dialog;
+    public MusicController music;
 
     private bool _firstInEpisodeOne = true;
 
@@ -78,10 +79,12 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneStart()
     {
         //根据 Director 状态设置 GameMode
-        if (TimelineManager.Instance.currentDirector.playOnAwake) {
+        if (TimelineManager.Instance.currentDirector.playOnAwake)
+        {
             gameMode = GameMode.Timeline;
         }
-        else {
+        else
+        {
             gameMode = GameMode.Gameplay;
         }
     }
@@ -89,20 +92,25 @@ public class GameManager : Singleton<GameManager>
     void EpisodeOneUpdate()
     {
         //第一次进入执行 Start
-        if (_firstInEpisodeOne) {
+        if (_firstInEpisodeOne)
+        {
             _firstInEpisodeOne = false;
             EpisodeOneStart();
         }
 
         //对话暂停时，需要按键恢复
-        if (gameMode == GameMode.Dialog) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+        if (gameMode == GameMode.Dialog)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 TimelineManager.Instance.ResumeTimeline();
             }
         }
         //加速播放，调试用
-        else if (gameMode == GameMode.Timeline) {
-            if (Input.GetKeyDown(KeyCode.L)) {
+        else if (gameMode == GameMode.Timeline)
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
                 TimelineManager.Instance.SpeedUp();
             }
         }
@@ -118,7 +126,8 @@ public class GameManager : Singleton<GameManager>
         hope.HearSource.loop = false;
         hope.HearSource.Play();
 
-        while (hope.HearSource.time >= 3.16) {
+        while (hope.HearSource.time >= 3.16)
+        {
             yield return null;
         }
 
@@ -136,13 +145,16 @@ public class GameManager : Singleton<GameManager>
 
     void EpisodeTwoUpdate()
     {
-        if (gameMode == GameMode.GameOver) {
-            foreach (var observer in _observers) {
+        if (gameMode == GameMode.GameOver)
+        {
+            foreach (var observer in _observers)
+            {
                 observer.GameOverNotify();
             }
         }
 
-        if (GameManager.Instance.gameMode == GameManager.GameMode.Dialog) {
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Dialog)
+        {
             if (Input.anyKey && !Input.GetKeyDown(KeyCode.E))
                 UIManager.Instance.ShowSkipTip();
         }
