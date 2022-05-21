@@ -179,7 +179,8 @@ public class Hope : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameManager.Instance.isEpisodeOneEnd = true;
+            UIManager.Instance.hint.gameObject.SetActive(false);
+            StartCoroutine(GameManager.Instance.EpisodeOneEnd());
         }
     }
 

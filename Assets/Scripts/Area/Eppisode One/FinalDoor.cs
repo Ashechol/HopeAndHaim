@@ -27,7 +27,7 @@ public class FinalDoor : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
 
-                GameManager.Instance.isEpisodeOneEnd = true;
+                StartCoroutine(GameManager.Instance.EpisodeOneEnd());
             }
         }
     }

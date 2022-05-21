@@ -113,8 +113,26 @@ public class GameManager : Singleton<GameManager>
                 TimelineManager.Instance.SpeedUp();
             }
         }
+    }
 
-        EpisodeOneEnd();
+    public IEnumerator EpisodeOneEnd()
+    {
+        //中断玩家输入
+        gameMode = GameMode.Dialog;
+        Debug.Log("第一幕最后演出");
+        gameMode = GameMode.Timeline;
+        hope.StopHope();
+        hope.HearSource.clip = AudioManager.Instance.openDoorClip;
+        hope.HearSource.loop = false;
+        hope.HearSource.Play();
+
+        while (hope.HearSource.isPlaying) yield return null;
+
+        //开门语音播放完毕
+
+        Debug.Log("第一幕结束");
+        SceneLoadManager.Instance.LoadLevel("Middle-1-2");
+
     }
 
     void EpisodeTwoStart()
@@ -140,29 +158,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     //第一幕结束逻辑
-    private void EpisodeOneEnd()
-    {
-        if (isEpisodeOneEnd)
-        {
-            //中断玩家输入
-            if (gameMode == GameMode.Dialog)
-            {
-                Debug.Log("第一幕最后演出");
-                gameMode = GameMode.Timeline;
-                hope.StopHope();
-                //播放开门声
-                hope.HearSource.clip = AudioManager.Instance.openDoorClip;
-                hope.HearSource.loop = false;
-                hope.HearSource.Play();
-            }
-            //开门语音播放完毕
-            else if (!hope.HearSource.isPlaying)
-            {
-                Debug.Log("第一幕结束");
-                SceneLoadManager.Instance.LoadLevel("Middle-1-2");
-            }
-        }
-    }
+
 
     /// <summary>
     /// 判断当前的游戏模式是否接收用户输入

@@ -47,6 +47,9 @@ public class Ending : MonoBehaviour
         while (videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.Space))
             yield return null;
 
+        GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
+        SceneLoadManager.Instance.skipBegining = false;
+
         SceneLoadManager.Instance.LoadMainMenu();
     }
 
