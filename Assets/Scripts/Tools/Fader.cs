@@ -34,12 +34,10 @@ public abstract class Fader<T> : MonoBehaviour
     //重置状态
     public void Reset()
     {
-        if (isFadeIn)
-        {
+        if (isFadeIn) {
             FadeInInit();
         }
-        else
-        {
+        else {
             FadeOutInit();
         }
         isEnd = false;
@@ -66,23 +64,19 @@ public abstract class Fader<T> : MonoBehaviour
 
     protected virtual void Start()
     {
-        if (target == null)
-        {
+        if (target == null) {
             target = GetComponent<T>();
         }
 
         //target 初始化
-        if (isFadeIn)
-        {
+        if (isFadeIn) {
             FadeInInit();
         }
-        else
-        {
+        else {
             FadeOutInit();
         }
 
-        if (startOnWake)
-        {
+        if (startOnWake) {
             StartFading();
         }
     }
@@ -120,48 +114,40 @@ public abstract class Fader<T> : MonoBehaviour
     protected virtual void Update()
     {
         //开始淡入淡出
-        if (_isFirstTime && _isFading)
-        {
-            if (isFadeIn)
-            {
+        if (_isFirstTime && _isFading) {
+            if (isFadeIn) {
                 FadeInStart();
             }
-            else
-            {
+            else {
                 FadeOutStart();
             }
             _isFirstTime = false;
         }
 
         //淡入淡出
-        if (_isFading)
-        {
+        if (_isFading) {
             //淡入
-            if (isFadeIn)
-            {
+            if (isFadeIn) {
                 FadeIn();
-                if (IsFadeInEnd())
-                {
+                if (IsFadeInEnd()) {
                     FadeInEnd();
                     _isFading = false;
 
                     //结束
-                    AllEnd();
                     isEnd = true;
+                    AllEnd();
                 }
             }
             //淡出
-            else
-            {
+            else {
                 FadeOut();
-                if (IsFadeOutEnd())
-                {
+                if (IsFadeOutEnd()) {
                     FadeOutEnd();
                     _isFading = false;
 
                     //结束
-                    AllEnd();
                     isEnd = true;
+                    AllEnd();
                 }
             }
         }
