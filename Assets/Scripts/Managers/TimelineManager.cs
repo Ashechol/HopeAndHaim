@@ -25,8 +25,10 @@ public class TimelineManager : Singleton<TimelineManager>
     private void Update()
     {
         //检查跳过剧情
-        if (_canSkip) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+        if (_canSkip)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 currentDirector.Stop();
                 ResumeGame();
             }
@@ -65,10 +67,12 @@ public class TimelineManager : Singleton<TimelineManager>
     public void SpeedUp()
     {
         _isSpeedUp = !_isSpeedUp;
-        if (_isSpeedUp) {
+        if (_isSpeedUp)
+        {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(5);
         }
-        else {
+        else
+        {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
         }
     }
@@ -76,7 +80,8 @@ public class TimelineManager : Singleton<TimelineManager>
     //解决 Timeline bug, 手动置剧情语音 Source 停止播放
     public void StopAudioSource()
     {
-        if (_hope != null) {
+        if (_hope != null)
+        {
             _hope.HearSource.Stop();
         }
     }
@@ -92,7 +97,8 @@ public class TimelineManager : Singleton<TimelineManager>
     {
         //TODO: 第一次游玩判断
         //判断是否开启跳过
-        if (true) {
+        if (true)
+        {
             UIManager.Instance.DisplayHint("按下E键跳过剧情", 44);
             _canSkip = true;
         }
@@ -100,7 +106,8 @@ public class TimelineManager : Singleton<TimelineManager>
 
     public void HideSkipHint()
     {
-        if (_canSkip) {
+        if (_canSkip)
+        {
             UIManager.Instance.CleanHint();
             _canSkip = false;
         }
