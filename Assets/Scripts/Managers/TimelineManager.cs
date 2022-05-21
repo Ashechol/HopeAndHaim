@@ -32,6 +32,8 @@ public class TimelineManager : Singleton<TimelineManager>
                 //跳过剧情
                 currentDirector.Stop();
                 ResumeGame();
+                //停止语言，原因不明，无法正确停止 Source
+                StopAudioSource();
             }
         }
     }
