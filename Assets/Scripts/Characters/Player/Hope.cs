@@ -324,6 +324,7 @@ public class Hope : MonoBehaviour
     //切换 Hope 脚步声
     public void ChangeFootstep(AudioClip clip)
     {
+        Debug.Log("Hope 切换脚步声");
         _footSource.clip = clip;
         _footSource.loop = true;
         if (_isMoving) {
