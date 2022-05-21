@@ -1,6 +1,7 @@
 # HopeAndHaim
 ## 7天 GameJam作品
 ### 主题：
+题目来自QQ群：游戏开发竞赛组队&Demo合作（68521134）
 ![主题](https://images.gitee.com/uploads/images/2022/0521/221701_0dd6d05f_5152184.jpeg "微信图片_20220521221634.jpg")
 
 ## 团队成员
