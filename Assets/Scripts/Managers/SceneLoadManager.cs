@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
-    public SceneFader sceneFaderPrefab;
-    bool fadeInGameOver;
     bool sceneLoadComplete;
 
     public bool skipBegining = false;
+
+    public SceneFader sceneFaderPrefab;
+    public bool useFader;
+    public SceneFader currentFader;
     public float fadeInDuration;
     public float fadeOutDuration;
 
@@ -21,23 +23,19 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
-    {
-        // fadeInGameOver = true;
-    }
-
     IEnumerator LoadScene(string sceneName)
     {
-        SceneFader fade = Instantiate(sceneFaderPrefab);
 
-        if (sceneName != "Middle-1-2")
-            yield return StartCoroutine(fade.FadeOut(fadeOutDuration));
+        currentFader = Instantiate(sceneFaderPrefab);
+
+
+        yield return StartCoroutine(currentFader.FadeOut(fadeOutDuration));
 
 
         yield return SceneManager.LoadSceneAsync(sceneName);
 
-        if (sceneName != "Middle-1-2")
-            yield return StartCoroutine(fade.FadeIn(fadeInDuration));
+
+        yield return StartCoroutine(currentFader.FadeIn(fadeInDuration));
 
         yield break;
     }

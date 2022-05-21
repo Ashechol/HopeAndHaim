@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +34,7 @@ public class FinalDoor : MonoBehaviour
                 //音响淡出
                 soundFader.StartFading();
 
-                //GameManager.Instance.isEpisodeOneEnd = true;
+                StartCoroutine(GameManager.Instance.EpisodeOneEnd());
             }
         }
     }
