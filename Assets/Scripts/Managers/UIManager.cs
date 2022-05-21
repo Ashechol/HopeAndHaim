@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : Singleton<UIManager>, IGameObserver
 {
+    bool hasBeenNotified;
+
     [Header("Episode One UI")]
     //全屏黑幕
     public Image curtain;
@@ -45,6 +47,12 @@ public class UIManager : Singleton<UIManager>, IGameObserver
         //第一幕中检测 M 键按下，关闭幕布
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
+
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
+        {
+            if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
+                hasBeenNotified = false;
+        }
     }
 
     private void EpisodeOneUpdate()
@@ -144,8 +152,14 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     public void GameOverNotify()
     {
-        gameOverPanel.SetActive(true);
-        tipsUI.gameObject.SetActive(false);
-        infomationPanel.SetActive(false);
+        if (!hasBeenNotified)
+        {
+            GameManager.Instance.music.PlayDeadMusic();
+            gameOverPanel.SetActive(true);
+            tipsUI.gameObject.SetActive(false);
+            infomationPanel.SetActive(false);
+
+            hasBeenNotified = true;
+        }
     }
 }
