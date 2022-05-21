@@ -26,14 +26,14 @@ public class Middle1t2Process : MonoBehaviour
     {
         //视频在播放
         if (video.isPlaying) {
-            //没有显示提示 && 视频过 10s
+            //没有显示提示 && 视频过 10s (只会执行一次)
             if (!_showHint && video.time >= 10) {
                 _showHint = true;
                 hint.StartFading();
                 //接收跳过输入
                 StartCoroutine(MiddleSceneAction());
             }
-            //显示了提示 && 视频过 20s
+            //显示了提示 && 视频过 20s (只会执行一次)
             else if (_showHint && video.time >= 20) {
                 hint.isFadeIn = false;
                 hint.Reset();
@@ -47,12 +47,14 @@ public class Middle1t2Process : MonoBehaviour
 
     private IEnumerator MiddleSceneAction()
     {
-        //能播放能跳过
+        //能播放不能跳过
         while (video.isPlaying && !_skip) {
             yield return null;
         }
 
         video.Stop();
+
+        hint.transform.Find("Hint").gameObject.SetActive(false);
 
         LoadNextScene();
     }
