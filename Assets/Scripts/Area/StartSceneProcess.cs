@@ -50,6 +50,11 @@ public class StartSceneProcess : Singleton<StartSceneProcess>
     {
         audioSource = GetComponent<AudioSource>();
 
+        //是否激活第二幕按钮
+        if (PlayerPrefs.GetInt(GameManager.Instance.episodeOneEndName, 0) != 0) {
+            btnEpisodeTwo.gameObject.SetActive(true);
+        }
+
         //淡入后，标体淡入
         fader.endActions += logo.StartFading;
         //淡入后，菜单淡入

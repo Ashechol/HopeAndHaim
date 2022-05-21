@@ -17,6 +17,9 @@ public class TimelineManager : Singleton<TimelineManager>
     //是否接收跳过检测
     private bool _canSkip = false;
 
+    //PP 储存字段
+    private string _episodeOnePlayedName = "EpisodeOne_Plot1_Played";
+
     private void Start()
     {
         _hope = GameManager.Instance.hope;
@@ -110,7 +113,6 @@ public class TimelineManager : Singleton<TimelineManager>
         }
     }
 
-    private string _episodeOnePlayedName = "EpisodeOne_Plot1_Played";
     //记录是否已经看完过第一幕第一段剧情
     public void LogEpisodeOnePlotPlayed()
     {

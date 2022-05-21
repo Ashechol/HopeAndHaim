@@ -13,12 +13,12 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     [Header("Episode One UI")]
     //全屏黑幕
-    public Image curtain;
+    private Image _curtain;
     private bool _underCurtain = true;
     //对话框
-    public Text dialogue;
+    private Text _dialogue;
     //提示框
-    public Text hint;
+    private Text _hint;
 
     [Header("Episode Two UI")]
     public GameObject gameOverPanel;
@@ -48,8 +48,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
-        {
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2") {
             if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
                 hasBeenNotified = false;
         }
@@ -57,68 +56,68 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void EpisodeOneUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
+        if (Input.GetKeyDown(KeyCode.M)) {
             _underCurtain = !_underCurtain;
-            curtain.gameObject.SetActive(_underCurtain);
+            _curtain.gameObject.SetActive(_underCurtain);
         }
+    }
+
+    public void RegisterHope(Hope hope)
+    {
+        _curtain = hope.curtain;
+        _dialogue = hope.dialogue;
+        _hint = hope.hint;
     }
 
     //显示对话框
     public void DisplayDialogue(string txt, int size)
     {
-        if (!dialogue.gameObject.activeSelf)
-        {
+        if (!_dialogue.gameObject.activeSelf) {
             //Debug.Log("显示对话框");
-            dialogue.gameObject.SetActive(true);
+            _dialogue.gameObject.SetActive(true);
         }
 
-        dialogue.text = txt;
-        dialogue.fontSize = size;
+        _dialogue.text = txt;
+        _dialogue.fontSize = size;
     }
 
     //隐藏对话框
     public void CleanDialogue()
     {
         //不知道为什么会出现空引用，显示 Text 已被摧毁
-        if (dialogue == null)
-        {
+        if (_dialogue == null) {
             return;
         }
 
-        if (dialogue.gameObject.activeSelf)
-        {
-            dialogue.text = "";
+        if (_dialogue.gameObject.activeSelf) {
+            _dialogue.text = "";
 
-            dialogue.gameObject.SetActive(false);
+            _dialogue.gameObject.SetActive(false);
         }
     }
 
     //显示游戏提示
     public void DisplayHint(string txt, int size)
     {
-        if (!hint.gameObject.activeSelf)
-        {
-            hint.gameObject.SetActive(true);
+        if (!_hint.gameObject.activeSelf) {
+            _hint.gameObject.SetActive(true);
         }
 
-        hint.text = txt;
-        hint.fontSize = size;
+        _hint.text = txt;
+        _hint.fontSize = size;
     }
 
     //隐藏提示框
     public void CleanHint()
     {
-        if (hint == null)
-        {
+        if (_hint == null) {
             return;
         }
 
-        if (hint.gameObject.activeSelf)
-        {
-            hint.text = "";
+        if (_hint.gameObject.activeSelf) {
+            _hint.text = "";
 
-            hint.gameObject.SetActive(false);
+            _hint.gameObject.SetActive(false);
         }
     }
 
@@ -152,8 +151,7 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     public void GameOverNotify()
     {
-        if (!hasBeenNotified)
-        {
+        if (!hasBeenNotified) {
             GameManager.Instance.music.PlayDeadMusic();
             gameOverPanel.SetActive(true);
             tipsUI.gameObject.SetActive(false);

@@ -743,9 +743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fd1f23cf5cb144d80c5038810c6a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curtain: {fileID: 862145760}
-  dialogue: {fileID: 1038697120}
-  hint: {fileID: 758362689}
   gameOverPanel: {fileID: 0}
   lastQuestionPanel: {fileID: 0}
   infomationPanel: {fileID: 0}
@@ -1380,6 +1377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   director: {fileID: 1167488413}
+  curtain: {fileID: 862145760}
+  dialogue: {fileID: 1038697120}
+  hint: {fileID: 758362689}
   speed: 120
   rSpeed: 6
   _staticTime: 0

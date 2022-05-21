@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 /// <summary>
 /// 角色 Hope 的控制器
@@ -24,6 +25,13 @@ public class Hope : MonoBehaviour
     public AudioSource FootSource => _footSource;
 
     public PlayableDirector director;
+    // 场景物品
+    //全屏黑幕
+    public Image curtain;
+    //对话框
+    public Text dialogue;
+    //提示框
+    public Text hint;
     #endregion
 
     #region 输入参数
@@ -74,7 +82,7 @@ public class Hope : MonoBehaviour
     private float _originalSpeed;
     #endregion
 
-    #region 初始化
+    #region Hope 初始化
 
     private void Awake()
     {
@@ -90,6 +98,7 @@ public class Hope : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.RegisterHope(this);
+        UIManager.Instance.RegisterHope(this);
     }
 
     #endregion
