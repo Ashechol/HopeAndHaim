@@ -223,8 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a9b828ff485ac4fa32ed3f791e7e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontSize: 30
+  fontSize: 56
   plotClip: {fileID: 8300000, guid: 7c2b925039e529241bcb6733f67e0aee, type: 3}
+  soundFader: {fileID: 1935660381}
 --- !u!1 &79918924
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +810,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481804208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.45, y: -4.74, z: -10}
+  m_LocalPosition: {x: -3.7, y: -4.76, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 839596690}
@@ -1334,7 +1335,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011864766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.45, y: -4.74, z: 0}
+  m_LocalPosition: {x: -3.7, y: -4.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1056661439}
@@ -1648,7 +1649,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 600e493b17467ca45adf0ff3b80859f7, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -1732,6 +1733,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a675a539a672cf64ba24b26569924103, type: 2}
     - {fileID: 11400000, guid: bb3e6536b3061ff488ee5456432b70c4, type: 2}
     - {fileID: 11400000, guid: 050967038bf2b8a499814e2fb11582fa, type: 2}
+    - {fileID: 11400000, guid: 42a84dfbff928534f86d6be2c2a8885b, type: 2}
+    - {fileID: 11400000, guid: 841d10aa414da3e4b9aab4ef9f49b3b5, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1878,6 +1881,34 @@ MonoBehaviour:
         - m_Target: {fileID: 873944317}
           m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
           m_MethodName: Skip5sInEpisodeOne
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 873944317}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+          m_MethodName: DisplaySkipHint
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 873944317}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+          m_MethodName: HideSkipHint
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -17200,11 +17231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3823266633035144238, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_FontData.m_MaxSize
-      value: 60
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 3823266633035144238, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_FontData.m_MinSize
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3823266633035144238, guid: 707af50d643a8764d85d78157f97391b, type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -17475,7 +17506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797650587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.45, y: -4.74, z: -10}
+  m_LocalPosition: {x: -3.7, y: -4.76, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -17638,6 +17669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1935660379}
   - component: {fileID: 1935660380}
+  - component: {fileID: 1935660381}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -17755,6 +17787,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1935660381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935660378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757f426b70f68ff4bb511a62429f347c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startOnWake: 0
+  target: {fileID: 1935660380}
+  fSpeed: 1.2
+  threshold: 0.05
+  isFadeIn: 0
+  isEnd: 0
+  targetVolume: 1
 --- !u!1 &1990800150
 GameObject:
   m_ObjectHideFlags: 0

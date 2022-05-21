@@ -12,11 +12,25 @@ public class TimelineManager : Singleton<TimelineManager>
     private Hope _hope;
 
     //调试加速
-    private bool isSpeedUp = false;
+    private bool _isSpeedUp = false;
+
+    //是否接收跳过检测
+    private bool _canSkip = false;
 
     private void Start()
     {
         _hope = GameManager.Instance.hope;
+    }
+
+    private void Update()
+    {
+        //检查跳过剧情
+        if (_canSkip) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                currentDirector.Stop();
+                ResumeGame();
+            }
+        }
     }
 
     #region Timeline 通用函数
@@ -50,8 +64,8 @@ public class TimelineManager : Singleton<TimelineManager>
     //调试用，加速播放 Timeline
     public void SpeedUp()
     {
-        isSpeedUp = !isSpeedUp;
-        if (isSpeedUp) {
+        _isSpeedUp = !_isSpeedUp;
+        if (_isSpeedUp) {
             currentDirector.playableGraph.GetRootPlayable(0).SetSpeed(5);
         }
         else {
@@ -71,6 +85,25 @@ public class TimelineManager : Singleton<TimelineManager>
     public void Skip5sInEpisodeOne()
     {
         currentDirector.time = 6;
+    }
+
+    //跳过剧情提示
+    public void DisplaySkipHint()
+    {
+        //TODO: 第一次游玩判断
+        //判断是否开启跳过
+        if (true) {
+            UIManager.Instance.DisplayHint("按下E键跳过剧情", 44);
+            _canSkip = true;
+        }
+    }
+
+    public void HideSkipHint()
+    {
+        if (_canSkip) {
+            UIManager.Instance.CleanHint();
+            _canSkip = false;
+        }
     }
     #endregion
 }
