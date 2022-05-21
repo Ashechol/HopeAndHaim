@@ -110,5 +110,11 @@ public class TimelineManager : Singleton<TimelineManager>
             _canSkip = false;
         }
     }
+
+    //记录是否已经看完过第一幕第一段剧情
+    public void LogPlotPlayed()
+    {
+
+    }
     #endregion
 }
