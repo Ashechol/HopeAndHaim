@@ -31,7 +31,9 @@ public class GridController : MonoBehaviour, IGameObserver
     void Update()
     {
         if (!_gameOver && GameManager.Instance.haim.ArriveAtDest())
+        {
             SetInteractiveMap();
+        }
     }
 
     void SetInteractiveMap()
@@ -42,6 +44,7 @@ public class GridController : MonoBehaviour, IGameObserver
             _interactiveMap.SetTile(_previousMousePos, null);
             _interactiveMap.SetTile(MouseManager.Instance.MousePos, hoverTile);
             _previousMousePos = MouseManager.Instance.MousePos;
+
         }
     }
 
