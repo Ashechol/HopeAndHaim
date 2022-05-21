@@ -48,6 +48,10 @@ public class AudioManager : Singleton<AudioManager>
 
     public void SetFootstep(AudioClip clip)
     {
+        if (_hope == null) {
+            _hope = GameManager.Instance.hope;
+        }
+
         if (_hope != null) {
             _hope.ChangeFootstep(clip);
         }
@@ -55,7 +59,12 @@ public class AudioManager : Singleton<AudioManager>
 
     public void SetIntercomBgm()
     {
+        if (_hope == null) {
+            _hope = GameManager.Instance.hope;
+        }
+
         if (_hope != null) {
+            Debug.Log("播放对讲机音效");
             _hope.ChangeBgm(intercomClip, false);
         }
     }
