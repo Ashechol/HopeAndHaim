@@ -53,6 +53,7 @@ public class Ending : MonoBehaviour
 
         while (isPlaying && !Input.GetKeyDown(KeyCode.End))
         {
+            isPlaying = _videoPlayer.isPlaying;
 
             if (!_skipTip.activeInHierarchy)
             {

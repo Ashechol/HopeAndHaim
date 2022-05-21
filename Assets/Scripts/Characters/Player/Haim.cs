@@ -41,7 +41,7 @@ public class Haim : MonoBehaviour
         _footStep = GetComponent<AudioSource>();
         _selfLight = GetComponentInChildren<Light2D>();
         _anim = GetComponent<Animator>();
-        _direction = MoveDirection.Forward;
+        _direction = MoveDirection.Backward;
     }
 
     void Start()
