@@ -1,19 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class Ending : MonoBehaviour
 {
-    VideoPlayer videoPlayer;
+    VideoPlayer _videoPlayer;
+    GameObject _skipTip;
 
     public VideoClip newLife;
     public VideoClip exile;
     public VideoClip obey;
+    public float skipTipTimer = 3;
+    public bool timerRunning;
+
 
     void Awake()
     {
-        videoPlayer = GetComponent<VideoPlayer>();
+        _videoPlayer = GetComponent<VideoPlayer>();
+        _skipTip = FindObjectOfType<Canvas>().transform.GetChild(0).gameObject;
     }
 
     void Start()
@@ -21,15 +26,15 @@ public class Ending : MonoBehaviour
         switch (GameManager.Instance.gameEnding)
         {
             case GameManager.GameEnding.NewLife:
-                videoPlayer.clip = newLife;
+                _videoPlayer.clip = newLife;
                 break;
 
             case GameManager.GameEnding.Obey:
-                videoPlayer.clip = obey;
+                _videoPlayer.clip = obey;
                 break;
 
             case GameManager.GameEnding.Exile:
-                videoPlayer.clip = exile;
+                _videoPlayer.clip = exile;
                 break;
         }
 
@@ -39,18 +44,50 @@ public class Ending : MonoBehaviour
 
     IEnumerator PlayEndingMovie()
     {
-        videoPlayer.Play();
+        _videoPlayer.Play();
 
-        while (!videoPlayer.isPlaying)
+        while (!_videoPlayer.isPlaying)
             yield return null;
 
-        while (videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.Space))
+        while (_videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.End))
+        {
+
+            if (!_skipTip.activeInHierarchy)
+            {
+                if (Input.anyKeyDown)
+                    StartCoroutine(ShowSkipTip(skipTipTimer));
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _videoPlayer.Stop();
+                _skipTip.SetActive(false);
+            }
+
             yield return null;
+        }
 
         GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
         SceneLoadManager.Instance.skipBegining = false;
 
         SceneLoadManager.Instance.LoadMainMenu();
+    }
+
+    IEnumerator ShowSkipTip(float skipTipTimer)
+    {
+
+        if (GameManager.Instance.gameEnding == GameManager.GameEnding.NewLife)
+            yield break;
+
+        float timer = skipTipTimer;
+        _skipTip.SetActive(true);
+
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        _skipTip.SetActive(false);
     }
 
 }
