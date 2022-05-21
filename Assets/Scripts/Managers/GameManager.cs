@@ -46,8 +46,8 @@ public class GameManager : Singleton<GameManager>
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneStart();
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
-            EpisodeTwoStart();
+        // if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
+        //     EpisodeTwoStart();
     }
 
     void Update()

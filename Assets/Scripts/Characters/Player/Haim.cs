@@ -66,12 +66,13 @@ public class Haim : MonoBehaviour
         if (isIdle)
         {
             GameManager.Instance.dialog.PlayRandomIdle();
+            isIdle = false;
         }
     }
 
     void IdleTimeCheck()
     {
-        if (!_idleChecking)
+        if (!_idleChecking && !isIdle)
         {
             StartCoroutine(TimeCheck());
             _idleChecking = true;
