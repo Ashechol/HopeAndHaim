@@ -1379,6 +1379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc01cf3372b0df444af04aba1f6e77c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  director: {fileID: 1167488413}
   speed: 120
   rSpeed: 6
   _staticTime: 0
@@ -1649,7 +1650,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 600e493b17467ca45adf0ff3b80859f7, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0

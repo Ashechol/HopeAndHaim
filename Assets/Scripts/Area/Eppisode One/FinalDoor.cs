@@ -42,8 +42,8 @@ public class FinalDoor : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) {
-            //播放语音
-            if (!_hope.HearSource.isPlaying && !soundFader.isEnd) {
+            //播放语音：语音不是正在播放 && 声音淡出没有结束，即第一幕场景没有结束
+            if (!_hope.IsHearSourcePlaying() && !soundFader.isEnd) {
                 _hope.HearSource.clip = plotClip;
                 _hope.HearSource.Play();
             }
