@@ -84,6 +84,10 @@ public class TimelineManager : Singleton<TimelineManager>
     //解决 Timeline bug, 手动置剧情语音 Source 停止播放
     public void StopAudioSource()
     {
+        if (_hope == null) {
+            _hope = GameManager.Instance.hope;
+        }
+
         if (_hope != null) {
             _hope.HearSource.Stop();
         }
