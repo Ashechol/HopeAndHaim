@@ -6,6 +6,7 @@ public class MouseManager : Singleton<MouseManager>
 {
     Camera _mainCam;
     Vector3Int _gridPos;
+    public Texture2D cursorTexture;
     public Tilemap pathMap;
 
     public Vector3Int MousePos { get { return _gridPos; } }
@@ -18,11 +19,19 @@ public class MouseManager : Singleton<MouseManager>
         _mainCam = Camera.main;
     }
 
+    void Start()
+    {
+        Cursor.SetCursor(cursorTexture, new Vector2(32, 32), CursorMode.Auto);
+    }
+
     void Update()
     {
         if (GameManager.Instance.haim.ArriveAtDest() &&
             GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
+        {
+            // Cursor.visible = false;
             MouseControll();
+        }
     }
 
     void MouseControll()
