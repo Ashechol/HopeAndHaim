@@ -60,13 +60,15 @@ public class Haim : MonoBehaviour
         _anim.SetInteger("direction", (int)_direction);
 
         if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
+        {
             IdleTimeCheck();
 
-        // idle dialog
-        if (isIdle)
-        {
-            GameManager.Instance.dialog.PlayRandomIdle();
-            isIdle = false;
+            // idle dialog
+            if (isIdle)
+            {
+                GameManager.Instance.dialog.PlayRandomIdle();
+                isIdle = false;
+            }
         }
     }
 
