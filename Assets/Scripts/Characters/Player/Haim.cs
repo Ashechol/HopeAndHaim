@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using Cinemachine;
+using System;
 
 public enum MoveDirection { Forward, Backward, LeftRight }
 public class Haim : MonoBehaviour
@@ -23,8 +24,9 @@ public class Haim : MonoBehaviour
     public float speed;
     public float sightRadius = 1.5f;
     public bool hasKey = false;
-    public float idleTimer = 5;
+    public float idleTimer = 10;
     public bool isIdle;
+    private bool _idleChecking;
 
     [Header("Hack Surveillance Camera")]
     public bool canHack;
@@ -56,6 +58,38 @@ public class Haim : MonoBehaviour
         Interact();
         _anim.SetBool("walk", _walk);
         _anim.SetInteger("direction", (int)_direction);
+
+        if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
+            IdleTimeCheck();
+
+        // idle dialog
+        if (isIdle)
+        {
+            GameManager.Instance.dialog.PlayRandomIdle();
+        }
+    }
+
+    void IdleTimeCheck()
+    {
+        if (!_idleChecking)
+        {
+            StartCoroutine(TimeCheck());
+            _idleChecking = true;
+        }
+    }
+
+    IEnumerator TimeCheck()
+    {
+        float timer = idleTimer;
+
+        while (timer > 0 && !Input.anyKeyDown)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        isIdle = timer < 0 ? true : false;
+        _idleChecking = false;
     }
 
     void OnEnable()
