@@ -95,9 +95,8 @@ public class TimelineManager : Singleton<TimelineManager>
     //跳过剧情提示
     public void DisplaySkipHint()
     {
-        //TODO: 第一次游玩判断
         //判断是否开启跳过
-        if (true) {
+        if (PlayerPrefs.GetInt(_episodeOnePlayedName, 0) != 0) {
             UIManager.Instance.DisplayHint("按下空格键跳过剧情", 44);
             _canSkip = true;
         }
@@ -111,10 +110,14 @@ public class TimelineManager : Singleton<TimelineManager>
         }
     }
 
+    private string _episodeOnePlayedName = "EpisodeOne_Plot1_Played";
     //记录是否已经看完过第一幕第一段剧情
-    public void LogPlotPlayed()
+    public void LogEpisodeOnePlotPlayed()
     {
-
+        if (PlayerPrefs.GetInt(_episodeOnePlayedName, 0) == 0) {
+            PlayerPrefs.SetInt(_episodeOnePlayedName, 1);
+            PlayerPrefs.Save();
+        }
     }
     #endregion
 }

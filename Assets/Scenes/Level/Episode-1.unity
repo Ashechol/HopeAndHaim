@@ -1736,6 +1736,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 050967038bf2b8a499814e2fb11582fa, type: 2}
     - {fileID: 11400000, guid: 42a84dfbff928534f86d6be2c2a8885b, type: 2}
     - {fileID: 11400000, guid: 841d10aa414da3e4b9aab4ef9f49b3b5, type: 2}
+    - {fileID: 11400000, guid: 3d0a26bfca0ec3b4f83d584d4aafeb36, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1910,6 +1911,20 @@ MonoBehaviour:
         - m_Target: {fileID: 873944317}
           m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
           m_MethodName: HideSkipHint
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 873944317}
+          m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+          m_MethodName: LogEpisodeOnePlotPlayed
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
