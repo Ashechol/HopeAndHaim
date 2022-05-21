@@ -7,12 +7,14 @@ public class BeginingTip : MonoBehaviour
     public GameObject tip1;
     public GameObject tip2;
     public GameObject tip3;
+    public bool skipTipActivated;
 
     public float tip1Timer = 6;
     public float tip2Timer = 4;
 
     void Start()
     {
+
     }
 
     public IEnumerator ShowTip()
@@ -32,6 +34,7 @@ public class BeginingTip : MonoBehaviour
     IEnumerator TimerCountDown(float timer, GameObject tip)
     {
         tip.SetActive(true);
+        skipTipActivated = true;
 
         while (timer > 0)
         {
@@ -40,5 +43,6 @@ public class BeginingTip : MonoBehaviour
         }
 
         tip.SetActive(false);
+        skipTipActivated = false;
     }
 }

@@ -9,6 +9,7 @@ public class DialogController : MonoBehaviour
     public List<AudioClip> beginingClips;
     public List<AudioClip> idleClips;
     public List<AudioClip> dialog;
+    public bool skipBegining;
     public float dialogPlayChance = 0.2f;
     public float diceChanceTime = 20;
     public bool dialogReady;
@@ -55,6 +56,11 @@ public class DialogController : MonoBehaviour
         UIManager.Instance.ShowBeginingTip();
 
         GameManager.Instance.gameMode = GameManager.GameMode.Gameplay;
+    }
+
+    public void StopBegining()
+    {
+        StopCoroutine(Begining());
     }
 
     public void PlayDiaglog(AudioClip dialog)

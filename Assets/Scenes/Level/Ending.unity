@@ -294,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba7f47d98e4dce44a3855c6eae6b703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skipTip: {fileID: 1254562233}
   newLife: {fileID: 32900000, guid: 1f9ba5d30df1c914ea192cc372a04c7c, type: 3}
   exile: {fileID: 32900000, guid: 926ad41bcc066924ba4c22edb4cb25c0, type: 3}
   obey: {fileID: 32900000, guid: c1d40bffc8d11584c888910cfc71ae1d, type: 3}
@@ -335,6 +336,7 @@ MonoBehaviour:
   haim: {fileID: 0}
   dialog: {fileID: 0}
   music: {fileID: 0}
+  episodeOneEndName: EpisodeOne_End
   isEpisodeOneEnd: 0
 --- !u!4 &485402930
 Transform:

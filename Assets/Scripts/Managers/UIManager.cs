@@ -48,7 +48,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
         if (SceneLoadManager.Instance.CurrentScene.name == "Episode-1")
             EpisodeOneUpdate();
 
-        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2") {
+        if (SceneLoadManager.Instance.CurrentScene.name == "Episode-2")
+        {
             if (GameManager.Instance.gameMode == GameManager.GameMode.Gameplay)
                 hasBeenNotified = false;
         }
@@ -56,7 +57,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     private void EpisodeOneUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.M)) {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
             _underCurtain = !_underCurtain;
             _curtain.gameObject.SetActive(_underCurtain);
         }
@@ -72,7 +74,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示对话框
     public void DisplayDialogue(string txt, int size)
     {
-        if (!_dialogue.gameObject.activeSelf) {
+        if (!_dialogue.gameObject.activeSelf)
+        {
             //Debug.Log("显示对话框");
             _dialogue.gameObject.SetActive(true);
         }
@@ -85,11 +88,13 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     public void CleanDialogue()
     {
         //不知道为什么会出现空引用，显示 Text 已被摧毁
-        if (_dialogue == null) {
+        if (_dialogue == null)
+        {
             return;
         }
 
-        if (_dialogue.gameObject.activeSelf) {
+        if (_dialogue.gameObject.activeSelf)
+        {
             _dialogue.text = "";
 
             _dialogue.gameObject.SetActive(false);
@@ -99,7 +104,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //显示游戏提示
     public void DisplayHint(string txt, int size)
     {
-        if (!_hint.gameObject.activeSelf) {
+        if (!_hint.gameObject.activeSelf)
+        {
             _hint.gameObject.SetActive(true);
         }
 
@@ -110,11 +116,13 @@ public class UIManager : Singleton<UIManager>, IGameObserver
     //隐藏提示框
     public void CleanHint()
     {
-        if (_hint == null) {
+        if (_hint == null)
+        {
             return;
         }
 
-        if (_hint.gameObject.activeSelf) {
+        if (_hint.gameObject.activeSelf)
+        {
             _hint.text = "";
 
             _hint.gameObject.SetActive(false);
@@ -144,6 +152,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
             tipsUI.beginingTip.ShowSkipTip(2);
     }
 
+    public bool SkipTipActivated() { return tipsUI.beginingTip.skipTipActivated; }
+
     public void ShowDoorLockTip()
     {
         StartCoroutine(tipsUI.DoorLockTip());
@@ -151,7 +161,8 @@ public class UIManager : Singleton<UIManager>, IGameObserver
 
     public void GameOverNotify()
     {
-        if (!hasBeenNotified) {
+        if (!hasBeenNotified)
+        {
             GameManager.Instance.music.PlayDeadMusic();
             gameOverPanel.SetActive(true);
             tipsUI.gameObject.SetActive(false);

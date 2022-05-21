@@ -6,20 +6,21 @@ using UnityEngine.UI;
 public class Ending : MonoBehaviour
 {
     VideoPlayer _videoPlayer;
-    GameObject _skipTip;
+    public GameObject _skipTip;
 
     public VideoClip newLife;
     public VideoClip exile;
     public VideoClip obey;
     public float skipTipTimer = 3;
     public bool timerRunning;
+    public bool isPlaying;
 
 
     void Awake()
     {
         _videoPlayer = GetComponent<VideoPlayer>();
-        _skipTip = FindObjectOfType<Canvas>().transform.GetChild(0).gameObject;
     }
+
 
     void Start()
     {
@@ -45,11 +46,12 @@ public class Ending : MonoBehaviour
     IEnumerator PlayEndingMovie()
     {
         _videoPlayer.Play();
+        isPlaying = true;
 
         while (!_videoPlayer.isPlaying)
             yield return null;
 
-        while (_videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.End))
+        while (isPlaying && !Input.GetKeyDown(KeyCode.End))
         {
 
             if (!_skipTip.activeInHierarchy)
@@ -59,7 +61,7 @@ public class Ending : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
-                _videoPlayer.Stop();
+                isPlaying = false;
                 _skipTip.SetActive(false);
             }
 
